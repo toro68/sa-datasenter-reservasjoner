@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Statnett – reserveringer og kapasitetskø</title>
+    <title>Statnett – reservasjoner og kapasitetskø</title>
     <style>
       :root {
         --bg: #0b1220;
@@ -212,11 +212,14 @@
   </head>
   <body>
     <header>
-      <h1>Reserveringer og kapasitetskø</h1>
+      <h1>Reservasjoner og kapasitetskø</h1>
       <p>
         Filtrer på prisområde og næringstype. Tabellen og topplistene oppdateres i sanntid. Data
         lastes fra <span class="pill">datasett_clean.json</span> og
         <span class="pill">kapasitetsko_clean.json</span>.
+      </p>
+      <p style="margin-top: 10px">
+        Egen NO2-side med grafer: <a class="pill" href="./no2.html">Åpne NO2</a>
       </p>
     </header>
 
@@ -231,7 +234,7 @@
           <div class="control">
             <label for="dataset">Datasett</label>
             <select id="dataset">
-              <option value="reservasjoner" selected>Reserveringer</option>
+              <option value="reservasjoner" selected>Reservasjoner</option>
               <option value="kapasitetsko">Kapasitetskø</option>
             </select>
           </div>
@@ -351,7 +354,7 @@
     <script>
       const DATASETS = {
         reservasjoner: {
-          label: "Reserveringer",
+          label: "Reservasjoner",
           url: "../datasett_clean.json",
           mwKey: "reservert_mw",
         },
@@ -576,4 +579,3 @@
     </script>
   </body>
 </html>
-

@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NO2 – reservasjoner og kapasitetskø</title>
+    <style>
+      :root {
+        --bg: #0b1220;
+        --panel: #101a2e;
+        --text: #e8eefc;
+        --muted: #a8b4d6;
+        --border: rgba(232, 238, 252, 0.12);
+        --accent: #6aa2ff;
+        --danger: #ff6a7a;
+        --grid: rgba(232, 238, 252, 0.08);
+      }
+
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+          "Apple Color Emoji", "Segoe UI Emoji";
+        background: var(--bg);
+        color: var(--text);
+      }
+
+      header {
+        padding: 24px 20px 12px;
+      }
+
+      header h1 {
+        font-size: 18px;
+        margin: 0 0 6px;
+        letter-spacing: 0.2px;
+      }
+
+      header p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.35;
+        max-width: 1100px;
+      }
+
+      header a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+
+      header a:hover {
+        text-decoration: underline;
+      }
+
+      main {
+        padding: 0 20px 26px;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        overflow: hidden;
+      }
+
+      .panel-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px;
+        border-bottom: 1px solid var(--border);
+        gap: 10px;
+      }
+
+      .panel-header h2 {
+        margin: 0;
+        font-size: 14px;
+        letter-spacing: 0.25px;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 4px 8px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--muted);
+        font-size: 11px;
+      }
+
+      .controls {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(180px, 1fr)) minmax(160px, 1fr);
+        gap: 10px;
+        padding: 14px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .control {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      label {
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      select,
+      input[type="search"] {
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--text);
+        padding: 10px 10px;
+        outline: none;
+      }
+
+      input[type="search"]::placeholder {
+        color: rgba(232, 238, 252, 0.55);
+      }
+
+      .charts {
+        padding: 14px;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      .chart {
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 10px;
+        background: rgba(0, 0, 0, 0.12);
+      }
+
+      .chart h3 {
+        margin: 0 0 10px;
+        font-size: 12px;
+        color: var(--muted);
+        letter-spacing: 0.2px;
+        font-weight: 600;
+      }
+
+      svg {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      .axis {
+        font-size: 10px;
+        fill: var(--muted);
+      }
+
+      .grid line {
+        stroke: var(--grid);
+        stroke-width: 1;
+      }
+
+      .bar {
+        fill: rgba(106, 162, 255, 0.8);
+      }
+
+      .bar:hover {
+        fill: rgba(106, 162, 255, 1);
+      }
+
+      .footer-note {
+        padding: 10px 14px 14px;
+        color: var(--muted);
+        font-size: 12px;
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        flex-wrap: wrap;
+        border-top: 1px solid var(--border);
+      }
+
+      .error {
+        padding: 12px 14px;
+        color: var(--danger);
+        border-top: 1px solid var(--border);
+        background: rgba(255, 0, 0, 0.05);
+        font-size: 12px;
+        display: none;
+      }
+
+      @media (max-width: 900px) {
+        .controls {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>NO2 – reservasjoner og kapasitetskø</h1>
+      <p>
+        Fokuserer på prisområde <span class="pill">NO2</span> og viser grafer for fordeling og
+        utvikling per år. Data lastes fra <span class="pill">datasett_clean.json</span> og
+        <span class="pill">kapasitetsko_clean.json</span>. Tilbake til
+        <a href="./index.html">oversikten</a>.
+      </p>
+    </header>
+
+    <main>
+      <section class="panel" id="app">
+        <div class="panel-header">
+          <h2>Filtre</h2>
+          <div class="pill" id="status">Laster…</div>
+        </div>
+
+        <div class="controls">
+          <div class="control">
+            <label for="dataset">Datasett</label>
+            <select id="dataset">
+              <option value="reservasjoner" selected>Reservasjoner</option>
+              <option value="kapasitetsko">Kapasitetskø</option>
+            </select>
+          </div>
+
+          <div class="control">
+            <label for="naringstype">Næringstype</label>
+            <select id="naringstype"></select>
+          </div>
+
+          <div class="control">
+            <label for="search">Søk (stasjon, kunde, sluttkunde)</label>
+            <input id="search" type="search" placeholder="Søk…" />
+          </div>
+        </div>
+
+        <div class="charts">
+          <div class="chart">
+            <h3>Sum MW per næringstype (NO2)</h3>
+            <svg viewBox="0 0 900 320" role="img" aria-label="Stolpediagram per næringstype">
+              <g id="chart-naring"></g>
+            </svg>
+          </div>
+
+          <div class="chart">
+            <h3>Sum MW per år (reservert/innmeldt) (NO2)</h3>
+            <svg viewBox="0 0 900 320" role="img" aria-label="Stolpediagram per år">
+              <g id="chart-year"></g>
+            </svg>
+          </div>
+        </div>
+
+        <div class="footer-note">
+          <div class="muted" id="note">–</div>
+          <div class="muted" id="updated">–</div>
+        </div>
+
+        <div class="error" id="error"></div>
+      </section>
+    </main>
+
+    <script>
+      const DATASETS = {
+        reservasjoner: {
+          label: "Reservasjoner",
+          url: "../datasett_clean.json",
+          mwKey: "reservert_mw",
+          dateKey: "reservert_dato",
+        },
+        kapasitetsko: {
+          label: "Kapasitetskø",
+          url: "../kapasitetsko_clean.json",
+          mwKey: "kapasitet_ko_mw",
+          dateKey: "innmelding_dato",
+        },
+      };
+
+      const PRICE_AREA = "NO2";
+      const $ = (id) => document.getElementById(id);
+
+      const state = {
+        activeDataset: "reservasjoner",
+        rows: [],
+        filtered: [],
+      };
+
+      function formatNumber(value) {
+        if (value === null || value === undefined || Number.isNaN(value)) return "–";
+        return new Intl.NumberFormat("no-NO", {
+          maximumFractionDigits: 2,
+        }).format(value);
+      }
+
+      function setError(message) {
+        const el = $("error");
+        if (!message) {
+          el.style.display = "none";
+          el.textContent = "";
+          return;
+        }
+        el.style.display = "block";
+        el.textContent = message;
+      }
+
+      function setStatus(text) {
+        $("status").textContent = text;
+      }
+
+      function unique(values) {
+        const set = new Set();
+        for (const v of values) {
+          const val = (v ?? "").toString().trim();
+          if (val) set.add(val);
+        }
+        return [...set].sort((a, b) => a.localeCompare(b, "no"));
+      }
+
+      function fillSelect(selectEl, items, allLabel) {
+        selectEl.innerHTML = "";
+        const all = document.createElement("option");
+        all.value = "__ALL__";
+        all.textContent = allLabel;
+        selectEl.appendChild(all);
+        for (const item of items) {
+          const opt = document.createElement("option");
+          opt.value = item;
+          opt.textContent = item;
+          selectEl.appendChild(opt);
+        }
+      }
+
+      async function loadDataset(key) {
+        state.activeDataset = key;
+        setError("");
+        setStatus("Laster…");
+        try {
+          const response = await fetch(DATASETS[key].url, { cache: "no-store" });
+          if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
+          state.rows = await response.json();
+
+          const no2 = state.rows.filter((r) => (r.prisomrade || "").trim() === PRICE_AREA);
+          const naring = unique(no2.map((r) => r.naringstype));
+          fillSelect($("naringstype"), naring, "Alle næringstyper");
+          $("search").value = "";
+          $("naringstype").value = "__ALL__";
+
+          setStatus(`${DATASETS[key].label}: ${no2.length} rader i ${PRICE_AREA}`);
+          applyFiltersAndRender();
+        } catch (err) {
+          setStatus("Feil");
+          setError(
+            `Klarte ikke å laste ${DATASETS[key].url}. Åpne siden via en lokal webserver (ikke file://). (${err.message})`
+          );
+        }
+      }
+
+      function rowMatchesSearch(row, q) {
+        if (!q) return true;
+        const hay = [row.stasjon, row.statnetts_kunde, row.sluttkunde, row.saksnr]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
+        return hay.includes(q);
+      }
+
+      function filterRows() {
+        const q = $("search").value.trim().toLowerCase();
+        const naringFilter = $("naringstype").value;
+
+        return state.rows.filter((row) => {
+          if ((row.prisomrade || "").trim() !== PRICE_AREA) return false;
+          if (naringFilter !== "__ALL__" && row.naringstype !== naringFilter) return false;
+          if (!rowMatchesSearch(row, q)) return false;
+          return true;
+        });
+      }
+
+      function aggregate(rows, keyFn, mwKey) {
+        const sums = new Map();
+        for (const r of rows) {
+          const key = (keyFn(r) ?? "").toString().trim();
+          if (!key) continue;
+          const mw = Number(r[mwKey] ?? 0);
+          sums.set(key, (sums.get(key) ?? 0) + (Number.isFinite(mw) ? mw : 0));
+        }
+        return [...sums.entries()].map(([key, mw]) => ({ key, mw }));
+      }
+
+      function parseYear(value) {
+        const str = (value ?? "").toString().trim();
+        const match = str.match(/^([12]\d{3})/);
+        return match ? match[1] : "Ukjent";
+      }
+
+      function drawBarChart(targetId, items, options) {
+        const root = $(targetId);
+        root.innerHTML = "";
+
+        const width = 900;
+        const height = 320;
+        const margin = { top: 16, right: 16, bottom: 96, left: 64 };
+        const innerWidth = width - margin.left - margin.right;
+        const innerHeight = height - margin.top - margin.bottom;
+
+        const data = items.slice(0, options.limit ?? items.length);
+        const maxValue = Math.max(1, ...data.map((d) => d.mw));
+        const barGap = 6;
+        const barWidth = data.length
+          ? (innerWidth - barGap * (data.length - 1)) / data.length
+          : innerWidth;
+
+        const yTicks = 4;
+        const tickGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        tickGroup.setAttribute("class", "grid");
+        tickGroup.setAttribute("transform", `translate(${margin.left},${margin.top})`);
+        for (let i = 0; i <= yTicks; i += 1) {
+          const y = innerHeight - (innerHeight * i) / yTicks;
+          const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+          line.setAttribute("x1", "0");
+          line.setAttribute("x2", `${innerWidth}`);
+          line.setAttribute("y1", `${y}`);
+          line.setAttribute("y2", `${y}`);
+          tickGroup.appendChild(line);
+
+          const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+          label.setAttribute("class", "axis");
+          label.setAttribute("x", "-8");
+          label.setAttribute("y", `${y + 3}`);
+          label.setAttribute("text-anchor", "end");
+          const value = (maxValue * i) / yTicks;
+          label.textContent = formatNumber(value);
+          tickGroup.appendChild(label);
+        }
+        root.appendChild(tickGroup);
+
+        const barsGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        barsGroup.setAttribute("transform", `translate(${margin.left},${margin.top})`);
+
+        data.forEach((d, idx) => {
+          const x = idx * (barWidth + barGap);
+          const h = (d.mw / maxValue) * innerHeight;
+          const y = innerHeight - h;
+          const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+          rect.setAttribute("class", "bar");
+          rect.setAttribute("x", `${x}`);
+          rect.setAttribute("y", `${y}`);
+          rect.setAttribute("width", `${barWidth}`);
+          rect.setAttribute("height", `${h}`);
+          rect.setAttribute("rx", "6");
+          rect.setAttribute("ry", "6");
+          rect.setAttribute("tabindex", "0");
+          rect.setAttribute("role", "img");
+          rect.setAttribute("aria-label", `${d.key}: ${formatNumber(d.mw)} MW`);
+          rect.addEventListener("mouseenter", () => {
+            $("note").textContent = `${options.notePrefix}: ${d.key} = ${formatNumber(d.mw)} MW`;
+          });
+          rect.addEventListener("focus", () => {
+            $("note").textContent = `${options.notePrefix}: ${d.key} = ${formatNumber(d.mw)} MW`;
+          });
+          barsGroup.appendChild(rect);
+
+          const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+          label.setAttribute("class", "axis");
+          label.setAttribute("text-anchor", "end");
+          label.setAttribute(
+            "transform",
+            `translate(${x + barWidth / 2}, ${innerHeight + 8}) rotate(-60)`
+          );
+          label.textContent = d.key.length > 22 ? `${d.key.slice(0, 22)}…` : d.key;
+          barsGroup.appendChild(label);
+        });
+
+        root.appendChild(barsGroup);
+      }
+
+      function applyFiltersAndRender() {
+        const cfg = DATASETS[state.activeDataset];
+        const mwKey = cfg.mwKey;
+        const dateKey = cfg.dateKey;
+
+        state.filtered = filterRows();
+
+        const byNaring = aggregate(state.filtered, (r) => r.naringstype, mwKey)
+          .sort((a, b) => b.mw - a.mw)
+          .slice(0, 16);
+
+        const byYear = aggregate(
+          state.filtered,
+          (r) => parseYear(r[dateKey]),
+          mwKey
+        )
+          .sort((a, b) => a.key.localeCompare(b.key, "no"));
+
+        drawBarChart("chart-naring", byNaring, {
+          limit: 16,
+          notePrefix: "Næringstype",
+        });
+
+        drawBarChart("chart-year", byYear, {
+          limit: byYear.length,
+          notePrefix: "År",
+        });
+
+        const totalMw = state.filtered.reduce((acc, r) => acc + (Number(r[mwKey]) || 0), 0);
+        $("note").textContent = `Utvalg: ${state.filtered.length} rader · Sum ${formatNumber(
+          totalMw
+        )} MW`;
+        $("updated").textContent = `Sist oppdatert: ${new Date().toLocaleString("no-NO")}`;
+      }
+
+      function wireEvents() {
+        $("dataset").addEventListener("change", (e) => loadDataset(e.target.value));
+        $("naringstype").addEventListener("change", applyFiltersAndRender);
+        $("search").addEventListener("input", applyFiltersAndRender);
+      }
+
+      wireEvents();
+      loadDataset(state.activeDataset);
+    </script>
+  </body>
+</html>
