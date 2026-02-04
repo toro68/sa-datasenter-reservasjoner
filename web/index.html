@@ -178,6 +178,12 @@
         cursor: default;
       }
 
+      .subtle {
+        color: var(--muted);
+        font-size: 11px;
+        margin-top: 6px;
+      }
+
       input[type="search"]::placeholder {
         color: rgba(232, 238, 252, 0.55);
       }
@@ -388,6 +394,11 @@
             <input id="search" type="search" placeholder="Søk…" />
           </div>
 
+          <div class="control">
+            <label for="stasjon">Stasjon</label>
+            <select id="stasjon"></select>
+          </div>
+
           <div class="check-grid" aria-label="Avhuking for filtre">
             <div class="check-card">
               <div class="title">
@@ -417,6 +428,7 @@
                 </span>
               </div>
               <div class="chips" id="chips-stasjon"></div>
+              <div class="subtle">Tips: dropdown «Stasjon» oppdateres av prisområde/næringstype.</div>
             </div>
           </div>
         </div>
@@ -616,6 +628,7 @@
             if (cb.checked) selectedSet.add(item);
             else selectedSet.delete(item);
             renderChips(targetId, items, selectedSet, options);
+            if (targetId === "chips-pris" || targetId === "chips-naring") updateStasjonOptions();
             applyFiltersAndRender();
           });
           const text = document.createElement("span");
@@ -635,6 +648,37 @@
         }
       }
 
+      function getAllowedPrisSet() {
+        if (state.multi.pris.size > 0) return new Set(state.multi.pris);
+        const val = $("prisomrade").value;
+        return val && val !== "__ALL__" ? new Set([val]) : null;
+      }
+
+      function getAllowedNaringSet() {
+        if (state.multi.naring.size > 0) return new Set(state.multi.naring);
+        const val = $("naringstype").value;
+        return val && val !== "__ALL__" ? new Set([val]) : null;
+      }
+
+      function updateStasjonOptions() {
+        const allowedPris = getAllowedPrisSet();
+        const allowedNaring = getAllowedNaringSet();
+        const opts = unique(
+          state.rows
+            .filter((row) => {
+              if (allowedPris && !allowedPris.has((row.prisomrade ?? "").toString().trim())) return false;
+              if (allowedNaring && !allowedNaring.has((row.naringstype ?? "").toString().trim())) return false;
+              return true;
+            })
+            .map((row) => row.stasjon)
+        );
+
+        const current = $("stasjon").value;
+        fillSelect($("stasjon"), opts, "Alle stasjoner");
+        if (opts.includes(current)) $("stasjon").value = current;
+        else $("stasjon").value = "__ALL__";
+      }
+
       async function loadDataset(key) {
         state.activeDataset = key;
         setError("");
@@ -651,6 +695,7 @@
           const stasjoner = unique(state.rows.map((r) => r.stasjon));
           fillSelect($("prisomrade"), pris, "Alle prisområder");
           fillSelect($("naringstype"), naring, "Alle næringstyper");
+          fillSelect($("stasjon"), stasjoner, "Alle stasjoner");
 
           state.multi.pris = new Set();
           state.multi.naring = new Set();
@@ -661,6 +706,9 @@
           $("search").value = "";
           $("prisomrade").value = "__ALL__";
           $("naringstype").value = "__ALL__";
+          $("stasjon").value = "__ALL__";
+
+          updateStasjonOptions();
 
           setStatus(`${DATASETS[key].label}: ${state.rows.length} rader`);
           applyFiltersAndRender();
@@ -684,6 +732,7 @@
       function filterRows() {
         const prisFilter = $("prisomrade").value;
         const naringFilter = $("naringstype").value;
+        const stasjonFilter = $("stasjon").value;
         const q = $("search").value.trim().toLowerCase();
         const prisMulti = state.multi.pris;
         const naringMulti = state.multi.naring;
@@ -700,6 +749,8 @@
 
           if (stasjonMulti.size > 0) {
             if (!stasjonMulti.has((row.stasjon ?? "").toString().trim())) return false;
+          } else if (stasjonFilter !== "__ALL__" && row.stasjon !== stasjonFilter) {
+            return false;
           }
 
           if (!rowMatchesSearch(row, q)) return false;
@@ -812,6 +863,7 @@
 
       function applyFiltersAndRender() {
         const mwKey = DATASETS[state.activeDataset].mwKey;
+        updateStasjonOptions();
         state.filtered = filterRows();
 
         renderKpis(state.filtered, mwKey);
@@ -837,6 +889,7 @@
         });
         $("prisomrade").addEventListener("change", applyFiltersAndRender);
         $("naringstype").addEventListener("change", applyFiltersAndRender);
+        $("stasjon").addEventListener("change", applyFiltersAndRender);
         $("sort").addEventListener("change", applyFiltersAndRender);
         $("search").addEventListener("input", () => {
           // små datasett: vi kan rendere på hver tast
@@ -870,6 +923,8 @@
             renderChips("chips-pris", pris, state.multi.pris, { limit: 14 });
             renderChips("chips-naring", naring, state.multi.naring, { limit: 14 });
             renderChips("chips-stasjon", stasjoner, state.multi.stasjon, { limit: 12 });
+            $("stasjon").value = "__ALL__";
+            updateStasjonOptions();
             applyFiltersAndRender();
           });
         });
