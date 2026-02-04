@@ -1,0 +1,177 @@
+saksnr,stasjon,omradeplan,prisomrade,statnetts_kunde,sluttkunde,naringstype,moden_bestilling_dato,kapasitet_ko_mw,onsket_tilknytning,kundens_referanse,kunde_og_tilknytningsansvarlig
+21/00093,Varangerbotn,Nord,NO4,Barents Nett As,Aker Solution og Varanger Kraft Hydrogen,Hydrogen/ammoniakk,2024-01-23,177.0,2030-01-30,,Lars Erik Johansen
+21/00098,Tveiten,Telemark og Vestfold,NO2,Lede AS,Green Mountain AS,Datasenter,2022-12-14,20.0,2027-03-30,,Geir Kåsa
+21/00283,Kårstø,Bergen og Haugalandet,NO2,Gassco AS,Gassco AS,Petroleum,2019-05-15,20.0,2023-06-30,,Magnus Tennøe
+21/00426,Arendal,Sør Rogaland og Agder,NO2,Glitre Nett AS,Biozin Holding AS,Industri,2025-05-29,65.0,2027-12-30,,Geir Kåsa
+21/00473,Marka,Helgeland og Salten,NO4,Linea AS,Gen2 energy,Hydrogen/ammoniakk,2022-10-30,500.0,2031-12-31,,Ingvild Grøtterud Birkeland
+21/00475,Marka,Helgeland og Salten,NO4,Linea AS,Alcoa Mosjøen,Industri,2018-02-04,17.0,2025-03-31,,Ingvild Grøtterud Birkeland
+22/00602,Rød,Telemark og Vestfold,NO2,WS Computing AS,WSC,Datasenter,2022-03-29,480.0,2025-03-31,,Geir Kåsa
+22/00618,Åfjord,Midt,NO3,Tensio AS,Gen2 energy,Hydrogen/ammoniakk,2022-04-11,150.0,2028-08-31,,Christopher Aarnseth Ruud
+22/00654,Vågåmo,Innlandet,NO3,Fjellnett As,Krefter AS,Datasenter,2022-05-24,10.0,2025-07-30,,Heidi Hellesvik Ringstad
+22/00660,Sildvik,Nord,NO4,Narvik Hydrogen AS,Narvik Hydrogen AS,Hydrogen/ammoniakk,2023-09-21,90.0,2027-04-01,,Lars Erik Johansen
+22/00715,Kolsvik,Helgeland og Salten,NO4,Linea AS,Aquaculture Innovation,Oppdrettsnæring,2022-04-27,25.0,2026-10-01,,Ingvild Grøtterud Birkeland
+22/00717,Nedre Røssåga,Helgeland og Salten,NO4,Linea AS,SCC Eiendom,Datasenter,2022-09-15,20.0,2024-12-31,,Ingvild Grøtterud Birkeland
+22/00747,Aura,Midt,NO3,Linja AS,Pega Nordic AS,Datasenter,2022-11-25,8.0,2023-01-30,,Christopher Aarnseth Ruud
+23/00809,Tveiten,Telemark og Vestfold,NO2,Lede AS,Slagentangen H2 og ammoniakk produksjon fase 2,Hydrogen/ammoniakk,2022-09-04,59.0,2026-06-29,,Geir Kåsa
+23/00814,Hof,Telemark og Vestfold,NO2,Lede AS,NOAH - Saltgjennvinning,Industri,2022-10-26,16.0,2029-03-30,,Geir Kåsa
+23/00826,Ørskog,Sogn og Sunnmøre,NO3,Linja AS,Norwegian Hydrogen AS,Hydrogen/ammoniakk,2023-01-25,250.0,2027-08-30,,Hans Olav Ween
+23/00863,Moskog,Sogn og Sunnmøre,NO3,Linja AS,North Ammonia AS,Hydrogen/ammoniakk,2024-06-06,200.0,2028-01-30,,Hans Olav Ween
+23/00918,Skaidi,Nord,NO4,Area Nett AS,Sky Consulting,Datasenter,2025-03-03,15.0,2025-12-30,,Lars Erik Johansen
+23/00931,Strinda,Midt,NO3,Tensio AS,Statkraft Varme,Annet forbruk,2023-04-04,10.1,2027-07-01,,Christopher Aarnseth Ruud
+23/00951,Hinnøy,Nord,NO4,Noranett AS,NorthSafe AS,Datasenter,2023-04-23,25.0,2023-09-13,,Lars Erik Johansen
+23/00977,Orkdal,Midt,NO3,Tensio AS,Ellinor Batteries AS,Batteriproduksjon,2023-05-16,100.0,2027-12-30,,Christopher Aarnseth Ruud
+23/01018,Viklandet,Midt,NO3,Linja AS,BIO3,Oppdrettsnæring,2023-05-30,40.0,2026-06-29,,Christopher Aarnseth Ruud
+23/01050,Fåberg,Innlandet,NO1,Vevig As,Glocal Green Innlandet AS,Hydrogen/ammoniakk,2024-05-30,125.0,2029-03-30,,Heidi Hellesvik Ringstad
+23/01051,Leirdøla,Sogn og Sunnmøre,NO5,Sygnir AS,Kitebrook Infrastructure AS,Datasenter,2025-04-26,100.0,2024-12-30,,Hans Olav Ween
+23/01063,Tegneby,"Oslo, Akershus og Østfold",NO1,Elvia As,SI OSL 04 AS,Datasenter,2023-07-13,44.0,2033-06-29,,Heidi Hellesvik Ringstad
+23/01086,Viklandet,Midt,NO3,Linja AS,Averøy Industripark AS,Oppdrettsnæring,2023-08-15,20.0,2028-01-30,,Christopher Aarnseth Ruud
+23/01095,Orkdal,Midt,NO3,Tensio AS,Orkland Næringspark AS,Industri,2023-08-18,5.1,2027-12-30,,Christopher Aarnseth Ruud
+23/01099,Moskog,Sogn og Sunnmøre,NO3,Linja AS,HTwo-Fuel AS,Hydrogen/ammoniakk,2023-08-28,20.0,2028-01-30,,Hans Olav Ween
+23/01121,Aura,Midt,NO3,Hydro Aluminium As,Hydro Aluminium AS,Industri,2022-10-25,85.0,2033-12-30,,Christopher Aarnseth Ruud
+23/01166,Hof,Telemark og Vestfold,NO2,Lede AS,Norgips Norge AS,Industri,2024-06-30,32.0,2027-12-30,,Geir Kåsa
+23/01219,Niingen,Nord,NO4,Noranett AS,Bogen Aqua,Oppdrettsnæring,2023-11-06,5.0,2028-11-30,,Lars Erik Johansen
+23/01237,Kvitnes,Nord,NO4,Noranett AS,Denvo Wolffish Norway AS,Oppdrettsnæring,2023-10-21,10.0,2031-11-30,,Lars Erik Johansen
+23/01317,Salten transformatorstasjon,Helgeland og Salten,NO4,Arva AS,Fjuel Bodø,Transport,2023-11-14,6.0,2028-03-30,,Ingvild Grøtterud Birkeland
+23/01318,Salten transformatorstasjon,Helgeland og Salten,NO4,Arva AS,NSG – Nye Sulitjelma Gruver,Industri,2023-11-16,10.0,2030-03-30,,Ingvild Grøtterud Birkeland
+23/01320,Salten transformatorstasjon,Helgeland og Salten,NO4,Arva AS,ISE Utvikling AS,Transport,2023-11-17,5.0,2025-12-31,,Ingvild Grøtterud Birkeland
+23/01324,Salten transformatorstasjon,Helgeland og Salten,NO4,Arva AS,Glomfjord Hydrogen AS (Fauske),Hydrogen/ammoniakk,2023-11-18,30.0,2028-03-30,,Ingvild Grøtterud Birkeland
+23/01326,Svartisen,Helgeland og Salten,NO4,Arva AS,Fish Farm International AS,Oppdrettsnæring,2023-11-21,6.0,2028-09-29,,Ingvild Grøtterud Birkeland
+23/01327,Svartisen,Helgeland og Salten,NO4,Arva AS,Neptun GGA,Hydrogen/ammoniakk,2023-11-22,30.0,2027-06-29,,Ingvild Grøtterud Birkeland
+23/01328,Svartisen,Helgeland og Salten,NO4,Arva AS,Lovundlaks AS,Oppdrettsnæring,2023-11-25,10.0,2027-09-29,,Ingvild Grøtterud Birkeland
+23/01351,Kristiansand,Sør Rogaland og Agder,NO2,Glitre Nett AS,Bulk,Datasenter,2023-10-02,25.0,2026-09-30,,Geir Kåsa
+23/01360,Mestervik,Nord,NO4,Arva AS,Kvitebjørn Varme AS,Industri,2023-11-15,13.0,2028-12-31,,Lars Erik Johansen
+23/01362,Mestervik,Nord,NO4,Arva AS,FJUEL TROMSØ AS,Transport,2023-11-23,7.0,2025-09-30,,Lars Erik Johansen
+23/01391,Nesflaten,Bergen og Haugalandet,NO2,Lyse Kraft DA,LYSE KRAFT DA,Annet forbruk,2023-11-06,115.0,2032-03-30,,Magnus Tennøe
+23/01393,Røldal,Bergen og Haugalandet,NO2,Lyse Kraft DA,LYSE KRAFT DA,Annet forbruk,2023-11-06,292.0,2032-03-30,,Magnus Tennøe
+23/01394,Novle,Bergen og Haugalandet,NO2,Lyse Kraft DA,LYSE KRAFT DA,Annet forbruk,2023-11-06,91.0,2032-03-30,,Magnus Tennøe
+24/01456,Moskog,Sogn og Sunnmøre,NO3,Linja AS,Skyss,Transport,2024-01-09,3.0,2027-10-28,,Hans Olav Ween
+24/01471,Mestervik,Nord,NO4,Arva AS,Lerøy,Oppdrettsnæring,2024-01-17,15.0,2030-06-02,,Lars Erik Johansen
+24/01473,Bjerkreim,Sør Rogaland og Agder,NO2,Lnett AS,WS COMPUTING AS,Datasenter,2024-03-06,360.0,2027-06-30,,Ingvild Grøtterud Birkeland
+24/01489,Ørskog,Sogn og Sunnmøre,NO3,Linja AS,Ocean Gem AS,Oppdrettsnæring,2024-01-29,21.0,2028-06-29,,Hans Olav Ween
+24/01502,Humleberget,Sør Rogaland og Agder,NO2,Lnett AS,Avinor,Transport,2024-05-14,9.6,2030-03-30,,Ingvild Grøtterud Birkeland
+24/01506,Åfjord,Midt,NO3,Tensio AS,Fossefall AS,Datasenter,2024-02-10,5.8,2025-12-31,,Christopher Aarnseth Ruud
+24/01507,Namsos,Midt,NO3,Tensio AS,ECO Seafood AS,Oppdrettsnæring,2023-11-16,40.6,2026-08-31,,Christopher Aarnseth Ruud
+24/01508,Tunnsjødal,Midt,NO4,Tensio AS,Exanorth AS,Datasenter,2024-01-08,6.0,2024-12-31,,Christopher Aarnseth Ruud
+24/01541,Salten transformatorstasjon,Helgeland og Salten,NO4,Arva AS,Arctic Sapphire,Industri,2024-02-28,53.0,2030-01-01,,Ingvild Grøtterud Birkeland
+24/01593,Fortun,Sogn og Sunnmøre,NO5,Linja AS,Hydro Aluminium AS,Industri,2022-04-25,40.0,2029-01-30,,Hans Olav Ween
+24/01595,Fortun,Sogn og Sunnmøre,NO5,Linja AS,Hydro Aluminium AS,Industri,2022-04-25,40.0,2027-12-30,,Hans Olav Ween
+24/01604,Klæbu,Midt,NO3,Tensio AS,TRØNDELAG FYLKESKOMMUNE,Transport,2024-02-27,25.0,2029-03-01,,Christopher Aarnseth Ruud
+24/01621,Klæbu,Midt,NO3,Tensio AS,STATKRAFT VARME AS,Industri,2024-04-09,12.0,2030-07-01,,Christopher Aarnseth Ruud
+24/01632,Lindås,Bergen og Haugalandet,NO5,BKK AS,Equinor ASA,Hydrogen/ammoniakk,2024-04-11,50.0,2030-10-01,,Magnus Tennøe
+24/01634,Snilldal,Midt,NO3,Tensio AS,BEWI EPS Norway AS,Oppdrettsnæring,2024-03-01,3.0,2024-12-31,,Christopher Aarnseth Ruud
+24/01643,Minne,Innlandet,NO1,Elvia As,STORMVIND AS,Annet forbruk,2024-12-05,20.0,2026-06-29,,Heidi Hellesvik Ringstad
+24/01646,Sogn,"Oslo, Akershus og Østfold",NO1,Elvia As,Nydalen Energi AS,Annet forbruk,2024-11-26,15.0,2025-09-29,,Heidi Hellesvik Ringstad
+24/01661,Eidum,Midt,NO3,Tensio AS,Verne Norway AS,Datasenter,2024-06-14,180.0,2027-12-31,,Christopher Aarnseth Ruud
+24/01670,Vang,Innlandet,NO1,Elvia As,STORMVIND AS,Annet forbruk,2024-08-18,20.0,2026-03-30,,Heidi Hellesvik Ringstad
+24/01708,Ålfoten,Sogn og Sunnmøre,NO3,Linja AS,NORDFJORD HAVN IKS,Transport,2024-06-04,12.0,2026-06-01,,Hans Olav Ween
+24/01678,Rød,Telemark og Vestfold,NO2,Lede AS,Color Line,Transport,2024-06-19,16.5,2030-03-30,,Geir Kåsa
+24/01718,Ørskog,Sogn og Sunnmøre,NO3,Linja AS,Pharma Marine AS,Industri,2024-06-14,7.0,2028-01-30,,Hans Olav Ween
+24/01723,Kjelland,Sør Rogaland og Agder,NO2,Lnett AS,Sirevåg Aqua AS,Oppdrettsnæring,2024-03-20,10.0,2028-08-01,,Ingvild Grøtterud Birkeland
+24/01726,Ulven,"Oslo, Akershus og Østfold",NO1,Elvia As,SI OSL 01 AS,Datasenter,2025-03-05,7.7,2027-09-29,,Heidi Hellesvik Ringstad
+24/01729,Rana,Helgeland og Salten,NO4,Linea AS,SMA Mineral,Industri,2024-07-04,385.0,2028-03-31,,Ingvild Grøtterud Birkeland
+24/01735,Tegneby,"Oslo, Akershus og Østfold",NO1,Elvia As,Nydalen Energi AS,Annet forbruk,2024-11-26,15.0,2025-12-31,,Heidi Hellesvik Ringstad
+24/01739,Surna,Midt,NO3,Mellom AS,Salfjord AS,Oppdrettsnæring,2024-06-05,55.0,2032-08-31,,Christopher Aarnseth Ruud
+24/01740,Viklandet,Midt,NO3,Linja AS,Green H AS,Hydrogen/ammoniakk,2024-05-25,50.0,2026-12-01,,Christopher Aarnseth Ruud
+24/01742,Fortun,Sogn og Sunnmøre,NO5,Linja AS,Hydro Aluminium AS,Industri,2024-09-03,56.0,2029-12-30,,Hans Olav Ween
+24/01758,Tveiten,Telemark og Vestfold,NO2,Lede AS,Green Mountain AS,Datasenter,2024-08-26,100.0,2027-09-29,,Geir Kåsa
+24/01761,Kirkenes,Nord,NO4,Barents Nett As,SYDVARANGER DRIFT AS,Industri,2024-09-11,35.0,2026-09-30,,Lars Erik Johansen
+24/01763,Vardal,Innlandet,NO1,Elvia As,Benteler Automotive Raufoss AS,Industri,2024-09-22,8.0,2028-03-30,,Heidi Hellesvik Ringstad
+24/01769,Vang,Innlandet,NO1,Elvia As,INDUSTRIGATA 22 AS,Datasenter,2024-09-06,99.0,2026-03-30,,Heidi Hellesvik Ringstad
+24/01783,Leirdøla,Sogn og Sunnmøre,NO5,Sygnir AS,Sogn Utvikling AS,Datasenter,2025-03-18,120.0,2028-03-30,,Hans Olav Ween
+24/01793,Ørsta,Sogn og Sunnmøre,NO3,Linja AS,Poly-Har AS,Industri,2024-05-29,6.4,2026-06-01,,Hans Olav Ween
+24/01798,Bærheim,Sør Rogaland og Agder,NO2,Lnett AS,ASP Data Center AS,Datasenter,2024-10-04,8.0,2025-07-01,,Ingvild Grøtterud Birkeland
+24/01801,Tegneby,"Oslo, Akershus og Østfold",NO1,WS Computing AS,WS COMPUTING AS,Datasenter,2024-11-04,480.0,2028-12-30,,Heidi Hellesvik Ringstad
+24/01806,Ringerike,Hallingdal og Ringerike,NO1,Glitre Nett AS,Green Mountain AS,Datasenter,2024-11-26,145.0,2031-09-29,,Heidi Hellesvik Ringstad
+24/01822,Brokke,Sør Rogaland og Agder,NO2,Lede AS,EdgeConneX MCN Norway AS,Datasenter,2025-02-10,225.0,2028-11-30,,Geir Kåsa
+24/01833,Kirkenes,Nord,NO4,Barents Nett As,69 Data Centre AS,Datasenter,2024-10-29,25.0,2028-07-02,,Lars Erik Johansen
+24/01849,Strinda,Midt,NO3,Tensio AS,Trondheim Havn,Transport,2024-10-10,12.0,2028-01-01,,Christopher Aarnseth Ruud
+24/01873,Vang,Innlandet,NO1,Elvia As,Carbon Centric AS,Industri,2024-10-21,14.0,2027-03-30,,Heidi Hellesvik Ringstad
+24/01901,Tegneby,"Oslo, Akershus og Østfold",NO1,Elvia As,Microsoft Datacenter Norway AS,Datasenter,2025-04-04,119.0,2028-12-30,,Heidi Hellesvik Ringstad
+24/01904,Frogner,"Oslo, Akershus og Østfold",NO1,Elvia As,COOP NORGE SA,Transport,2024-11-11,5.0,2025-09-29,,Heidi Hellesvik Ringstad
+24/01911,Rana,Helgeland og Salten,NO4,Linea AS,Nordland Data AS,Datasenter,2024-12-16,40.0,2027-01-01,,Ingvild Grøtterud Birkeland
+24/01915,Kilbotn,Nord,NO4,Noranett AS,Statkraft Varme,Industri,2024-12-19,15.0,2026-03-26,,Lars Erik Johansen
+25/01920,Minne,Innlandet,NO1,Elvia As,Arcem SK-DC1 AS,Datasenter,2024-11-10,75.0,2026-12-30,,Heidi Hellesvik Ringstad
+25/01925,Rana,Helgeland og Salten,NO4,Linea AS,Freyr / T1 Energy,Datasenter,2024-12-31,396.0,2026-03-31,,Ingvild Grøtterud Birkeland
+25/01938,Furuset,"Oslo, Akershus og Østfold",NO1,Elvia As,Bulk Data Centers OS-IX AS,Datasenter,2024-12-22,19.3,2026-06-29,,Heidi Hellesvik Ringstad
+25/01947,Balsfjord,Nord,NO4,Arva AS,Northern DC AS,Datasenter,2025-01-14,4.72,2029-05-01,,Lars Erik Johansen
+25/01950,Stølaheia,Sør Rogaland og Agder,NO2,Lnett AS,Stavangerregionen Havn IKS,Transport,2025-01-24,6.0,2026-03-01,,Ingvild Grøtterud Birkeland
+25/01967,Ålfoten,Sogn og Sunnmøre,NO3,Linja AS,Lefdal Mine Datasenter,Datasenter,2024-10-17,120.0,2034-12-28,,Hans Olav Ween
+25/01983,Frogner,"Oslo, Akershus og Østfold",NO1,Elvia As,Bulk Infrastructure Group AS,Datasenter,2024-12-19,88.0,2028-09-29,,Heidi Hellesvik Ringstad
+25/01992,Vardal,Innlandet,NO1,Elvia As,Eidsiva Bredbånd Gjøvik,Datasenter,2024-11-21,4.0,2026-03-30,,Heidi Hellesvik Ringstad
+25/02010,Tegneby,"Oslo, Akershus og Østfold",NO1,Elvia As,STATENS VEGVESEN,Transport,2024-12-03,10.0,2028-04-01,,Heidi Hellesvik Ringstad
+25/02012,Kilbotn,Nord,NO4,Noranett AS,Sunde AS,Industri,2025-02-02,4.0,2026-06-25,,Lars Erik Johansen
+25/02013,Skaidi,Nord,NO4,Area Nett AS,Nordkappregionen Havn Honningsvåg,Transport,2025-02-25,16.0,2026-06-25,,Lars Erik Johansen
+25/02014,Frogner,"Oslo, Akershus og Østfold",NO1,Elvia As,Ferskvarehuset AS,Annet forbruk,2025-02-09,4.0,2025-08-14,,Heidi Hellesvik Ringstad
+25/02030,Nes GE,Hallingdal og Ringerike,NO5,Glitre Nett AS,STORMVIND AS,Annet forbruk,2025-08-25,10.0,2026-09-29,,Heidi Hellesvik Ringstad
+25/02032,Ringerike,Hallingdal og Ringerike,NO1,Glitre Nett AS,Acrem DC 10 AS,Datasenter,2025-05-24,60.0,2029-06-29,,Heidi Hellesvik Ringstad
+25/02040,T35,Telemark og Vestfold,,Herøya Nett As,Nordic Electrofuel AS,Hydrogen/ammoniakk,2025-03-20,10.0,2028-12-30,,Geir Kåsa
+25/02042,Kjelland,Sør Rogaland og Agder,NO2,Lnett AS,Kaupanes Hydrogen AS,Hydrogen/ammoniakk,2025-02-20,13.0,2027-11-15,,Ingvild Grøtterud Birkeland
+25/02047,Ålfoten,Sogn og Sunnmøre,NO3,Linja AS,SMART SALMON FOODS AS,Oppdrettsnæring,2024-11-21,6.0,2028-04-01,,Hans Olav Ween
+25/02058,Balsfjord,Nord,NO4,Arva AS,Northern DC AS,Datasenter,2025-01-14,8.0,2032-02-27,,Lars Erik Johansen
+25/02062,Ringerike,Hallingdal og Ringerike,NO1,Glitre Nett AS,ASP Data Center AS,Datasenter,2025-02-12,35.0,2025-11-03,,Heidi Hellesvik Ringstad
+25/02068,Tveiten,Telemark og Vestfold,NO2,Lede AS,Bonum prosjekt 113 AS,Datasenter,2025-09-01,25.0,2029-06-29,,Geir Kåsa
+25/02070,Minne,Innlandet,NO1,Elvia As,NGB - Datasenter fase 2,Datasenter,2025-03-24,4.0,2025-12-30,,Heidi Hellesvik Ringstad
+25/02075,Skaidi,Nord,NO4,Area Nett AS,Pelagia,Datasenter,2025-04-09,10.0,2025-11-02,,Lars Erik Johansen
+25/02078,Salten transformatorstasjon,Helgeland og Salten,NO4,Arva AS,ISE Utvikling AS,Hydrogen/ammoniakk,2023-11-17,5.0,2026-12-31,,Ingvild Grøtterud Birkeland
+25/02082,Kristiansand,Sør Rogaland og Agder,NO2,Glitre Nett AS,Agder Hydrogen Hub,Hydrogen/ammoniakk,2024-11-21,40.0,2028-12-01,,Geir Kåsa
+25/02083,Kvitfossen,Nord,NO4,Elmea AS,Lofoten Salmon as,Oppdrettsnæring,2025-04-24,5.0,2028-09-28,,Lars Erik Johansen
+25/02087,Furuset,"Oslo, Akershus og Østfold",NO1,Elvia As,HAFSLUND CELSIO AS,Annet forbruk,2025-03-12,6.0,2027-11-30,,Heidi Hellesvik Ringstad
+25/02103,Nedre Røssåga,Helgeland og Salten,NO4,Linea AS,GreenH,Hydrogen/ammoniakk,2024-12-31,10.0,2034-09-29,,Ingvild Grøtterud Birkeland
+25/02112,Vang,Innlandet,NO1,Elvia As,Green Mountain Innlandet AS,Datasenter,2022-10-08,70.0,2027-12-30,,Heidi Hellesvik Ringstad
+25/02121,Bardufoss Transformatorstasjon,Nord,NO4,Arva AS,RÅ BIOPARK AS,Petroleum,2025-05-25,5.0,2027-08-31,,Lars Erik Johansen
+25/02124,Lio,Telemark og Vestfold,NO2,Statkraft Energi As,DataEnergy,Datasenter,2025-04-10,50.0,2026-03-31,,Geir Kåsa
+25/02130,Smestad,"Oslo, Akershus og Østfold",NO1,Elvia As,Oslo Kommune Vann- og avløpsetaten,Annet forbruk,2020-10-20,16.0,2026-04-01,,Heidi Hellesvik Ringstad
+25/02131,Furuset,"Oslo, Akershus og Østfold",NO1,Elvia As,Oslo Kommune Vann- og avløpsetaten,Annet forbruk,2020-10-20,4.0,2026-06-29,,Heidi Hellesvik Ringstad
+25/02153,Kvandal,Nord,NO4,Nordkraft Industrinett,Aaktik Digital AS,Datasenter,2025-06-12,200.0,2028-09-29,,Lars Erik Johansen
+25/02154,Kvandal,Nord,NO4,Nordkraft Industrinett,Aaktik Digital AS,Datasenter,2025-06-12,90.0,2029-09-29,,Lars Erik Johansen
+25/02160,Hasle,"Oslo, Akershus og Østfold",NO1,Elvia As,AtNorth AS,Datasenter,2025-06-09,60.0,2028-06-29,,Heidi Hellesvik Ringstad
+25/02175,Røykås,"Oslo, Akershus og Østfold",NO1,Elvia As,RUTER AS,Transport,2025-05-18,6.0,2028-06-29,,Heidi Hellesvik Ringstad
+25/02191,Hof,Telemark og Vestfold,NO2,Lede AS,Uncap AS,Annet forbruk,2025-07-03,30.0,2027-02-10,,Geir Kåsa
+25/02229,Kvitfossen,Nord,NO4,Elmea AS,Polarfeed AS,Industri,2025-07-16,15.0,2028-01-01,,Lars Erik Johansen
+25/02230,Vinnelys,Nord,NO4,Vissi AS,Mowi AS,Oppdrettsnæring,2025-07-23,4.8,2028-05-31,,Lars Erik Johansen
+25/02231,Follo,"Oslo, Akershus og Østfold",NO1,Elvia As,Bulk Data Centers AS,Datasenter,2025-11-27,80.0,2027-04-01,,Heidi Hellesvik Ringstad
+25/02232,Samnanger,Bergen og Haugalandet,NO5,BKK AS,Regn / Kitebrook,Datasenter,2024-11-18,100.0,2025-03-31,,Magnus Tennøe
+25/02281,Bardufoss Transformatorstasjon,Nord,NO4,Arva AS,FORSVARSBYGG,Annet forbruk,2025-05-20,4.0,2026-04-01,,Lars Erik Johansen
+25/02288,Salten transformatorstasjon,Helgeland og Salten,NO4,Arva AS,VARTDAL PLAST BODØ AS,Annet forbruk,2023-07-06,2.0,2026-01-01,,Ingvild Grøtterud Birkeland
+25/02300,Vardal,Innlandet,NO1,Elvia As,Nammo Raufoss AS,Industri,2024-10-30,1.0,2027-01-01,,Heidi Hellesvik Ringstad
+25/02301,Vardal,Innlandet,NO1,Elvia As,Nammo Raufoss AS,Industri,2024-10-30,1.0,2026-01-01,,Heidi Hellesvik Ringstad
+25/02337,Fana Transformatorstasjon,Bergen og Haugalandet,NO5,BKK AS,TINE SA,Transport,2025-08-25,1.6,2025-07-01,,Magnus Tennøe
+25/02347,Fana Transformatorstasjon,Bergen og Haugalandet,NO5,BKK AS,PLUG AS,Transport,2025-08-29,4.99,2026-07-01,,Magnus Tennøe
+25/02362,Nedre Røssåga,Helgeland og Salten,NO4,Linea AS,Aaktik Digital AS,Datasenter,2025-10-20,250.0,2028-07-01,,Ingvild Grøtterud Birkeland
+25/02369,Førre,Bergen og Haugalandet,NO2,Fagne AS,MOWI ASA,Oppdrettsnæring,2026-01-12,1.6,2026-07-01,,Magnus Tennøe
+25/02389,Arendal Industrinett,Sør Rogaland og Agder,NO2,Glitre Nett AS,Bulk Data Center AS,Datasenter,2025-09-04,150.0,2028-12-31,,Geir Kåsa
+25/02396,Husnes,Bergen og Haugalandet,NO2,Hydro Aluminium As,Hydro Aluminium AS,Industri,2025-05-28,33.0,2034-12-31,,Magnus Tennøe
+25/02516,Salten transformatorstasjon,Helgeland og Salten,NO4,Arva AS,FJUEL BODØ AS,Transport,2025-03-21,2.0,2026-04-01,,Ingvild Grøtterud Birkeland
+25/02523,Spanne,Bergen og Haugalandet,NO2,Fagne AS,AtNorth AS,Datasenter,2025-12-16,120.0,2028-03-31,,Magnus Tennøe
+25/02544,Stokmarknes,Nord,NO4,Noranett AS,AVINOR AS,Transport,2023-02-20,2.8,2030-10-01,,Lars Erik Johansen
+25/02545,Blåfalli,Bergen og Haugalandet,NO2,Fagne AS,ARCEM GO-DC2 AS,Datasenter,2026-01-22,40.0,2032-04-01,,Magnus Tennøe
+25/02563,Furuset,"Oslo, Akershus og Østfold",NO1,Elvia As,S Lauritzen & Co AS,Transport,2025-11-09,1.6,2025-10-01,,Heidi Hellesvik Ringstad
+25/02588,Stokmarknes,Nord,NO4,Noranett AS,STOKMARKNES MILJØHAVN AS,Annet forbruk,2024-02-29,3.0,2026-10-01,,Lars Erik Johansen
+25/02589,Stokmarknes,Nord,NO4,Noranett AS,STOKMARKNES MILJØHAVN AS,Annet forbruk,2024-02-29,4.0,2026-10-01,,Lars Erik Johansen
+25/02590,Stokmarknes,Nord,NO4,Noranett AS,NORDLAKS EIENDOM AS,Oppdrettsnæring,2024-02-09,5.6,2026-04-01,,Lars Erik Johansen
+25/02592,Melbu,Nord,NO4,Noranett AS,NORDLAND FYLKESKOMMUNE,Transport,2024-12-01,4.0,2027-10-01,,Lars Erik Johansen
+25/02625,Ballangen,Nord,NO4,Nordkraft Industrinett,Aker Nscale,Datasenter,2025-11-02,140.0,2027-10-31,,Lars Erik Johansen
+25/02674,Stokmarknes,Nord,NO4,Noranett AS,Gridcore Energy Storage AS,Batteriproduksjon,2025-10-22,15.0,2026-04-01,,Lars Erik Johansen
+25/02675,Stokmarknes,Nord,NO4,Noranett AS,Gridcore Energy Storage AS,Batteriproduksjon,2025-10-22,15.0,2026-04-01,,Lars Erik Johansen
+25/02680,Stølaheia,Sør Rogaland og Agder,NO2,Lnett AS,Uncap AS,Annet forbruk,2026-01-13,70.0,2029-01-01,,Ingvild Grøtterud Birkeland
+25/02721,Tunnsjødal,Midt,NO4,Tensio AS,JOMA GRUVER AS,Industri,2025-12-19,4.6,2028-01-01,,Christopher Aarnseth Ruud
+25/02724,Klæbu,Midt,NO3,Tensio AS,COOP NORGE SA,Transport,2025-09-12,1.4,2025-10-01,,Christopher Aarnseth Ruud
+25/02772,Hasle,"Oslo, Akershus og Østfold",NO1,Elvia As,Uncap AS,Annet forbruk,2026-01-22,90.0,2028-04-01,,Heidi Hellesvik Ringstad
+25/02803,Frogner,"Oslo, Akershus og Østfold",NO1,Elvia As,ADVANSIA AS,Annet forbruk,2026-01-26,1.55,2026-01-01,,Heidi Hellesvik Ringstad
+25/02856,Holen,Telemark og Vestfold,NO2,Otra Kraft DA,Otra Kraft DA,Annet forbruk,2024-12-12,1500.0,2025-12-30,,Geir Kåsa
+25/02857,Rjukan,Telemark og Vestfold,NO2,Hydro Energi As,Hydro Energi As,Annet forbruk,2025-03-27,750.0,2024-09-29,,Geir Kåsa
+25/02859,Rjukan,Telemark og Vestfold,NO2,Statkraft Energi As,STATKRAFT ENERGI AS,Annet forbruk,2025-03-10,900.0,2034-12-30,,Geir Kåsa
+25/02860,Rjukan,Telemark og Vestfold,NO2,Statkraft Energi As,STATKRAFT ENERGI AS,Annet forbruk,2025-10-29,140.0,2034-10-01,,Geir Kåsa
+25/02906,Bjerkreim,Sør Rogaland og Agder,NO2,Lnett AS,EWZ MÅKAKNUTEN VIND AS,Annet forbruk,2026-01-06,7.0,2026-01-01,,Ingvild Grøtterud Birkeland
+25/02922,Klæbu,Midt,NO3,Tensio AS,RIMOL MILJØPARK AS,Industri,2026-01-20,0.5,2026-01-01,,Christopher Aarnseth Ruud
+25/02934,Tveiten,Telemark og Vestfold,NO2,Lede AS,STORMVIND AS,Annet forbruk,2025-11-06,30.0,2029-09-29,,Geir Kåsa
+25/03004,Lindås,Bergen og Haugalandet,NO5,BKK AS,SKIPAVIKA NÆRINGSPARK AS,Datasenter,2026-01-09,45.0,2027-04-01,,Magnus Tennøe
+25/03026,Strinda,Midt,NO3,Tensio AS,STATKRAFT VARME AS,Annet forbruk,2026-01-13,8.0,2028-01-01,,Christopher Aarnseth Ruud
+26/03076,Hof,Telemark og Vestfold,NO2,Lede AS,Norgips Norge AS,Industri,2026-01-05,7.0,2026-12-31,,Geir Kåsa
+26/03112,Hof,Telemark og Vestfold,NO2,Lede AS,Uncap AS,Annet forbruk,2025-05-12,25.0,2027-06-30,,Geir Kåsa
+26/03114,Rød,Telemark og Vestfold,NO2,Lede AS,STORMVIND AS,Annet forbruk,2024-11-14,20.0,2026-03-07,,Geir Kåsa
+26/03116,Rød,Telemark og Vestfold,NO2,Lede AS,STORMVIND AS,Annet forbruk,2024-11-14,5.0,2025-12-31,,Geir Kåsa
+26/03117,Hof,Telemark og Vestfold,NO2,Lede AS,STORMVIND AS,Annet forbruk,2025-08-19,10.0,2027-03-30,,Geir Kåsa
+26/03165,Rød,Telemark og Vestfold,NO2,Lede AS,LØVENSKIOLD-FOSSUM KRAFT DRIFT AS,Datasenter,2026-01-21,96.0,2027-10-01,,Geir Kåsa
+26/03170,Tveiten,Telemark og Vestfold,NO2,Lede AS,MAGNA EIENDOM AS,Datasenter,2026-01-28,80.0,2031-01-01,,Geir Kåsa
+26/03374,Porsgrunn,Telemark og Vestfold,NO2,Lede AS,DRIV EIENDOMSFORVALTNING AS,Annet forbruk,2026-02-03,1.0,2026-04-01,,Geir Kåsa

@@ -1,0 +1,21 @@
+{
+  "rows": 189,
+  "total_mw": 8047.5,
+  "by_naringstype_mw": {
+    "Datasenter": 3480.0,
+    "Hydrogen/ammoniakk": 1702.5,
+    "Industri": 1107.5,
+    "Petroleum": 901.0,
+    "Oppdrettsnæring": 364.4,
+    "Transport": 288.8,
+    "Annet forbruk": 114.8,
+    "Batteriproduksjon": 88.5
+  },
+  "by_prisomrade_mw": {
+    "NO2": 2616.2000000000003,
+    "NO4": 2304.0000000000005,
+    "NO1": 1309.7,
+    "NO5": 877.0,
+    "NO3": 814.5999999999999
+  }
+}
