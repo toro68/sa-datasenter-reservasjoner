@@ -150,6 +150,12 @@
         gap: 8px;
       }
 
+      #chips-stasjon {
+        max-height: 240px;
+        overflow: auto;
+        padding-right: 4px;
+      }
+
       .chip {
         display: inline-flex;
         align-items: center;
@@ -342,14 +348,17 @@
     <header>
       <h1>Reservasjoner og kapasitetskø</h1>
       <p>
-        Filtrer på prisområde og næringstype. Tabellen og topplistene oppdateres i sanntid. Data
-        lastes fra <span class="pill">datasett_clean.json</span> og
+        Filtrer på prisområde og næringstype. Tabellen og topplistene lastes fra
+        <span class="pill">datasett_clean.json</span> og
         <span class="pill">kapasitetsko_clean.json</span>.
       </p>
       <div class="quick-links">
         <div class="hint">Snarvei:</div>
         <a class="pill pill-link" href="./no2.html" title="Graf-side for prisområde NO2">
           NO2 (grafer) →
+        </a>
+        <a class="pill pill-link" href="./no2-kart.html" title="Kart-side for prisområde NO2">
+          NO2 (kart) →
         </a>
       </div>
     </header>
@@ -614,7 +623,7 @@
       function renderChips(targetId, items, selectedSet, options) {
         const wrap = $(targetId);
         wrap.innerHTML = "";
-        const limit = options.limit ?? 14;
+        const limit = options.limit ?? items.length;
         const shown = items.slice(0, limit);
 
         for (const item of shown) {
@@ -677,6 +686,8 @@
         fillSelect($("stasjon"), opts, "Alle stasjoner");
         if (opts.includes(current)) $("stasjon").value = current;
         else $("stasjon").value = "__ALL__";
+
+        renderChips("chips-stasjon", opts, state.multi.stasjon, { limit: opts.length });
       }
 
       async function loadDataset(key) {
@@ -702,7 +713,7 @@
           state.multi.stasjon = new Set();
           renderChips("chips-pris", pris, state.multi.pris, { limit: 14 });
           renderChips("chips-naring", naring, state.multi.naring, { limit: 14 });
-          renderChips("chips-stasjon", stasjoner, state.multi.stasjon, { limit: 12 });
+          renderChips("chips-stasjon", stasjoner, state.multi.stasjon, { limit: stasjoner.length });
           $("search").value = "";
           $("prisomrade").value = "__ALL__";
           $("naringstype").value = "__ALL__";

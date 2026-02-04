@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NO2 – kart over stasjoner</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <style>
+      :root {
+        --bg: #0b1220;
+        --panel: #101a2e;
+        --text: #e8eefc;
+        --muted: #a8b4d6;
+        --border: rgba(232, 238, 252, 0.12);
+        --accent: #6aa2ff;
+        --danger: #ff6a7a;
+      }
+
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+          "Apple Color Emoji", "Segoe UI Emoji";
+        background: var(--bg);
+        color: var(--text);
+      }
+
+      header {
+        padding: 24px 20px 12px;
+      }
+
+      header h1 {
+        font-size: 18px;
+        margin: 0 0 6px;
+        letter-spacing: 0.2px;
+      }
+
+      header p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.35;
+        max-width: 1100px;
+      }
+
+      header a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+
+      header a:hover {
+        text-decoration: underline;
+      }
+
+      main {
+        padding: 0 20px 26px;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        overflow: hidden;
+      }
+
+      .panel-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px;
+        border-bottom: 1px solid var(--border);
+        gap: 10px;
+      }
+
+      .panel-header h2 {
+        margin: 0;
+        font-size: 14px;
+        letter-spacing: 0.25px;
+      }
+
+      .controls {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(180px, 1fr));
+        gap: 10px;
+        padding: 14px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .control {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      label {
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      select,
+      input[type="search"] {
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--text);
+        padding: 10px 10px;
+        outline: none;
+      }
+
+      #map {
+        height: 560px;
+      }
+
+      .kpis {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(160px, 1fr));
+        gap: 10px;
+        padding: 14px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .kpi {
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 10px;
+        background: rgba(0, 0, 0, 0.12);
+      }
+
+      .kpi .label {
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .kpi .value {
+        font-size: 18px;
+        margin-top: 6px;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 16px;
+        padding: 14px;
+      }
+
+      .list {
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 10px;
+        background: rgba(0, 0, 0, 0.12);
+        max-height: 560px;
+        overflow: auto;
+      }
+
+      .list h3 {
+        margin: 0 0 8px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .list ul {
+        margin: 0;
+        padding-left: 18px;
+        font-size: 12px;
+        color: var(--text);
+      }
+
+      .footer-note {
+        padding: 10px 14px 14px;
+        color: var(--muted);
+        font-size: 12px;
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        flex-wrap: wrap;
+        border-top: 1px solid var(--border);
+      }
+
+      .error {
+        padding: 12px 14px;
+        color: var(--danger);
+        border-top: 1px solid var(--border);
+        background: rgba(255, 0, 0, 0.05);
+        font-size: 12px;
+        display: none;
+      }
+
+      @media (max-width: 1000px) {
+        .controls {
+          grid-template-columns: 1fr;
+        }
+
+        .kpis {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>NO2 – kart over stasjoner</h1>
+      <p>
+        Kart over stasjoner i prisområde <strong>NO2</strong> basert på NVE Nettanlegg (transformatorstasjoner).
+        Tilbake til <a href="./index.html">oversikten</a>.
+      </p>
+    </header>
+
+    <main>
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Filtre</h2>
+          <div class="pill" id="status">Laster…</div>
+        </div>
+
+        <div class="controls">
+          <div class="control">
+            <label for="dataset">Datasett</label>
+            <select id="dataset">
+              <option value="reservasjoner" selected>Reservasjoner</option>
+              <option value="kapasitetsko">Kapasitetskø</option>
+            </select>
+          </div>
+
+          <div class="control">
+            <label for="naringstype">Næringstype</label>
+            <select id="naringstype"></select>
+          </div>
+
+          <div class="control">
+            <label for="search">Søk (stasjon/sluttkunde)</label>
+            <input id="search" type="search" placeholder="Søk…" />
+          </div>
+        </div>
+
+        <div class="kpis">
+          <div class="kpi">
+            <div class="label">Rader i NO2</div>
+            <div class="value" id="kpi-rows">–</div>
+          </div>
+          <div class="kpi">
+            <div class="label">Sum MW</div>
+            <div class="value" id="kpi-mw">–</div>
+          </div>
+          <div class="kpi">
+            <div class="label">Matchede stasjoner</div>
+            <div class="value" id="kpi-match">–</div>
+          </div>
+          <div class="kpi">
+            <div class="label">Uten koordinat</div>
+            <div class="value" id="kpi-missing">–</div>
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="panel" id="map"></div>
+          <div class="list">
+            <h3>Stasjoner uten koordinat (topp 40)</h3>
+            <ul id="missing-list"></ul>
+          </div>
+        </div>
+
+        <div class="footer-note">
+          <div>
+            Kartgrunnlag: NVE Nettanlegg (Transformatorstasjoner) via ArcGIS REST. Basemap © OpenStreetMap.
+          </div>
+          <div class="muted" id="updated">–</div>
+        </div>
+
+        <div class="error" id="error"></div>
+      </section>
+    </main>
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script>
+      const PRICE_AREA = "NO2";
+      const DATASETS = {
+        reservasjoner: {
+          label: "Reservasjoner",
+          url: "../datasett_clean.json",
+          mwKey: "reservert_mw",
+        },
+        kapasitetsko: {
+          label: "Kapasitetskø",
+          url: "../kapasitetsko_clean.json",
+          mwKey: "kapasitet_ko_mw",
+        },
+      };
+
+      const $ = (id) => document.getElementById(id);
+
+      const state = {
+        activeDataset: "reservasjoner",
+        rows: [],
+        geo: null,
+        markers: null,
+      };
+
+      function formatNumber(value) {
+        if (value === null || value === undefined || Number.isNaN(value)) return "–";
+        return new Intl.NumberFormat("no-NO", {
+          maximumFractionDigits: 2,
+        }).format(value);
+      }
+
+      function setError(message) {
+        const el = $("error");
+        if (!message) {
+          el.style.display = "none";
+          el.textContent = "";
+          return;
+        }
+        el.style.display = "block";
+        el.textContent = message;
+      }
+
+      function setStatus(text) {
+        $("status").textContent = text;
+      }
+
+      function normalizeName(value) {
+        return (value || "")
+          .toString()
+          .toLowerCase()
+          .replace(/[^a-z0-9æøå]+/g, " ")
+          .replace(/\s+/g, " ")
+          .trim();
+      }
+
+      function unique(values) {
+        const set = new Set();
+        for (const v of values) {
+          const val = (v ?? "").toString().trim();
+          if (val) set.add(val);
+        }
+        return [...set].sort((a, b) => a.localeCompare(b, "no"));
+      }
+
+      function fillSelect(selectEl, items, allLabel) {
+        selectEl.innerHTML = "";
+        const all = document.createElement("option");
+        all.value = "__ALL__";
+        all.textContent = allLabel;
+        selectEl.appendChild(all);
+        for (const item of items) {
+          const opt = document.createElement("option");
+          opt.value = item;
+          opt.textContent = item;
+          selectEl.appendChild(opt);
+        }
+      }
+
+      function filterRows() {
+        const q = $("search").value.trim().toLowerCase();
+        const naring = $("naringstype").value;
+
+        return state.rows.filter((row) => {
+          if ((row.prisomrade || "").trim() !== PRICE_AREA) return false;
+          if (naring !== "__ALL__" && row.naringstype !== naring) return false;
+          if (!q) return true;
+          const hay = [row.stasjon, row.sluttkunde, row.statnetts_kunde]
+            .filter(Boolean)
+            .join(" ")
+            .toLowerCase();
+          return hay.includes(q);
+        });
+      }
+
+      function buildStationTotals(rows, mwKey) {
+        const totals = new Map();
+        for (const row of rows) {
+          const key = normalizeName(row.stasjon);
+          if (!key) continue;
+          const mw = Number(row[mwKey] || 0);
+          totals.set(key, (totals.get(key) || 0) + (Number.isFinite(mw) ? mw : 0));
+        }
+        return totals;
+      }
+
+      function updateMissingList(missing) {
+        const list = $("missing-list");
+        list.innerHTML = "";
+        missing.slice(0, 40).forEach((name) => {
+          const li = document.createElement("li");
+          li.textContent = name;
+          list.appendChild(li);
+        });
+      }
+
+      function renderMap(rows) {
+        if (!state.geo) return;
+        const mwKey = DATASETS[state.activeDataset].mwKey;
+        const stationTotals = buildStationTotals(rows, mwKey);
+        const stationNames = new Set([...stationTotals.keys()]);
+
+        const features = state.geo.features || [];
+        const matched = [];
+        const unmatchedStations = new Set(stationNames);
+
+        features.forEach((feature) => {
+          const name = feature?.properties?.navn || "";
+          const normalized = normalizeName(name);
+          if (stationNames.has(normalized)) {
+            matched.push({ feature, normalized });
+            unmatchedStations.delete(normalized);
+          }
+        });
+
+        if (state.markers) {
+          state.markers.clearLayers();
+        } else {
+          state.markers = L.layerGroup().addTo(map);
+        }
+
+        matched.forEach(({ feature, normalized }) => {
+          const mw = stationTotals.get(normalized) || 0;
+          const coords = feature.geometry.coordinates;
+          const radius = Math.max(5, Math.min(28, 4 + Math.sqrt(mw)));
+          const marker = L.circleMarker([coords[1], coords[0]], {
+            radius,
+            color: "#6aa2ff",
+            weight: 1,
+            fillColor: "#6aa2ff",
+            fillOpacity: 0.7,
+          });
+          const name = feature?.properties?.navn || "Ukjent";
+          marker.bindPopup(`<strong>${name}</strong><br/>${formatNumber(mw)} MW`);
+          state.markers.addLayer(marker);
+        });
+
+        $("kpi-match").textContent = formatNumber(matched.length);
+        $("kpi-missing").textContent = formatNumber(unmatchedStations.size);
+        updateMissingList([...unmatchedStations].sort((a, b) => a.localeCompare(b, "no")));
+      }
+
+      function updateKpis(rows) {
+        const mwKey = DATASETS[state.activeDataset].mwKey;
+        const totalMw = rows.reduce((acc, r) => acc + (Number(r[mwKey]) || 0), 0);
+        $("kpi-rows").textContent = formatNumber(rows.length);
+        $("kpi-mw").textContent = formatNumber(totalMw);
+        $("updated").textContent = `Sist oppdatert: ${new Date().toLocaleString("no-NO")}`;
+      }
+
+      async function loadData() {
+        setError("");
+        setStatus("Laster…");
+        try {
+          const dataset = DATASETS[state.activeDataset];
+          const [rows, geo] = await Promise.all([
+            fetch(dataset.url, { cache: "no-store" }).then((r) => r.json()),
+            fetch("../kartgrunnlag.geojson", { cache: "no-store" }).then((r) => r.json()),
+          ]);
+
+          state.rows = rows;
+          state.geo = geo;
+
+          const naring = unique(rows.filter((r) => r.prisomrade === PRICE_AREA).map((r) => r.naringstype));
+          fillSelect($("naringstype"), naring, "Alle næringstyper");
+
+          setStatus(`${dataset.label}: ${rows.length} rader`);
+          applyFiltersAndRender();
+        } catch (err) {
+          setStatus("Feil");
+          setError(`Klarte ikke å laste data. (${err.message})`);
+        }
+      }
+
+      function applyFiltersAndRender() {
+        const filtered = filterRows();
+        updateKpis(filtered);
+        renderMap(filtered);
+      }
+
+      $("dataset").addEventListener("change", (e) => {
+        state.activeDataset = e.target.value;
+        loadData();
+      });
+      $("naringstype").addEventListener("change", applyFiltersAndRender);
+      $("search").addEventListener("input", applyFiltersAndRender);
+
+      const map = L.map("map", { scrollWheelZoom: false }).setView([59.6, 7.2], 6);
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "&copy; OpenStreetMap-bidragsytere",
+        maxZoom: 18,
+      }).addTo(map);
+
+      loadData();
+    </script>
+  </body>
+</html>
