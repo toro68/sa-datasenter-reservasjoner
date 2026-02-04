@@ -91,6 +91,30 @@
         font-size: 11px;
       }
 
+      .pill-accent {
+        color: var(--text);
+        border-color: rgba(106, 162, 255, 0.55);
+        background: rgba(106, 162, 255, 0.12);
+      }
+
+      .pill-accent:hover {
+        background: rgba(106, 162, 255, 0.2);
+      }
+
+      .quick-links {
+        margin-top: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .quick-links .hint {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
       .controls {
         display: grid;
         grid-template-columns: repeat(2, minmax(180px, 1fr)) minmax(160px, 1fr);
@@ -157,6 +181,10 @@
         fill: var(--muted);
       }
 
+      .axis .tick {
+        font-variant-numeric: tabular-nums;
+      }
+
       .grid line {
         stroke: var(--grid);
         stroke-width: 1;
@@ -168,6 +196,12 @@
 
       .bar:hover {
         fill: rgba(106, 162, 255, 1);
+      }
+
+      .bar.selected {
+        outline: none;
+        stroke: rgba(255, 255, 255, 0.6);
+        stroke-width: 2;
       }
 
       .footer-note {
@@ -201,11 +235,17 @@
     <header>
       <h1>NO2 – reservasjoner og kapasitetskø</h1>
       <p>
-        Fokuserer på prisområde <span class="pill">NO2</span> og viser grafer for fordeling og
-        utvikling per år. Data lastes fra <span class="pill">datasett_clean.json</span> og
-        <span class="pill">kapasitetsko_clean.json</span>. Tilbake til
-        <a href="./index.html">oversikten</a>.
+        Fokuserer på prisområde <span class="pill pill-accent">NO2</span> og viser grafer for fordeling og
+        utvikling per år.
       </p>
+      <div class="quick-links">
+        <div class="hint">Snarveier:</div>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap">
+          <a class="pill pill-accent" href="./index.html">← Oversikten</a>
+          <a class="pill" href="#chart-naring">Næringstype</a>
+          <a class="pill" href="#chart-year">År</a>
+        </div>
+      </div>
     </header>
 
     <main>
@@ -232,6 +272,13 @@
           <div class="control">
             <label for="search">Søk (stasjon, kunde, sluttkunde)</label>
             <input id="search" type="search" placeholder="Søk…" />
+          </div>
+
+          <div class="control">
+            <label>&nbsp;</label>
+            <button id="reset" type="button" class="pill" style="justify-content: center; cursor: pointer">
+              Nullstill filtre
+            </button>
           </div>
         </div>
 
@@ -428,6 +475,7 @@
           label.setAttribute("x", "-8");
           label.setAttribute("y", `${y + 3}`);
           label.setAttribute("text-anchor", "end");
+          label.setAttribute("aria-hidden", "true");
           const value = (maxValue * i) / yTicks;
           label.textContent = formatNumber(value);
           tickGroup.appendChild(label);
@@ -436,6 +484,11 @@
 
         const barsGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
         barsGroup.setAttribute("transform", `translate(${margin.left},${margin.top})`);
+
+        function selectBar(rect) {
+          barsGroup.querySelectorAll("rect.bar.selected").forEach((el) => el.classList.remove("selected"));
+          rect.classList.add("selected");
+        }
 
         data.forEach((d, idx) => {
           const x = idx * (barWidth + barGap);
@@ -452,11 +505,20 @@
           rect.setAttribute("tabindex", "0");
           rect.setAttribute("role", "img");
           rect.setAttribute("aria-label", `${d.key}: ${formatNumber(d.mw)} MW`);
-          rect.addEventListener("mouseenter", () => {
+          const updateNote = () => {
             $("note").textContent = `${options.notePrefix}: ${d.key} = ${formatNumber(d.mw)} MW`;
+          };
+          rect.addEventListener("mouseenter", () => {
+            selectBar(rect);
+            updateNote();
           });
           rect.addEventListener("focus", () => {
-            $("note").textContent = `${options.notePrefix}: ${d.key} = ${formatNumber(d.mw)} MW`;
+            selectBar(rect);
+            updateNote();
+          });
+          rect.addEventListener("click", () => {
+            selectBar(rect);
+            updateNote();
           });
           barsGroup.appendChild(rect);
 
@@ -467,6 +529,7 @@
             "transform",
             `translate(${x + barWidth / 2}, ${innerHeight + 8}) rotate(-60)`
           );
+          label.setAttribute("aria-hidden", "true");
           label.textContent = d.key.length > 22 ? `${d.key.slice(0, 22)}…` : d.key;
           barsGroup.appendChild(label);
         });
@@ -513,6 +576,11 @@
         $("dataset").addEventListener("change", (e) => loadDataset(e.target.value));
         $("naringstype").addEventListener("change", applyFiltersAndRender);
         $("search").addEventListener("input", applyFiltersAndRender);
+        $("reset").addEventListener("click", () => {
+          $("search").value = "";
+          $("naringstype").value = "__ALL__";
+          applyFiltersAndRender();
+        });
       }
 
       wireEvents();

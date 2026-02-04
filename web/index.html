@@ -176,6 +176,34 @@
         font-size: 11px;
       }
 
+      a.pill {
+        text-decoration: none;
+      }
+
+      .pill-link {
+        color: var(--text);
+        border-color: rgba(106, 162, 255, 0.55);
+        background: rgba(106, 162, 255, 0.12);
+      }
+
+      .pill-link:hover {
+        background: rgba(106, 162, 255, 0.2);
+      }
+
+      .quick-links {
+        margin-top: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .quick-links .hint {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
       .error {
         padding: 12px 14px;
         color: var(--danger);
@@ -218,9 +246,12 @@
         lastes fra <span class="pill">datasett_clean.json</span> og
         <span class="pill">kapasitetsko_clean.json</span>.
       </p>
-      <p style="margin-top: 10px">
-        Egen NO2-side med grafer: <a class="pill" href="./no2.html">Åpne NO2</a>
-      </p>
+      <div class="quick-links">
+        <div class="hint">Snarvei:</div>
+        <a class="pill pill-link" href="./no2.html" title="Graf-side for prisområde NO2">
+          NO2 (grafer) →
+        </a>
+      </div>
     </header>
 
     <main>
