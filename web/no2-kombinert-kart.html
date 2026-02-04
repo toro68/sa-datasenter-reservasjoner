@@ -92,26 +92,6 @@
         border-bottom: 1px solid var(--border);
       }
 
-      .legend {
-        display: inline-flex;
-        gap: 12px;
-        align-items: center;
-        font-size: 12px;
-        color: var(--muted);
-      }
-
-      .legend-item {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-      }
-
-      .legend-swatch {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        display: inline-block;
-      }
 
       .control {
         display: flex;
@@ -241,15 +221,7 @@
       <section class="panel">
         <div class="panel-header">
           <h2>Filtre</h2>
-          <div class="legend">
-            <span class="legend-item">
-              <span class="legend-swatch" style="background:#2ecc71"></span> Reservasjoner
-            </span>
-            <span class="legend-item">
-              <span class="legend-swatch" style="background:#ff6a7a"></span> Kapasitetskø
-            </span>
-            <span class="pill" id="status">Laster…</span>
-          </div>
+          <div class="pill" id="status">Laster…</div>
         </div>
 
         <div class="controls">
@@ -328,8 +300,6 @@
         rows: [],
         geo: null,
         markers: null,
-        markersReservasjoner: null,
-        markersKapasitetsko: null,
       };
 
       function formatNumber(value) {
@@ -445,49 +415,31 @@
           }
         });
 
-        if (state.markersReservasjoner) state.markersReservasjoner.clearLayers();
-        if (state.markersKapasitetsko) state.markersKapasitetsko.clearLayers();
-        if (!state.markersReservasjoner) state.markersReservasjoner = L.layerGroup().addTo(map);
-        if (!state.markersKapasitetsko) state.markersKapasitetsko = L.layerGroup().addTo(map);
+        if (state.markers) {
+          state.markers.clearLayers();
+        } else {
+          state.markers = L.layerGroup().addTo(map);
+        }
 
         matched.forEach(({ feature, normalized }) => {
           const entry = stationTotals.get(normalized) || { total: 0, reservasjoner: 0, ko: 0 };
+          if (entry.total <= 0) return;
           const coords = feature.geometry.coordinates;
           const name = feature?.properties?.navn || "Ukjent";
-
-          if (entry.reservasjoner > 0) {
-            const radius = Math.max(5, Math.min(26, 3 + Math.sqrt(entry.reservasjoner)));
-            const marker = L.circleMarker([coords[1], coords[0]], {
-              radius,
-              color: "#2ecc71",
-              weight: 1,
-              fillColor: "#2ecc71",
-              fillOpacity: 0.65,
-            });
-            marker.bindPopup(
-              `<strong>${name}</strong><br/>Reservasjoner: ${formatNumber(entry.reservasjoner)} MW<br/>Kapasitetskø: ${formatNumber(
-                entry.ko
-              )} MW`
-            );
-            state.markersReservasjoner.addLayer(marker);
-          }
-
-          if (entry.ko > 0) {
-            const radius = Math.max(5, Math.min(26, 3 + Math.sqrt(entry.ko)));
-            const marker = L.circleMarker([coords[1], coords[0]], {
-              radius,
-              color: "#ff6a7a",
-              weight: 1,
-              fillColor: "#ff6a7a",
-              fillOpacity: 0.65,
-            });
-            marker.bindPopup(
-              `<strong>${name}</strong><br/>Reservasjoner: ${formatNumber(entry.reservasjoner)} MW<br/>Kapasitetskø: ${formatNumber(
-                entry.ko
-              )} MW`
-            );
-            state.markersKapasitetsko.addLayer(marker);
-          }
+          const radius = Math.max(5, Math.min(28, 4 + Math.sqrt(entry.total)));
+          const marker = L.circleMarker([coords[1], coords[0]], {
+            radius,
+            color: "#6aa2ff",
+            weight: 1,
+            fillColor: "#6aa2ff",
+            fillOpacity: 0.7,
+          });
+          marker.bindPopup(
+            `<strong>${name}</strong><br/>Totalt: ${formatNumber(entry.total)} MW<br/>Reservasjoner: ${formatNumber(
+              entry.reservasjoner
+            )} MW<br/>Kapasitetskø: ${formatNumber(entry.ko)} MW`
+          );
+          state.markers.addLayer(marker);
         });
 
         $("kpi-match").textContent = formatNumber(matched.length);
