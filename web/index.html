@@ -135,6 +135,20 @@
         padding: 14px;
       }
 
+      th.sortable {
+        cursor: pointer;
+        user-select: none;
+        white-space: nowrap;
+      }
+
+      th.sortable:hover {
+        color: var(--text);
+      }
+
+      th.sortable[data-active="true"] {
+        color: var(--text);
+      }
+
       table {
         width: 100%;
         border-collapse: collapse;
@@ -324,10 +338,28 @@
               <thead>
                 <tr>
                   <th>Saksnr</th>
-                  <th>Stasjon</th>
-                  <th>Prisområde</th>
-                  <th>Næringstype</th>
-                  <th class="muted">MW</th>
+                  <th class="sortable" data-sort-key="stasjon" id="sort-stasjon" title="Sorter på stasjon">
+                    Stasjon <span class="muted" id="sort-ind-stasjon"></span>
+                  </th>
+                  <th
+                    class="sortable"
+                    data-sort-key="prisomrade"
+                    id="sort-prisomrade"
+                    title="Sorter på prisområde"
+                  >
+                    Prisområde <span class="muted" id="sort-ind-prisomrade"></span>
+                  </th>
+                  <th
+                    class="sortable"
+                    data-sort-key="naringstype"
+                    id="sort-naringstype"
+                    title="Sorter på næringstype"
+                  >
+                    Næringstype <span class="muted" id="sort-ind-naringstype"></span>
+                  </th>
+                  <th class="sortable muted" data-sort-key="mw" id="sort-mw" title="Sorter på MW">
+                    MW <span class="muted" id="sort-ind-mw"></span>
+                  </th>
                 </tr>
               </thead>
               <tbody id="rows"></tbody>
@@ -402,6 +434,7 @@
         activeDataset: "reservasjoner",
         rows: [],
         filtered: [],
+        tableSort: { key: "mw", dir: "desc" },
       };
 
       function formatNumber(value) {
@@ -520,6 +553,36 @@
         return copy;
       }
 
+      function getTableSortValue(row, mwKey, key) {
+        if (key === "mw") return Number(row[mwKey]) || 0;
+        return (row[key] ?? "").toString().trim();
+      }
+
+      function sortTableRows(rows, mwKey) {
+        const { key, dir } = state.tableSort;
+        const copy = rows.slice();
+        const sign = dir === "asc" ? 1 : -1;
+        copy.sort((a, b) => {
+          const av = getTableSortValue(a, mwKey, key);
+          const bv = getTableSortValue(b, mwKey, key);
+          if (typeof av === "number" && typeof bv === "number") return (av - bv) * sign;
+          return av.toString().localeCompare(bv.toString(), "no") * sign;
+        });
+        return copy;
+      }
+
+      function renderSortIndicators() {
+        const keys = ["stasjon", "prisomrade", "naringstype", "mw"];
+        for (const key of keys) {
+          const th = document.querySelector(`th[data-sort-key="${key}"]`);
+          const ind = $(`sort-ind-${key}`);
+          if (!th || !ind) continue;
+          const active = state.tableSort.key === key;
+          th.dataset.active = active ? "true" : "false";
+          ind.textContent = active ? (state.tableSort.dir === "asc" ? "▲" : "▼") : "";
+        }
+      }
+
       function renderKpis(rows, mwKey) {
         const totalMw = rows.reduce((acc, r) => acc + (Number(r[mwKey]) || 0), 0);
         const stasjoner = new Set(rows.map((r) => (r.stasjon || "").trim()).filter(Boolean));
@@ -533,7 +596,8 @@
       function renderRows(rows, mwKey) {
         const tbody = $("rows");
         tbody.innerHTML = "";
-        const slice = rows.slice(0, 200);
+        const sorted = sortTableRows(rows, mwKey);
+        const slice = sorted.slice(0, 200);
         for (const r of slice) {
           const tr = document.createElement("tr");
           tr.innerHTML = `
@@ -545,7 +609,8 @@
           `;
           tbody.appendChild(tr);
         }
-        $("rows-note").textContent = `Viser ${slice.length} av ${rows.length}`;
+        renderSortIndicators();
+        $("rows-note").textContent = `Viser ${slice.length} av ${rows.length} (sortert på ${state.tableSort.key})`;
       }
 
       function renderToplist(tbodyId, items, limit = 12) {
@@ -602,6 +667,20 @@
         $("search").addEventListener("input", () => {
           // små datasett: vi kan rendere på hver tast
           applyFiltersAndRender();
+        });
+
+        document.querySelectorAll("th.sortable").forEach((th) => {
+          th.addEventListener("click", () => {
+            const key = th.dataset.sortKey;
+            if (!key) return;
+            if (state.tableSort.key === key) {
+              state.tableSort.dir = state.tableSort.dir === "asc" ? "desc" : "asc";
+            } else {
+              state.tableSort.key = key;
+              state.tableSort.dir = key === "mw" ? "desc" : "asc";
+            }
+            applyFiltersAndRender();
+          });
         });
       }
 
