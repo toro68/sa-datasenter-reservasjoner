@@ -98,6 +98,86 @@
         outline: none;
       }
 
+      .check-grid {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(180px, 1fr));
+        gap: 10px;
+      }
+
+      .check-card {
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: rgba(0, 0, 0, 0.12);
+        padding: 10px;
+        min-height: 42px;
+      }
+
+      .check-card .title {
+        font-size: 12px;
+        color: var(--muted);
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+      }
+
+      .check-card .actions {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+
+      .check-card button {
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--muted);
+        border-radius: 10px;
+        padding: 6px 10px;
+        cursor: pointer;
+        font-size: 12px;
+      }
+
+      .check-card button:hover {
+        color: var(--text);
+      }
+
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.03);
+        cursor: pointer;
+        user-select: none;
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .chip input {
+        accent-color: var(--accent);
+      }
+
+      .chip.active {
+        color: var(--text);
+        border-color: rgba(106, 162, 255, 0.55);
+        background: rgba(106, 162, 255, 0.12);
+      }
+
+      .chip.more {
+        cursor: default;
+      }
+
       input[type="search"]::placeholder {
         color: rgba(232, 238, 252, 0.55);
       }
@@ -307,6 +387,38 @@
             <label for="search">Søk (stasjon, kunde, sluttkunde)</label>
             <input id="search" type="search" placeholder="Søk…" />
           </div>
+
+          <div class="check-grid" aria-label="Avhuking for filtre">
+            <div class="check-card">
+              <div class="title">
+                <span>Prisområder (avhuking)</span>
+                <span class="actions">
+                  <button type="button" data-clear="pris">Nullstill</button>
+                </span>
+              </div>
+              <div class="chips" id="chips-pris"></div>
+            </div>
+
+            <div class="check-card">
+              <div class="title">
+                <span>Næringstyper (avhuking)</span>
+                <span class="actions">
+                  <button type="button" data-clear="naring">Nullstill</button>
+                </span>
+              </div>
+              <div class="chips" id="chips-naring"></div>
+            </div>
+
+            <div class="check-card">
+              <div class="title">
+                <span>Stasjoner (avhuking)</span>
+                <span class="actions">
+                  <button type="button" data-clear="stasjon">Nullstill</button>
+                </span>
+              </div>
+              <div class="chips" id="chips-stasjon"></div>
+            </div>
+          </div>
         </div>
 
         <div class="kpis">
@@ -435,6 +547,11 @@
         rows: [],
         filtered: [],
         tableSort: { key: "mw", dir: "desc" },
+        multi: {
+          pris: new Set(),
+          naring: new Set(),
+          stasjon: new Set(),
+        },
       };
 
       function formatNumber(value) {
@@ -482,6 +599,42 @@
         }
       }
 
+      function renderChips(targetId, items, selectedSet, options) {
+        const wrap = $(targetId);
+        wrap.innerHTML = "";
+        const limit = options.limit ?? 14;
+        const shown = items.slice(0, limit);
+
+        for (const item of shown) {
+          const label = document.createElement("label");
+          label.className = "chip";
+          const cb = document.createElement("input");
+          cb.type = "checkbox";
+          cb.value = item;
+          cb.checked = selectedSet.has(item);
+          cb.addEventListener("change", () => {
+            if (cb.checked) selectedSet.add(item);
+            else selectedSet.delete(item);
+            renderChips(targetId, items, selectedSet, options);
+            applyFiltersAndRender();
+          });
+          const text = document.createElement("span");
+          text.textContent = item;
+          label.appendChild(cb);
+          label.appendChild(text);
+          if (cb.checked) label.classList.add("active");
+          wrap.appendChild(label);
+        }
+
+        const hidden = items.length - shown.length;
+        if (hidden > 0) {
+          const more = document.createElement("div");
+          more.className = "chip more";
+          more.textContent = `+ ${hidden} til… (bruk søk eller dropdown)`;
+          wrap.appendChild(more);
+        }
+      }
+
       async function loadDataset(key) {
         state.activeDataset = key;
         setError("");
@@ -495,8 +648,16 @@
 
           const pris = unique(state.rows.map((r) => r.prisomrade));
           const naring = unique(state.rows.map((r) => r.naringstype));
+          const stasjoner = unique(state.rows.map((r) => r.stasjon));
           fillSelect($("prisomrade"), pris, "Alle prisområder");
           fillSelect($("naringstype"), naring, "Alle næringstyper");
+
+          state.multi.pris = new Set();
+          state.multi.naring = new Set();
+          state.multi.stasjon = new Set();
+          renderChips("chips-pris", pris, state.multi.pris, { limit: 14 });
+          renderChips("chips-naring", naring, state.multi.naring, { limit: 14 });
+          renderChips("chips-stasjon", stasjoner, state.multi.stasjon, { limit: 12 });
           $("search").value = "";
           $("prisomrade").value = "__ALL__";
           $("naringstype").value = "__ALL__";
@@ -524,10 +685,23 @@
         const prisFilter = $("prisomrade").value;
         const naringFilter = $("naringstype").value;
         const q = $("search").value.trim().toLowerCase();
+        const prisMulti = state.multi.pris;
+        const naringMulti = state.multi.naring;
+        const stasjonMulti = state.multi.stasjon;
 
         return state.rows.filter((row) => {
-          if (prisFilter !== "__ALL__" && row.prisomrade !== prisFilter) return false;
-          if (naringFilter !== "__ALL__" && row.naringstype !== naringFilter) return false;
+          if (prisMulti.size > 0) {
+            if (!prisMulti.has((row.prisomrade ?? "").toString().trim())) return false;
+          } else if (prisFilter !== "__ALL__" && row.prisomrade !== prisFilter) return false;
+
+          if (naringMulti.size > 0) {
+            if (!naringMulti.has((row.naringstype ?? "").toString().trim())) return false;
+          } else if (naringFilter !== "__ALL__" && row.naringstype !== naringFilter) return false;
+
+          if (stasjonMulti.size > 0) {
+            if (!stasjonMulti.has((row.stasjon ?? "").toString().trim())) return false;
+          }
+
           if (!rowMatchesSearch(row, q)) return false;
           return true;
         });
@@ -679,6 +853,23 @@
               state.tableSort.key = key;
               state.tableSort.dir = key === "mw" ? "desc" : "asc";
             }
+            applyFiltersAndRender();
+          });
+        });
+
+        document.querySelectorAll("button[data-clear]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const key = btn.dataset.clear;
+            if (key === "pris") state.multi.pris.clear();
+            else if (key === "naring") state.multi.naring.clear();
+            else if (key === "stasjon") state.multi.stasjon.clear();
+
+            const pris = unique(state.rows.map((r) => r.prisomrade));
+            const naring = unique(state.rows.map((r) => r.naringstype));
+            const stasjoner = unique(state.rows.map((r) => r.stasjon));
+            renderChips("chips-pris", pris, state.multi.pris, { limit: 14 });
+            renderChips("chips-naring", naring, state.multi.naring, { limit: 14 });
+            renderChips("chips-stasjon", stasjoner, state.multi.stasjon, { limit: 12 });
             applyFiltersAndRender();
           });
         });
