@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NO2 – kart (inline)</title>
+    <style>
+      /* Aftenbladet blå profil (inline-safe) */
+      :root {
+        --ab-blue: #0f2d52;
+        --ab-blue-dark: #0a1e36;
+        --ab-dark: #1a1a1a;
+        --ab-grey: #555;
+        --ab-light: #f5f7fa;
+        --ab-border: #d8e1eb;
+        --ab-highlight: #dbe8f8;
+        --ab-danger: #b00020;
+      }
+
+      /* Scoped wrapper for trygg inline-publisering */
+      #ab-no2-kart {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+        color: var(--ab-dark);
+        background: white;
+      }
+
+      #ab-no2-kart * {
+        box-sizing: border-box;
+      }
+
+      #ab-no2-kart .card {
+        border: 1px solid var(--ab-border);
+        border-radius: 12px;
+        overflow: hidden;
+        background: white;
+      }
+
+      #ab-no2-kart header {
+        padding: 14px 14px 8px;
+        background: var(--ab-light);
+        border-bottom: 1px solid var(--ab-border);
+      }
+
+      #ab-no2-kart h1 {
+        margin: 0;
+        font-size: 16px;
+        line-height: 1.25;
+        color: var(--ab-blue);
+      }
+
+      #ab-no2-kart p {
+        margin: 8px 0 0;
+        font-size: 13px;
+        line-height: 1.35;
+        color: var(--ab-grey);
+      }
+
+      #ab-no2-kart .controls {
+        padding: 12px 14px;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      #ab-no2-kart label {
+        font-size: 12px;
+        color: var(--ab-grey);
+        display: block;
+        margin-bottom: 6px;
+      }
+
+      #ab-no2-kart select {
+        width: 100%;
+        padding: 10px 10px;
+        border-radius: 10px;
+        border: 1px solid var(--ab-border);
+        background: white;
+        color: var(--ab-dark);
+      }
+
+      #ab-no2-kart .stage {
+        position: relative;
+        padding: 0;
+      }
+
+      #ab-no2-kart svg {
+        width: 100%;
+        height: auto;
+        display: block;
+        background: #fff;
+      }
+
+      /* Tooltip / popup */
+      #ab-no2-kart .popup {
+        position: absolute;
+        left: 12px;
+        bottom: 12px;
+        right: 12px;
+        border: 1px solid var(--ab-border);
+        border-radius: 12px;
+        background: white;
+        padding: 10px 12px;
+        box-shadow: 0 8px 28px rgba(15, 45, 82, 0.12);
+        display: none;
+      }
+
+      #ab-no2-kart .popup[aria-hidden="false"] {
+        display: block;
+      }
+
+      #ab-no2-kart .popup .title {
+        font-weight: 700;
+        color: var(--ab-blue);
+        font-size: 13px;
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      #ab-no2-kart .popup .body {
+        margin-top: 8px;
+        font-size: 13px;
+        color: var(--ab-dark);
+        line-height: 1.35;
+      }
+
+      #ab-no2-kart .pill {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 999px;
+        border: 1px solid var(--ab-border);
+        background: var(--ab-light);
+        font-size: 12px;
+        color: var(--ab-grey);
+        white-space: nowrap;
+      }
+
+      #ab-no2-kart .legend {
+        padding: 10px 14px 14px;
+        border-top: 1px solid var(--ab-border);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      #ab-no2-kart .legend .items {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+      }
+
+      #ab-no2-kart .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        display: inline-block;
+        margin-right: 6px;
+      }
+
+      #ab-no2-kart .dot.res {
+        background: rgba(15, 45, 82, 0.85);
+      }
+
+      #ab-no2-kart .dot.ko {
+        background: rgba(0, 120, 212, 0.85);
+      }
+
+      #ab-no2-kart .dot.total {
+        background: rgba(15, 45, 82, 0.25);
+        outline: 1px solid rgba(15, 45, 82, 0.35);
+      }
+
+      @media (min-width: 768px) {
+        #ab-no2-kart .controls {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        #ab-no2-kart .popup {
+          left: auto;
+          right: 12px;
+          bottom: 12px;
+          width: min(360px, calc(100% - 24px));
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        #ab-no2-kart * {
+          scroll-behavior: auto !important;
+          transition: none !important;
+          animation: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <article id="ab-no2-kart">
+      <div class="card">
+        <header>
+          <h1>NO2: Reservasjoner og kapasitetskø – kart</h1>
+          <p>
+            Klikk på en stasjon for popup med total MW, og fordeling mellom
+            <span class="pill">reservasjoner</span> og <span class="pill">kapasitetskø</span>.
+          </p>
+        </header>
+
+        <div class="controls" aria-label="Filtre">
+          <div>
+            <label for="ab-dataset">Datasett</label>
+            <select id="ab-dataset">
+              <option value="both" selected>Reservasjoner + kapasitetskø</option>
+              <option value="reservasjoner">Kun reservasjoner</option>
+              <option value="kapasitetsko">Kun kapasitetskø</option>
+            </select>
+          </div>
+          <div>
+            <label for="ab-naring">Næringstype</label>
+            <select id="ab-naring"></select>
+          </div>
+        </div>
+
+        <div class="stage">
+          <svg
+            id="ab-map"
+            viewBox="0 0 900 520"
+            role="img"
+            aria-label="Kart over stasjoner (NO2)"
+          >
+            <rect x="0" y="0" width="900" height="520" fill="#ffffff" />
+            <g id="ab-points"></g>
+          </svg>
+
+          <section class="popup" id="ab-popup" aria-hidden="true">
+            <div class="title">
+              <span id="ab-popup-title">Stasjon</span>
+              <span class="pill" id="ab-popup-total">Total</span>
+            </div>
+            <div class="body" id="ab-popup-body">–</div>
+          </section>
+        </div>
+
+        <div class="legend" aria-label="Forklaring">
+          <div class="items">
+            <span><span class="dot total"></span>Total (størrelse)</span>
+            <span><span class="dot res"></span>Reservasjoner</span>
+            <span><span class="dot ko"></span>Kapasitetskø</span>
+          </div>
+          <div class="pill" id="ab-status">Laster…</div>
+        </div>
+      </div>
+    </article>
+
+    <script>
+      // Inline-widget: ingen eksterne avhengigheter.
+      const PRICE_AREA = "NO2";
+      const $ = (id) => document.getElementById(id);
+
+      const STATE = {
+        geo: null,
+        reservasjoner: [],
+        kapasitetsko: [],
+        byStation: new Map(),
+      };
+
+      function formatNumber(value) {
+        if (value === null || value === undefined || Number.isNaN(value)) return "–";
+        return new Intl.NumberFormat("no-NO", { maximumFractionDigits: 2 }).format(value);
+      }
+
+      function parseMw(value) {
+        const n = Number(value);
+        return Number.isFinite(n) ? n : 0;
+      }
+
+      function unique(values) {
+        const set = new Set();
+        for (const v of values) {
+          const val = (v ?? "").toString().trim();
+          if (val) set.add(val);
+        }
+        return [...set].sort((a, b) => a.localeCompare(b, "no"));
+      }
+
+      // En veldig enkel projeksjon (equirectangular) for å få punkter inn i en fast viewBox.
+      function makeProjector(points, width, height, padding) {
+        const lons = points.map((p) => p.lon);
+        const lats = points.map((p) => p.lat);
+        const minLon = Math.min(...lons);
+        const maxLon = Math.max(...lons);
+        const minLat = Math.min(...lats);
+        const maxLat = Math.max(...lats);
+
+        const innerW = width - padding * 2;
+        const innerH = height - padding * 2;
+
+        return (lat, lon) => {
+          const x = padding + ((lon - minLon) / (maxLon - minLon || 1)) * innerW;
+          // lat: høyere nord = større lat, men y nedover i svg
+          const y = padding + (1 - (lat - minLat) / (maxLat - minLat || 1)) * innerH;
+          return { x, y };
+        };
+      }
+
+      function radiusScale(value, maxValue) {
+        // Area-skalering: r ~ sqrt(value)
+        const maxR = 34;
+        const minR = 6;
+        const t = Math.sqrt(Math.max(0, value) / Math.max(1, maxValue));
+        return minR + t * (maxR - minR);
+      }
+
+      function setPopup(stationAgg) {
+        const popup = $("ab-popup");
+        if (!stationAgg) {
+          popup.setAttribute("aria-hidden", "true");
+          return;
+        }
+
+        const total = stationAgg.resMw + stationAgg.koMw;
+        const resPct = total > 0 ? (stationAgg.resMw / total) * 100 : 0;
+        const koPct = total > 0 ? (stationAgg.koMw / total) * 100 : 0;
+
+        $("ab-popup-title").textContent = stationAgg.station;
+        $("ab-popup-total").textContent = `Total: ${formatNumber(total)} MW`;
+        $("ab-popup-body").innerHTML = `
+          <div><strong>Reservasjoner:</strong> ${formatNumber(stationAgg.resMw)} MW (${formatNumber(resPct)} %)</div>
+          <div><strong>Kapasitetskø:</strong> ${formatNumber(stationAgg.koMw)} MW (${formatNumber(koPct)} %)</div>
+          <div style="margin-top:8px;color:#555;font-size:12px">Prisområde: NO2${stationAgg.naring ? ` · Næringstype: ${stationAgg.naring}` : ""}</div>
+        `;
+        popup.setAttribute("aria-hidden", "false");
+      }
+
+      function buildAggregates() {
+        const byStation = new Map();
+
+        for (const row of STATE.reservasjoner) {
+          if ((row.prisomrade || "").trim() !== PRICE_AREA) continue;
+          const station = (row.stasjon || "").trim();
+          if (!station) continue;
+          const mw = parseMw(row.reservert_mw);
+          const naring = (row.naringstype || "").trim();
+          const prev = byStation.get(station) || { station, resMw: 0, koMw: 0, naring: naring || "" };
+          prev.resMw += mw;
+          if (!prev.naring && naring) prev.naring = naring;
+          byStation.set(station, prev);
+        }
+
+        for (const row of STATE.kapasitetsko) {
+          if ((row.prisomrade || "").trim() !== PRICE_AREA) continue;
+          const station = (row.stasjon || "").trim();
+          if (!station) continue;
+          const mw = parseMw(row.kapasitet_ko_mw);
+          const naring = (row.naringstype || "").trim();
+          const prev = byStation.get(station) || { station, resMw: 0, koMw: 0, naring: naring || "" };
+          prev.koMw += mw;
+          if (!prev.naring && naring) prev.naring = naring;
+          byStation.set(station, prev);
+        }
+
+        STATE.byStation = byStation;
+      }
+
+      function findGeoPointForStation(station) {
+        if (!STATE.geo) return null;
+        const exact = STATE.geo.features.find((f) => (f.properties?.navn || "").trim() === station);
+        if (exact) return exact;
+
+        // Enkel fallback for noen kjente navnevarianter i datasettet.
+        const fallback = {
+          "Alta tra": "Alta",
+          "Salten transformatorstasjon": "Salten",
+          "Fana Transformatorstasjon": "Fana",
+          "Bardufoss Transformatorstasjon": "Bardufoss",
+          "Nes GE": "Nes",
+          Niingen: "NIINGEN",
+        };
+        const alt = fallback[station];
+        if (alt) {
+          return STATE.geo.features.find((f) => (f.properties?.navn || "").trim() === alt) || null;
+        }
+        return null;
+      }
+
+      function getCurrentFilters() {
+        return {
+          dataset: $("ab-dataset").value,
+          naring: $("ab-naring").value,
+        };
+      }
+
+      function applyFilters(aggs) {
+        const { dataset, naring } = getCurrentFilters();
+        return aggs.filter((a) => {
+          if (naring !== "__ALL__" && (a.naring || "") !== naring) return false;
+          if (dataset === "reservasjoner" && a.resMw <= 0) return false;
+          if (dataset === "kapasitetsko" && a.koMw <= 0) return false;
+          return true;
+        });
+      }
+
+      function render() {
+        const pointsGroup = $("ab-points");
+        pointsGroup.innerHTML = "";
+        setPopup(null);
+
+        const allAggs = [...STATE.byStation.values()];
+        const aggs = applyFilters(allAggs);
+
+        // Bygg liste av geo-punkter for projeksjon.
+        const projected = [];
+        const missing = [];
+        for (const a of aggs) {
+          const feature = findGeoPointForStation(a.station);
+          if (!feature) {
+            missing.push(a.station);
+            continue;
+          }
+          const [lon, lat] = feature.geometry.coordinates;
+          projected.push({ ...a, lat, lon });
+        }
+
+        if (projected.length === 0) {
+          $("ab-status").textContent = "Ingen punkter å vise";
+          return;
+        }
+
+        const projector = makeProjector(projected, 900, 520, 26);
+        const maxTotal = Math.max(1, ...projected.map((p) => p.resMw + p.koMw));
+
+        // Tegn største først for å få mindre punkter "på toppen".
+        projected
+          .slice()
+          .sort((a, b) => (b.resMw + b.koMw) - (a.resMw + a.koMw))
+          .forEach((p) => {
+            const { x, y } = projector(p.lat, p.lon);
+            const total = p.resMw + p.koMw;
+            const rTotal = radiusScale(total, maxTotal);
+            const shareRes = total > 0 ? p.resMw / total : 0;
+
+            // Total (bakgrunn)
+            const cTotal = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            cTotal.setAttribute("cx", x);
+            cTotal.setAttribute("cy", y);
+            cTotal.setAttribute("r", rTotal);
+            cTotal.setAttribute("fill", "rgba(15,45,82,0.20)");
+            cTotal.setAttribute("stroke", "rgba(15,45,82,0.35)");
+            cTotal.setAttribute("stroke-width", "1");
+            pointsGroup.appendChild(cTotal);
+
+            // Reservasjoner (fylt sirkel)
+            const cRes = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            cRes.setAttribute("cx", x);
+            cRes.setAttribute("cy", y);
+            cRes.setAttribute("r", Math.max(2, rTotal * Math.sqrt(shareRes)));
+            cRes.setAttribute("fill", "rgba(15,45,82,0.85)");
+            pointsGroup.appendChild(cRes);
+
+            // Kapasitetskø (ring som antyder resten)
+            const cKo = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            cKo.setAttribute("cx", x);
+            cKo.setAttribute("cy", y);
+            cKo.setAttribute("r", rTotal);
+            cKo.setAttribute("fill", "none");
+            cKo.setAttribute("stroke", "rgba(0,120,212,0.85)");
+            cKo.setAttribute("stroke-width", "2");
+            cKo.setAttribute("stroke-dasharray", `${Math.max(1, (1 - shareRes) * 2 * Math.PI * rTotal)} ${2 * Math.PI * rTotal}`);
+            cKo.setAttribute("stroke-linecap", "round");
+            pointsGroup.appendChild(cKo);
+
+            // Interaktiv "hit area"
+            const hit = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            hit.setAttribute("cx", x);
+            hit.setAttribute("cy", y);
+            hit.setAttribute("r", Math.max(10, rTotal));
+            hit.setAttribute("fill", "transparent");
+            hit.setAttribute("tabindex", "0");
+            hit.setAttribute("role", "button");
+            hit.setAttribute(
+              "aria-label",
+              `${p.station}. Total ${formatNumber(total)} MW. Reservasjoner ${formatNumber(p.resMw)} MW. Kapasitetskø ${formatNumber(p.koMw)} MW.`
+            );
+            const onPick = () => setPopup(p);
+            hit.addEventListener("click", onPick);
+            hit.addEventListener("focus", onPick);
+            hit.addEventListener("mouseenter", onPick);
+            pointsGroup.appendChild(hit);
+          });
+
+        const msgMissing = missing.length ? ` · Mangler kartpunkt for ${missing.length} stasjoner` : "";
+        $("ab-status").textContent = `Viser ${projected.length} stasjoner${msgMissing}`;
+      }
+
+      async function loadAll() {
+        $("ab-status").textContent = "Laster…";
+        try {
+          const [geoRes, resRes, koRes] = await Promise.all([
+            fetch("../kartgrunnlag.geojson", { cache: "no-store" }),
+            fetch("../datasett_clean.json", { cache: "no-store" }),
+            fetch("../kapasitetsko_clean.json", { cache: "no-store" }),
+          ]);
+          if (!geoRes.ok) throw new Error(`kartgrunnlag.geojson: ${geoRes.status}`);
+          if (!resRes.ok) throw new Error(`datasett_clean.json: ${resRes.status}`);
+          if (!koRes.ok) throw new Error(`kapasitetsko_clean.json: ${koRes.status}`);
+
+          STATE.geo = await geoRes.json();
+          STATE.reservasjoner = await resRes.json();
+          STATE.kapasitetsko = await koRes.json();
+
+          buildAggregates();
+
+          const narings = unique(
+            [...STATE.byStation.values()]
+              .filter((a) => (a.resMw + a.koMw) > 0)
+              .map((a) => a.naring)
+          ).filter(Boolean);
+          const naringSel = $("ab-naring");
+          naringSel.innerHTML = "";
+          const optAll = document.createElement("option");
+          optAll.value = "__ALL__";
+          optAll.textContent = "Alle næringstyper";
+          naringSel.appendChild(optAll);
+          for (const n of narings) {
+            const opt = document.createElement("option");
+            opt.value = n;
+            opt.textContent = n;
+            naringSel.appendChild(opt);
+          }
+
+          $("ab-dataset").addEventListener("change", render);
+          $("ab-naring").addEventListener("change", render);
+          render();
+        } catch (err) {
+          $("ab-status").textContent = "Feil";
+          const popup = $("ab-popup");
+          $("ab-popup-title").textContent = "Kunne ikke laste";
+          $("ab-popup-total").textContent = "";
+          $("ab-popup-body").textContent = err.message;
+          popup.setAttribute("aria-hidden", "false");
+        }
+      }
+
+      loadAll();
+    </script>
+  </body>
+</html>
+

@@ -295,13 +295,10 @@
 
       const $ = (id) => document.getElementById(id);
 
-      const DEFAULT_PRICE_AREA = "NO2";
-
       const state = {
         rows: [],
         geo: null,
         markers: null,
-        activePriceArea: DEFAULT_PRICE_AREA,
       };
 
       function formatNumber(value) {
@@ -361,10 +358,7 @@
       function filterRows() {
         const q = $("search").value.trim().toLowerCase();
         const naring = $("naringstype").value;
-        const priceArea = state.activePriceArea;
-
         return state.rows.filter((row) => {
-          if ((row.prisomrade || "").trim() !== priceArea) return false;
           if (naring !== "__ALL__" && row.naringstype !== naring) return false;
           if (!q) return true;
           const hay = [row.stasjon, row.sluttkunde, row.statnetts_kunde]
@@ -570,23 +564,11 @@
         renderMap(filtered);
       }
 
-      // Let URL choose price area: ?prisomrade=NO1
-      function initPriceAreaFromUrl() {
-        const params = new URLSearchParams(window.location.search);
-        const value = (params.get("prisomrade") || "").trim().toUpperCase();
-        if (["NO1", "NO2", "NO3", "NO4", "NO5"].includes(value)) {
-          state.activePriceArea = value;
-        }
-      }
-
       $("naringstype").addEventListener("change", applyFiltersAndRender);
       $("search").addEventListener("input", applyFiltersAndRender);
 
-      initPriceAreaFromUrl();
-
-      // Update header text to reflect chosen price area
-      document.querySelector("header h1").textContent = `${state.activePriceArea} – kart (reservasjoner + kapasitetskø)`;
-      document.querySelector("header p").innerHTML = `Samlet kart for prisområde <strong>${state.activePriceArea}</strong>. Summen per stasjon er reservasjoner + kapasitetskø. Tilbake til <a href="./index.html">oversikten</a>.`;
+      document.querySelector("header h1").textContent = "Norge – kart (reservasjoner + kapasitetskø)";
+      document.querySelector("header p").innerHTML = `Samlet kart for hele landet. Summen per stasjon er reservasjoner + kapasitetskø. Tilbake til <a href="./index.html">oversikten</a>.`;
 
       const map = L.map("map", { scrollWheelZoom: false }).setView([64.4, 12.0], 5);
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {

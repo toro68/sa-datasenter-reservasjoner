@@ -1,0 +1,27 @@
+{
+  "files.eol": "\n",
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "editor.formatOnSave": false,
+  "files.associations": {
+    "*.geojson": "json"
+  },
+  "[json]": {
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2
+  },
+  "[jsonc]": {
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2
+  },
+  "[html]": {
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2
+  },
+  "[css]": {
+    "editor.tabSize": 2
+  },
+  "[python]": {
+    "editor.tabSize": 4
+  }
+}
