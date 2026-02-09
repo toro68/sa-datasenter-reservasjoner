@@ -259,6 +259,10 @@
         fill: #6aa2ff;
       }
 
+      .chart-bar {
+        fill: rgba(106, 162, 255, 0.65);
+      }
+
       .chart-label {
         font-size: 11px;
         fill: rgba(232, 238, 252, 0.7);
@@ -523,15 +527,67 @@
         </div>
 
         <div class="panel-header" style="border-bottom: none; padding: 0 14px 10px">
-          <h2>Kumulativt antall datasentre</h2>
-          <div class="pill" id="chart-note">–</div>
+          <h2>Kumulativt antall datasentre per år</h2>
+          <div class="pill" id="chart-note-reservasjon">–</div>
         </div>
         <div class="chart-wrap">
-          <svg id="chart-datasenter" viewBox="0 0 640 220" role="img" aria-label="Kumulativt antall datasentre per år"></svg>
+          <svg
+            id="chart-datasenter-reservasjon"
+            viewBox="0 0 640 220"
+            role="img"
+            aria-label="Kumulativt antall datasentre per år (reservasjoner)"
+          ></svg>
         </div>
-        <div class="chart-note">
-          Basert på reserveringsdato (reservert_dato) og næringstype «Datasenter».
+        <div class="chart-note">Reservasjoner basert på reserveringsdato (reservert_dato).</div>
+
+        <div class="chart-note" style="display: flex; justify-content: space-between; gap: 12px">
+          <span>Filter for alle grafene:</span>
+          <label style="display: inline-flex; align-items: center; gap: 8px">
+            <input id="chart-only-datasenter" type="checkbox" checked /> Kun datasenter
+          </label>
         </div>
+
+        <div class="panel-header" style="border-bottom: none; padding: 0 14px 10px">
+          <h2>Kumulativt antall datasentre i kapasitetskø</h2>
+          <div class="pill" id="chart-note-ko">–</div>
+        </div>
+        <div class="chart-wrap">
+          <svg
+            id="chart-datasenter-ko"
+            viewBox="0 0 640 220"
+            role="img"
+            aria-label="Kumulativt antall datasentre per år (kapasitetskø)"
+          ></svg>
+        </div>
+        <div class="chart-note">Kapasitetskø basert på «moden_bestilling_dato».</div>
+
+        <div class="panel-header" style="border-bottom: none; padding: 0 14px 10px">
+          <h2>Kumulativt antall datasentre totalt</h2>
+          <div class="pill" id="chart-note-total">–</div>
+        </div>
+        <div class="chart-wrap">
+          <svg
+            id="chart-datasenter-total"
+            viewBox="0 0 640 220"
+            role="img"
+            aria-label="Kumulativt antall datasentre per år (total)"
+          ></svg>
+        </div>
+        <div class="chart-note">Kombinert kurve (reservasjon + kapasitetskø).</div>
+
+        <div class="panel-header" style="border-bottom: none; padding: 0 14px 10px">
+          <h2>Årlig nye datasentre (total)</h2>
+          <div class="pill" id="chart-note-annual">–</div>
+        </div>
+        <div class="chart-wrap">
+          <svg
+            id="chart-datasenter-annual"
+            viewBox="0 0 640 220"
+            role="img"
+            aria-label="Årlig nye datasentre per år (total)"
+          ></svg>
+        </div>
+        <div class="chart-note">Sum av reserverte + kø per år.</div>
 
         <div class="tables">
           <div>
@@ -639,6 +695,8 @@
         activeDataset: "reservasjoner",
         rows: [],
         filtered: [],
+        reservasjonerAll: [],
+        kapasitetskoAll: [],
         tableSort: { key: "mw", dir: "desc" },
         multi: {
           pris: new Set(),
@@ -772,6 +830,8 @@
             throw new Error(`${response.status} ${response.statusText}`);
           }
           state.rows = await response.json();
+          if (key === "reservasjoner") state.reservasjonerAll = state.rows;
+          if (key === "kapasitetsko") state.kapasitetskoAll = state.rows;
 
           const pris = unique(state.rows.map((r) => r.prisomrade));
           const naring = unique(state.rows.map((r) => r.naringstype));
@@ -901,11 +961,11 @@
         $("kpi-sluttkunder").textContent = formatNumber(sluttkunder.size);
       }
 
-      function buildCumulativeDatasenter(rows) {
+      function buildCumulativeDatasenter(rows, dateKey, onlyDatasenter) {
         const counts = new Map();
         for (const row of rows) {
-          if ((row.naringstype || "").toLowerCase() !== "datasenter") continue;
-          const dateStr = row.reservert_dato;
+          if (onlyDatasenter && (row.naringstype || "").toLowerCase() !== "datasenter") continue;
+          const dateStr = row[dateKey];
           if (!dateStr) continue;
           const d = new Date(dateStr);
           if (Number.isNaN(d.getTime())) continue;
@@ -925,13 +985,12 @@
         return series;
       }
 
-      function renderDatasenterChart(rows) {
-        const svg = $("chart-datasenter");
+      function renderLineChart({ svgId, series, noteId }) {
+        const svg = $(svgId);
         if (!svg) return;
-        const series = buildCumulativeDatasenter(rows);
         svg.innerHTML = "";
         if (series.length === 0) {
-          $("chart-note").textContent = "Ingen datasenter med gyldig dato";
+          $(noteId).textContent = "Ingen datasenter med gyldig dato";
           return;
         }
 
@@ -1007,15 +1066,162 @@
           svg.appendChild(circle);
         }
 
-        const yearLabel = document.createElementNS("http://www.w3.org/2000/svg", "text");
-        yearLabel.setAttribute("x", (width - pad.right).toString());
-        yearLabel.setAttribute("y", (height - 8).toString());
-        yearLabel.setAttribute("text-anchor", "end");
-        yearLabel.setAttribute("class", "chart-label");
-        yearLabel.textContent = `${minYear}–${maxYear}`;
-        svg.appendChild(yearLabel);
+        const labelStep = series.length > 14 ? 3 : series.length > 8 ? 2 : 1;
+        for (let i = 0; i < series.length; i += 1) {
+          if (i % labelStep !== 0) continue;
+          const point = series[i];
+          const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+          label.setAttribute("x", scaleX(point.year).toString());
+          label.setAttribute("y", (height - 12).toString());
+          label.setAttribute("text-anchor", "middle");
+          label.setAttribute("class", "chart-label");
+          label.textContent = point.year.toString();
+          svg.appendChild(label);
+        }
 
-        $("chart-note").textContent = `Datasentre: ${series[series.length - 1].value}`;
+        $(noteId).textContent = `Datasentre: ${series[series.length - 1].value}`;
+      }
+
+      function renderBarChart({ svgId, series, noteId }) {
+        const svg = $(svgId);
+        if (!svg) return;
+        svg.innerHTML = "";
+        if (series.length === 0) {
+          $(noteId).textContent = "Ingen datasenter med gyldig dato";
+          return;
+        }
+
+        const width = 640;
+        const height = 220;
+        const pad = { left: 52, right: 18, top: 18, bottom: 32 };
+        const innerW = width - pad.left - pad.right;
+        const innerH = height - pad.top - pad.bottom;
+        const maxValue = Math.max(...series.map((d) => d.value));
+        const years = series.map((d) => d.year);
+        const minYear = years[0];
+        const maxYear = years[years.length - 1];
+
+        const scaleX = (year) =>
+          pad.left + ((year - minYear) / Math.max(1, maxYear - minYear)) * innerW;
+        const scaleY = (value) => pad.top + innerH - (value / Math.max(1, maxValue)) * innerH;
+
+        const yTicks = 4;
+        for (let i = 0; i <= yTicks; i += 1) {
+          const value = Math.round((maxValue / yTicks) * i);
+          const y = scaleY(value);
+          const grid = document.createElementNS("http://www.w3.org/2000/svg", "line");
+          grid.setAttribute("x1", pad.left.toString());
+          grid.setAttribute("x2", (width - pad.right).toString());
+          grid.setAttribute("y1", y.toString());
+          grid.setAttribute("y2", y.toString());
+          grid.setAttribute("class", "chart-grid");
+          svg.appendChild(grid);
+
+          const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+          label.setAttribute("x", (pad.left - 10).toString());
+          label.setAttribute("y", (y + 4).toString());
+          label.setAttribute("text-anchor", "end");
+          label.setAttribute("class", "chart-label");
+          label.textContent = value.toString();
+          svg.appendChild(label);
+        }
+
+        const axisY = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        axisY.setAttribute("x1", pad.left.toString());
+        axisY.setAttribute("x2", pad.left.toString());
+        axisY.setAttribute("y1", pad.top.toString());
+        axisY.setAttribute("y2", (height - pad.bottom).toString());
+        axisY.setAttribute("class", "chart-axis");
+        svg.appendChild(axisY);
+
+        const axisX = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        axisX.setAttribute("x1", pad.left.toString());
+        axisX.setAttribute("x2", (width - pad.right).toString());
+        axisX.setAttribute("y1", (height - pad.bottom).toString());
+        axisX.setAttribute("y2", (height - pad.bottom).toString());
+        axisX.setAttribute("class", "chart-axis");
+        svg.appendChild(axisX);
+
+        const barWidth = innerW / Math.max(1, series.length) - 6;
+        const labelStep = series.length > 14 ? 3 : series.length > 8 ? 2 : 1;
+        for (let i = 0; i < series.length; i += 1) {
+          const point = series[i];
+          const x = scaleX(point.year) - barWidth / 2;
+          const y = scaleY(point.value);
+          const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+          rect.setAttribute("x", x.toString());
+          rect.setAttribute("y", y.toString());
+          rect.setAttribute("width", Math.max(2, barWidth).toString());
+          rect.setAttribute("height", (pad.top + innerH - y).toString());
+          rect.setAttribute("class", "chart-bar");
+          svg.appendChild(rect);
+
+          if (i % labelStep === 0) {
+            const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            label.setAttribute("x", (scaleX(point.year)).toString());
+            label.setAttribute("y", (height - 12).toString());
+            label.setAttribute("text-anchor", "middle");
+            label.setAttribute("class", "chart-label");
+            label.textContent = point.year.toString();
+            svg.appendChild(label);
+          }
+        }
+
+        const lastTotal = series.reduce((acc, item) => acc + item.value, 0);
+        $(noteId).textContent = `Totalt: ${lastTotal}`;
+      }
+
+      function renderDatasenterCharts(resRows, koRows) {
+        const onlyDatasenter = $("chart-only-datasenter")?.checked ?? true;
+        const reservasjonSeries = buildCumulativeDatasenter(resRows, "reservert_dato", onlyDatasenter);
+        renderLineChart({
+          svgId: "chart-datasenter-reservasjon",
+          series: reservasjonSeries,
+          noteId: "chart-note-reservasjon",
+        });
+
+        const koSeries = buildCumulativeDatasenter(koRows, "moden_bestilling_dato", onlyDatasenter);
+        renderLineChart({
+          svgId: "chart-datasenter-ko",
+          series: koSeries,
+          noteId: "chart-note-ko",
+        });
+
+        const combined = new Map();
+        for (const point of reservasjonSeries) {
+          combined.set(point.year, (combined.get(point.year) || 0) + point.value);
+        }
+        for (const point of koSeries) {
+          combined.set(point.year, (combined.get(point.year) || 0) + point.value);
+        }
+        const years = [...combined.keys()].sort((a, b) => a - b);
+        const totalSeries = years.map((year) => ({ year, value: combined.get(year) || 0 }));
+        renderLineChart({
+          svgId: "chart-datasenter-total",
+          series: totalSeries,
+          noteId: "chart-note-total",
+        });
+
+        const annualMap = new Map();
+        for (const point of reservasjonSeries) {
+          const prev = annualMap.get(point.year) || 0;
+          const lastYear = point.year - 1;
+          const prevValue = reservasjonSeries.find((p) => p.year === lastYear)?.value || 0;
+          annualMap.set(point.year, prev + (point.value - prevValue));
+        }
+        for (const point of koSeries) {
+          const prev = annualMap.get(point.year) || 0;
+          const lastYear = point.year - 1;
+          const prevValue = koSeries.find((p) => p.year === lastYear)?.value || 0;
+          annualMap.set(point.year, prev + (point.value - prevValue));
+        }
+        const annualYears = [...annualMap.keys()].sort((a, b) => a - b);
+        const annualSeries = annualYears.map((year) => ({ year, value: annualMap.get(year) || 0 }));
+        renderBarChart({
+          svgId: "chart-datasenter-annual",
+          series: annualSeries,
+          noteId: "chart-note-annual",
+        });
       }
 
       function renderRows(rows, mwKey) {
@@ -1067,7 +1273,7 @@
         state.filtered = filterRows();
 
         renderKpis(state.filtered, mwKey);
-        renderDatasenterChart(state.filtered);
+        renderDatasenterCharts(state.reservasjonerAll, state.kapasitetskoAll);
         renderRows(state.filtered, mwKey);
 
         const byPris = sortAggregates(aggregate(state.filtered, (r) => r.prisomrade, mwKey));
@@ -1096,6 +1302,13 @@
           // små datasett: vi kan rendere på hver tast
           applyFiltersAndRender();
         });
+
+        const chartToggle = $("chart-only-datasenter");
+        if (chartToggle) {
+          chartToggle.addEventListener("change", () => {
+            renderDatasenterCharts(state.reservasjonerAll, state.kapasitetskoAll);
+          });
+        }
 
         document.querySelectorAll("th.sortable").forEach((th) => {
           th.addEventListener("click", () => {
@@ -1132,7 +1345,8 @@
       }
 
       wireEvents();
-      loadDataset(state.activeDataset);
+      loadDataset("reservasjoner");
+      loadDataset("kapasitetsko");
     </script>
   </body>
 </html>
