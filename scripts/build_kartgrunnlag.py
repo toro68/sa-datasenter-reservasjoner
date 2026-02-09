@@ -9,6 +9,7 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT_GEOJSON = ROOT / "kartgrunnlag.geojson"
+OUT_WEB_GEOJSON = ROOT / "web" / "mapcreator.geojson"
 
 BASE_LAYER = "https://nve.geodataonline.no/arcgis/rest/services/Nettanlegg4/MapServer/5"
 QUERY_URL = f"{BASE_LAYER}/query"
@@ -77,8 +78,11 @@ def main() -> None:
             break
 
     geojson = {"type": "FeatureCollection", "features": features}
-    OUT_GEOJSON.write_text(json.dumps(geojson, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    payload = json.dumps(geojson, ensure_ascii=False, indent=2) + "\n"
+    OUT_GEOJSON.write_text(payload, encoding="utf-8")
+    OUT_WEB_GEOJSON.write_text(payload, encoding="utf-8")
     print(f"Skrev {OUT_GEOJSON}")
+    print(f"Skrev {OUT_WEB_GEOJSON}")
 
 
 if __name__ == "__main__":

@@ -5,10 +5,10 @@ Dette repoet inneholder et tabelluttrekk (ca. 190 rader) med reserverte MW, nær
 ## Filer og anbefalt flyt
 
 ### Rådata
-- `reservasjoner.tsv`: Tab-separert kopi av tabellen slik den ble hentet/limt inn.
+- `data/reservasjoner.tsv`: Tab-separert kopi av tabellen slik den ble hentet/limt inn.
 
 ### Anbefalt (for visualisering/publisering)
-- `datasett_clean.csv`: Normalisert versjon for analyse og grafikk.
+- `data/datasett_clean.csv`: Normalisert versjon for analyse og grafikk.
   - datoer: `YYYY-MM-DD`
   - numeriske felt: punktum som desimal (`560.00`)
   - stabile kolonnenavn (ASCII/snake_case)
@@ -17,8 +17,8 @@ Dette repoet inneholder et tabelluttrekk (ca. 190 rader) med reserverte MW, nær
 - `summary.json`: Enkel oppsummering (total MW + MW per næringstype/prisområde).
 
 ### Bygg
-- Kjør `python3 scripts/build_clean.py` for å regenerere `datasett_clean.csv`, `datasett_clean.json` og `summary.json` fra `Reservasjoner - Ark 1.csv`.
-- Kjør `python3 scripts/build_queue_clean.py` for å regenerere `kapasitetsko_clean.csv`, `kapasitetsko_clean.json` og `kapasitetsko_summary.json` fra `Reservasjoner - Kapasitetskø.csv`.
+- Kjør `python3 scripts/build_clean.py` for å regenerere `data/datasett_clean.csv`, `datasett_clean.json` og `summary.json` fra `data/Reservasjoner - Ark 1.csv`.
+- Kjør `python3 scripts/build_queue_clean.py` for å regenerere `data/kapasitetsko_clean.csv`, `kapasitetsko_clean.json` og `kapasitetsko_summary.json` fra `data/Reservasjoner - Kapasitetskø.csv`.
 
 ## Nettside (filtrering + topplister)
 
@@ -32,9 +32,16 @@ Dette repoet inneholder et tabelluttrekk (ca. 190 rader) med reserverte MW, nær
 
 Uten et slikt kartgrunnlag kan kart lages aggregert på `prisområde`/`områdeplan`, men ikke som punktkart per stasjon.
 
+### Geokoding og faktasjekk
+- `geocode_cache.json`: lokal cache av geokoding (typisk Nominatim/OSM‑svar) brukt til å matche stasjonsnavn til koordinater.
+- `data/stasjoner_manuelle_koordinater.csv`: manuelle koordinater lagt til i cache.
+- `data/stasjoner_faktasjekk_oversikt.csv`: alle unike stasjoner fra råfilene med status mot `geocode_cache.json`.
+- `data/stasjoner_faktasjekk_sortert.csv`: samme som over, sortert på status (mangler/null/har).
+- Siste faktasjekk (råfiler): 115 unike stasjoner · 56 i cache · 59 mangler · 40 null · 16 med koordinat.
+
 ## Kolonner (kort forklaring)
 
-Felt slik de står i `reservasjoner.tsv`:
+Felt slik de står i `data/reservasjoner.tsv`:
 - `Saksnr.`: saksnummer (forventes å være unik per rad, men må verifiseres).
 - `Stasjon for tilknytning i transmisjonsnettet`: stasjonsnavn/tilknytningspunkt.
 - `Områdeplan`: Statnetts områdeplan.

@@ -11,7 +11,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 
-SRC_CSV = ROOT / "Reservasjoner - Kapasitetskø.csv"
+SRC_CSV = ROOT / "data" / "Reservasjoner - Kapasitetskø.csv"
 OUT_CLEAN_CSV = ROOT / "kapasitetsko_clean.csv"
 OUT_CLEAN_JSON = ROOT / "kapasitetsko_clean.json"
 OUT_SUMMARY_JSON = ROOT / "kapasitetsko_summary.json"

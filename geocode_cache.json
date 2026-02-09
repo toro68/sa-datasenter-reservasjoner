@@ -1,6 +1,12 @@
 {
   "Adamselv": null,
-  "Alta tra": null,
+  "Alta tra": {
+    "lat": "69.9482",
+    "lon": "23.2721",
+    "display_name": "Alta tra (Alta) (manuell koordinat)",
+    "manual": true,
+    "comment": "Ved Transbakken i Alta."
+  },
   "Arendal": {
     "place_id": 151301282,
     "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
@@ -22,7 +28,13 @@
       "8.7698609"
     ]
   },
-  "Arendal Industrinett": null,
+  "Arendal Industrinett": {
+    "lat": "58.4875",
+    "lon": "8.7180",
+    "display_name": "Arendal Industrinett (manuell koordinat)",
+    "manual": true,
+    "comment": "Ved Eydehavn transformatorstasjon."
+  },
   "Arna": {
     "place_id": 147851573,
     "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
@@ -45,11 +57,16 @@
     ]
   },
   "Aura": null,
-  "Aurland2": null,
   "Ballangen": null,
   "Balsfjord": null,
   "Bamble": null,
-  "Bardufoss Transformatorstasjon": null,
+  "Bardufoss Transformatorstasjon": {
+    "lat": "69.0587",
+    "lon": "18.5090",
+    "display_name": "Bardufoss transformatorstasjon (manuell koordinat)",
+    "manual": true,
+    "comment": "Bardufoss transformatorstasjon."
+  },
   "Bjerkreim": null,
   "Blåfalli": null,
   "Boltås": null,
@@ -79,7 +96,13 @@
   "Eidum": null,
   "Ertsmyra": null,
   "Fagrafjell": null,
-  "Fana Transformatorstasjon": null,
+  "Fana Transformatorstasjon": {
+    "lat": "60.3015",
+    "lon": "5.3340",
+    "display_name": "Fana transformatorstasjon (manuell koordinat)",
+    "manual": true,
+    "comment": "Soleimyra ved Apeltun i Bergen."
+  },
   "Flesaker": null,
   "Follo": null,
   "Fortun": null,
@@ -156,9 +179,21 @@
       "10.7240107"
     ]
   },
-  "Humleberget": null,
+  "Humleberget": {
+    "lat": "58.8505",
+    "lon": "5.7665",
+    "display_name": "Humleberget (manuell koordinat)",
+    "manual": true,
+    "comment": "Ny stasjon i Sandnes (v/ Bærheim)."
+  },
   "Husnes": null,
-  "Hyggevatn": null,
+  "Hyggevatn": {
+    "lat": "70.68064",
+    "lon": "23.72552",
+    "display_name": "Hyggevatn (manuell koordinat)",
+    "manual": true,
+    "comment": "Manuelt lagt inn: Hyggevannet (70.68064°N 23.72552°Ø)."
+  },
   "Høyanger": null,
   "Kilbotn": null,
   "Kirkenes": null,
@@ -192,5 +227,225 @@
   "Kvinesdal": null,
   "Kvitfossen": null,
   "Kvitnes": null,
-  "Kårstø": null
+  "Kårstø": null,
+  "Aurland 2": {
+    "lat": "60.80332",
+    "lon": "7.37191",
+    "display_name": "Aurland 2 (manuell koordinat)",
+    "manual": true,
+    "comment": "Manuelt lagt inn: Aurland 2 (60.80332°N 7.37191°Ø)."
+  },
+  "Nes ge": {
+    "lat": "60.2095",
+    "lon": "11.5588",
+    "display_name": "Nes ge (Nes) (manuell koordinat)",
+    "manual": true,
+    "comment": "Nes transformatorstasjon (Akershus)."
+  },
+  "Novle": {
+    "lat": "59.8383",
+    "lon": "6.8805",
+    "display_name": "Novle (manuell koordinat)",
+    "manual": true,
+    "comment": "Novle kraftverk (Røldal)."
+  },
+  "Salten transformatorstasjon": {
+    "lat": "67.3780",
+    "lon": "15.6145",
+    "display_name": "Salten transformatorstasjon (manuell koordinat)",
+    "manual": true,
+    "comment": "Ny stasjon på Lemmen, Sørfold."
+  },
+  "T35": {
+    "lat": "68.5375",
+    "lon": "16.5985",
+    "display_name": "T35 (Kvitfors) (manuell koordinat)",
+    "manual": true,
+    "comment": "Ofte referanse til Kvitfors (Statnett-kode)."
+  },
+  "Aurland2": {
+    "lat": "60.80332",
+    "lon": "7.37191",
+    "display_name": "Aurland 2 (manuell koordinat)",
+    "manual": true,
+    "comment": "Manuelt lagt inn: Aurland 2 (60.80332°N 7.37191°Ø)."
+  },
+  "Leirdøla": null,
+  "Lindås": null,
+  "Lio": null,
+  "Litle Sotra": null,
+  "Marka": null,
+  "Melbu": null,
+  "Mestervik": null,
+  "Midtfjellet": null,
+  "Minne": null,
+  "Moskog": null,
+  "Namsos": null,
+  "Narvik": {
+    "place_id": 252487540,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 5526332038,
+    "lat": "68.4415503",
+    "lon": "17.4411132",
+    "class": "railway",
+    "type": "station",
+    "place_rank": 30,
+    "importance": 0.36763302028417766,
+    "addresstype": "railway",
+    "name": "Narvik",
+    "display_name": "Narvik, Stasjonsveien, Taraldsvik, Narvik, Nordland, 8517, Norge",
+    "boundingbox": [
+      "68.4365503",
+      "68.4465503",
+      "17.4361132",
+      "17.4461132"
+    ]
+  },
+  "Nedre Røssåga": null,
+  "Nedre Vinstra": null,
+  "Nes GE": null,
+  "Nesflaten": null,
+  "Niingen": null,
+  "Ogndal": null,
+  "Orkdal": null,
+  "Porsgrunn": {
+    "place_id": 151665872,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 5720557908,
+    "lat": "59.1400961",
+    "lon": "9.6585971",
+    "class": "railway",
+    "type": "station",
+    "place_rank": 30,
+    "importance": 0.35787102786166186,
+    "addresstype": "railway",
+    "name": "Porsgrunn",
+    "display_name": "Porsgrunn, Porsgrunn terminal, Jønnholt, Leirkup, Porsgrunn, Telemark, 3915, Norge",
+    "boundingbox": [
+      "59.1350961",
+      "59.1450961",
+      "9.6535971",
+      "9.6635971"
+    ]
+  },
+  "Rana": {
+    "place_id": 252771714,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 5526332068,
+    "lat": "66.3096077",
+    "lon": "14.1335001",
+    "class": "railway",
+    "type": "station",
+    "place_rank": 30,
+    "importance": 5.8607614251880943e-05,
+    "addresstype": "railway",
+    "name": "Mo i Rana / Måefie",
+    "display_name": "Mo i Rana / Måefie, Ole Tobias Olsens gate, Langneset, Mo i Rana, Rana, Nordland, 8624, Norge",
+    "boundingbox": [
+      "66.3046077",
+      "66.3146077",
+      "14.1285001",
+      "14.1385001"
+    ]
+  },
+  "Ringerike": {
+    "place_id": 147452943,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+    "osm_type": "way",
+    "osm_id": 602862481,
+    "lat": "60.2225660",
+    "lon": "10.2912040",
+    "class": "landuse",
+    "type": "military",
+    "place_rank": 22,
+    "importance": 0.10672439688715951,
+    "addresstype": "military",
+    "name": "Forsvarets stasjon Ringerike",
+    "display_name": "Forsvarets stasjon Ringerike, Marigård, Ringerike, Buskerud, Norge",
+    "boundingbox": [
+      "60.2175711",
+      "60.2276016",
+      "10.2837999",
+      "10.2977836"
+    ]
+  },
+  "Rjukan": {
+    "place_id": 150986892,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 4456605117,
+    "lat": "59.8771065",
+    "lon": "8.5836520",
+    "class": "railway",
+    "type": "station",
+    "place_rank": 30,
+    "importance": 0.22351224795927851,
+    "addresstype": "railway",
+    "name": "Rjukan",
+    "display_name": "Rjukan, Såheimsveien, Rjukan fabrikker, Østre Bøen, Rjukan, Tinn, Telemark, 3660, Norge",
+    "boundingbox": [
+      "59.8721065",
+      "59.8821065",
+      "8.5786520",
+      "8.5886520"
+    ]
+  },
+  "Rød": null,
+  "Røldal": null,
+  "Røykås": null,
+  "Samnanger": null,
+  "Sautso": null,
+  "Sildvik": {
+    "place_id": 407704935,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+    "osm_type": "way",
+    "osm_id": 207229955,
+    "lat": "68.4037757",
+    "lon": "17.7910714",
+    "class": "railway",
+    "type": "station",
+    "place_rank": 30,
+    "importance": 0.31977730603466514,
+    "addresstype": "railway",
+    "name": "Rombak - Ruoppat",
+    "display_name": "Rombak - Ruoppat, Sildvikveien, Kuberget, Narvik, Nordland, 8519, Norge",
+    "boundingbox": [
+      "68.4037078",
+      "68.4038435",
+      "17.7908556",
+      "17.7912871"
+    ]
+  },
+  "Skaidi": null,
+  "Smestad": null,
+  "Snilldal": null,
+  "Sogn": null,
+  "Sortland": null,
+  "Spanne": null,
+  "Stokmarknes": null,
+  "Stord": null,
+  "Strinda": null,
+  "Stølaheia": null,
+  "Surna": null,
+  "Svartisen": null,
+  "Sylling": null,
+  "Tegneby": null,
+  "Trollheim": null,
+  "Tunnsjødal": null,
+  "Tveiten": null,
+  "Ulven": null,
+  "Vang": null,
+  "Varangerbotn": null,
+  "Vardal": null,
+  "Viklandet": null,
+  "Vinje": null,
+  "Vinnelys": null,
+  "Vågåmo": null,
+  "Åfjord": null,
+  "Ålfoten": null,
+  "Ørskog": null,
+  "Ørsta": null
 }

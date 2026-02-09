@@ -1,0 +1,11 @@
+alta tra                      ->  69.951679, 23.373584   (treff=2, match='Alta', query='Alta')
+arendal industrinett          ->  58.588135, 8.728941   (treff=1, match='Arendal', query='Arendal')
+aurland2                      ->  60.811122, 7.364327   (treff=1, match='Aurland 2', query='Aurland 2')
+bardufoss transformatorstasjon  ->  69.034456, 18.593037   (treff=1, match='Bardufoss', query='Bardufoss')
+fana transformatorstasjon     ->  60.286918, 5.343682   (treff=2, match='Fana', query='Fana')
+humleberget                   ->  INGEN TREFF
+hyggevatn                     ->  INGEN TREFF
+nes ge                        ->  59.248451, 10.454285   (treff=42, match='Nes', query='Nes')
+novle                         ->  INGEN TREFF
+salten transformatorstasjon   ->  67.325676, 15.714227   (treff=1, match='Salten', query='Salten')
+t35                           ->  INGEN TREFF

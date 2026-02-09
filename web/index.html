@@ -227,6 +227,49 @@
         padding: 14px;
       }
 
+      .chart-wrap {
+        padding: 14px;
+      }
+
+      .chart-wrap svg {
+        width: 100%;
+        height: 220px;
+        display: block;
+        background: rgba(0, 0, 0, 0.12);
+        border-radius: 12px;
+      }
+
+      .chart-axis {
+        stroke: rgba(232, 238, 252, 0.2);
+        stroke-width: 1;
+      }
+
+      .chart-grid {
+        stroke: rgba(232, 238, 252, 0.08);
+        stroke-width: 1;
+      }
+
+      .chart-line {
+        fill: none;
+        stroke: #6aa2ff;
+        stroke-width: 2.5;
+      }
+
+      .chart-point {
+        fill: #6aa2ff;
+      }
+
+      .chart-label {
+        font-size: 11px;
+        fill: rgba(232, 238, 252, 0.7);
+      }
+
+      .chart-note {
+        padding: 0 14px 14px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
       th.sortable {
         cursor: pointer;
         user-select: none;
@@ -477,6 +520,17 @@
             <div class="label">Unike sluttkunder</div>
             <div class="value" id="kpi-sluttkunder">–</div>
           </div>
+        </div>
+
+        <div class="panel-header" style="border-bottom: none; padding: 0 14px 10px">
+          <h2>Kumulativt antall datasentre</h2>
+          <div class="pill" id="chart-note">–</div>
+        </div>
+        <div class="chart-wrap">
+          <svg id="chart-datasenter" viewBox="0 0 640 220" role="img" aria-label="Kumulativt antall datasentre per år"></svg>
+        </div>
+        <div class="chart-note">
+          Basert på reserveringsdato (reservert_dato) og næringstype «Datasenter».
         </div>
 
         <div class="tables">
@@ -847,6 +901,123 @@
         $("kpi-sluttkunder").textContent = formatNumber(sluttkunder.size);
       }
 
+      function buildCumulativeDatasenter(rows) {
+        const counts = new Map();
+        for (const row of rows) {
+          if ((row.naringstype || "").toLowerCase() !== "datasenter") continue;
+          const dateStr = row.reservert_dato;
+          if (!dateStr) continue;
+          const d = new Date(dateStr);
+          if (Number.isNaN(d.getTime())) continue;
+          const year = d.getFullYear();
+          counts.set(year, (counts.get(year) || 0) + 1);
+        }
+        const years = [...counts.keys()].sort((a, b) => a - b);
+        if (years.length === 0) return [];
+        const series = [];
+        let cumulative = 0;
+        const minYear = years[0];
+        const maxYear = years[years.length - 1];
+        for (let year = minYear; year <= maxYear; year += 1) {
+          cumulative += counts.get(year) || 0;
+          series.push({ year, value: cumulative });
+        }
+        return series;
+      }
+
+      function renderDatasenterChart(rows) {
+        const svg = $("chart-datasenter");
+        if (!svg) return;
+        const series = buildCumulativeDatasenter(rows);
+        svg.innerHTML = "";
+        if (series.length === 0) {
+          $("chart-note").textContent = "Ingen datasenter med gyldig dato";
+          return;
+        }
+
+        const width = 640;
+        const height = 220;
+        const pad = { left: 52, right: 18, top: 18, bottom: 32 };
+        const innerW = width - pad.left - pad.right;
+        const innerH = height - pad.top - pad.bottom;
+        const maxValue = Math.max(...series.map((d) => d.value));
+        const years = series.map((d) => d.year);
+        const minYear = years[0];
+        const maxYear = years[years.length - 1];
+
+        const scaleX = (year) =>
+          pad.left + ((year - minYear) / Math.max(1, maxYear - minYear)) * innerW;
+        const scaleY = (value) => pad.top + innerH - (value / Math.max(1, maxValue)) * innerH;
+
+        const yTicks = 4;
+        for (let i = 0; i <= yTicks; i += 1) {
+          const value = Math.round((maxValue / yTicks) * i);
+          const y = scaleY(value);
+          const grid = document.createElementNS("http://www.w3.org/2000/svg", "line");
+          grid.setAttribute("x1", pad.left.toString());
+          grid.setAttribute("x2", (width - pad.right).toString());
+          grid.setAttribute("y1", y.toString());
+          grid.setAttribute("y2", y.toString());
+          grid.setAttribute("class", "chart-grid");
+          svg.appendChild(grid);
+
+          const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+          label.setAttribute("x", (pad.left - 10).toString());
+          label.setAttribute("y", (y + 4).toString());
+          label.setAttribute("text-anchor", "end");
+          label.setAttribute("class", "chart-label");
+          label.textContent = value.toString();
+          svg.appendChild(label);
+        }
+
+        const axisY = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        axisY.setAttribute("x1", pad.left.toString());
+        axisY.setAttribute("x2", pad.left.toString());
+        axisY.setAttribute("y1", pad.top.toString());
+        axisY.setAttribute("y2", (height - pad.bottom).toString());
+        axisY.setAttribute("class", "chart-axis");
+        svg.appendChild(axisY);
+
+        const axisX = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        axisX.setAttribute("x1", pad.left.toString());
+        axisX.setAttribute("x2", (width - pad.right).toString());
+        axisX.setAttribute("y1", (height - pad.bottom).toString());
+        axisX.setAttribute("y2", (height - pad.bottom).toString());
+        axisX.setAttribute("class", "chart-axis");
+        svg.appendChild(axisX);
+
+        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        const d = series
+          .map((point, idx) => {
+            const x = scaleX(point.year);
+            const y = scaleY(point.value);
+            return `${idx === 0 ? "M" : "L"}${x},${y}`;
+          })
+          .join(" ");
+        path.setAttribute("d", d);
+        path.setAttribute("class", "chart-line");
+        svg.appendChild(path);
+
+        for (const point of series) {
+          const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+          circle.setAttribute("cx", scaleX(point.year).toString());
+          circle.setAttribute("cy", scaleY(point.value).toString());
+          circle.setAttribute("r", "3");
+          circle.setAttribute("class", "chart-point");
+          svg.appendChild(circle);
+        }
+
+        const yearLabel = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        yearLabel.setAttribute("x", (width - pad.right).toString());
+        yearLabel.setAttribute("y", (height - 8).toString());
+        yearLabel.setAttribute("text-anchor", "end");
+        yearLabel.setAttribute("class", "chart-label");
+        yearLabel.textContent = `${minYear}–${maxYear}`;
+        svg.appendChild(yearLabel);
+
+        $("chart-note").textContent = `Datasentre: ${series[series.length - 1].value}`;
+      }
+
       function renderRows(rows, mwKey) {
         const tbody = $("rows");
         tbody.innerHTML = "";
@@ -896,6 +1067,7 @@
         state.filtered = filterRows();
 
         renderKpis(state.filtered, mwKey);
+        renderDatasenterChart(state.filtered);
         renderRows(state.filtered, mwKey);
 
         const byPris = sortAggregates(aggregate(state.filtered, (r) => r.prisomrade, mwKey));

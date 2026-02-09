@@ -11,7 +11,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 
-SRC_CSV = ROOT / "Reservasjoner - Ark 1.csv"
+SRC_CSV = ROOT / "data" / "Reservasjoner - Ark 1.csv"
 OUT_CLEAN_CSV = ROOT / "datasett_clean.csv"
 OUT_CLEAN_JSON = ROOT / "datasett_clean.json"
 OUT_SUMMARY_JSON = ROOT / "summary.json"
@@ -152,4 +152,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

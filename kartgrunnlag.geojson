@@ -19462,25 +19462,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          7.3643273081241665,
-          60.81112188766246
-        ]
-      },
-      "properties": {
-        "navn": "Aurland 2",
-        "nveNetbasID": null,
-        "spenning_kV": null,
-        "driftsattaar": null,
-        "eier": "STATNETT SF",
-        "nveNettnivaa": "1",
-        "sosiNettnivaa": "Sentralnett"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           8.18357737756849,
           60.625915661157144
         ]
@@ -29601,6 +29582,186 @@
         "eier": "MELLOM AS",
         "nveNettnivaa": "1",
         "sosiNettnivaa": "Sentralnett"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "navn": "Alta tra",
+        "kilde": "manual",
+        "comment": "Ved Transbakken i Alta."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          23.2721,
+          69.9482
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "navn": "Arendal Industrinett",
+        "kilde": "manual",
+        "comment": "Ved Eydehavn transformatorstasjon."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.718,
+          58.4875
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "navn": "Aurland 2",
+        "kilde": "manual",
+        "comment": "Manuelt lagt inn: Aurland 2 (60.80332°N 7.37191°Ø)."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.37191,
+          60.80332
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "navn": "Aurland2",
+        "kilde": "manual",
+        "comment": "Manuelt lagt inn: Aurland 2 (60.80332°N 7.37191°Ø)."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.37191,
+          60.80332
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "navn": "Bardufoss Transformatorstasjon",
+        "kilde": "manual",
+        "comment": "Bardufoss transformatorstasjon."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.509,
+          69.0587
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "navn": "Fana Transformatorstasjon",
+        "kilde": "manual",
+        "comment": "Soleimyra ved Apeltun i Bergen."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          5.334,
+          60.3015
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "navn": "Humleberget",
+        "kilde": "manual",
+        "comment": "Ny stasjon i Sandnes (v/ Bærheim)."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          5.7665,
+          58.8505
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "navn": "Hyggevatn",
+        "kilde": "manual",
+        "comment": "Manuelt lagt inn: Hyggevannet (70.68064°N 23.72552°Ø)."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          23.72552,
+          70.68064
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "navn": "Nes ge",
+        "kilde": "manual",
+        "comment": "Nes transformatorstasjon (Akershus)."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.5588,
+          60.2095
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "navn": "Novle",
+        "kilde": "manual",
+        "comment": "Novle kraftverk (Røldal)."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.8805,
+          59.8383
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "navn": "Salten transformatorstasjon",
+        "kilde": "manual",
+        "comment": "Ny stasjon på Lemmen, Sørfold."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.6145,
+          67.378
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "navn": "T35",
+        "kilde": "manual",
+        "comment": "Ofte referanse til Kvitfors (Statnett-kode)."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          16.5985,
+          68.5375
+        ]
       }
     }
   ]
