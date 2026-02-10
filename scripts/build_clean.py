@@ -82,6 +82,9 @@ def build_clean_row(raw: dict[str, str]) -> CleanRow:
     kundens_referanse = norm_key(raw.get("Kundens referanse")) or None
     kunde_og_tilknytningsansvarlig = norm_key(raw.get("Kunde og tilknytningsansvarlig")) or None
 
+    if not prisomrade and stasjon == "T35":
+        prisomrade = "NO2"
+
     return CleanRow(
         saksnr=saksnr,
         stasjon=stasjon,

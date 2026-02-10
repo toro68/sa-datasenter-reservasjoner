@@ -19,7 +19,7 @@ saksnr,stasjon,omradeplan,prisomrade,statnetts_kunde,sluttkunde,naringstype,rese
 23/01056,Kollsnes,Bergen og Haugalandet,NO5,Equinor Asa,Equinor ASA,Petroleum,105.0,2019-04-19,2028-06-30,,Magnus Tennøe
 23/01030,Bjerkreim,Sør Rogaland og Agder,NO2,Lnett AS,Green Mountain AS,Datasenter,100.0,2024-06-16,2026-12-31,,Ingvild Grøtterud Birkeland
 24/01774,Ringerike,Hallingdal og Ringerike,NO1,Glitre Nett AS,Stack AS,Datasenter,100.0,2025-03-20,2027-12-30,,Heidi Hellesvik Ringstad
-21/00196,T35,Telemark og Vestfold,,Herøya Nett As,Yara,Industri,100.0,2023-02-27,2030-09-29,,Geir Kåsa
+21/00196,T35,Telemark og Vestfold,NO2,Herøya Nett As,Yara,Industri,100.0,2023-02-27,2030-09-29,,Geir Kåsa
 24/01756,Marka,Helgeland og Salten,NO4,Linea AS,Norsk E-fuel,Industri,90.0,2025-12-21,2028-06-29,,Ingvild Grøtterud Birkeland
 21/00184,Arendal Industrinett,Sør Rogaland og Agder,NO2,Glitre Nett AS,Morrow Batteries,Batteriproduksjon,88.5,2024-08-22,2028-06-29,,Geir Kåsa
 23/00955,Fagrafjell,Sør Rogaland og Agder,NO2,Lnett AS,Green Mountain,Datasenter,80.0,2024-06-27,2027-03-31,,Ingvild Grøtterud Birkeland
@@ -65,7 +65,7 @@ saksnr,stasjon,omradeplan,prisomrade,statnetts_kunde,sluttkunde,naringstype,rese
 22/00754,Mestervik,Nord,NO4,Arva AS,Neptun Tromsø AS,Hydrogen/ammoniakk,30.0,2025-10-08,2028-03-31,,Lars Erik Johansen
 23/00999,Hasle,"Oslo, Akershus og Østfold",NO1,Elvia As,Kronos Titan AS,Industri,30.0,2025-05-12,2030-12-30,,Heidi Hellesvik Ringstad
 26/03113,Bamble,Telemark og Vestfold,NO2,Lede AS,STORMVIND AS,Annet forbruk,30.0,2025-11-03,2028-06-29,,Geir Kåsa
-21/00112,T35,Telemark og Vestfold,,Herøya Nett As,Nordic Electrofuel AS,Hydrogen/ammoniakk,26.0,2023-01-18,2029-06-30,,Geir Kåsa
+21/00112,T35,Telemark og Vestfold,NO2,Herøya Nett As,Nordic Electrofuel AS,Hydrogen/ammoniakk,26.0,2023-01-18,2029-06-30,,Geir Kåsa
 21/00222,Fortun,Sogn og Sunnmøre,NO5,Linja AS,Hydro Aluminium AS,Industri,26.0,2019-02-17,2026-06-29,,Hans Olav Ween
 21/00458,Grenland,Telemark og Vestfold,NO2,Lede AS,INEOS Rafnes AS,Industri,26.0,2024-02-05,2030-09-29,,Geir Kåsa
 25/02311,Fagrafjell,Sør Rogaland og Agder,NO2,Lnett AS,MS Kvål,Datasenter,25.0,2024-05-27,2027-12-31,,Ingvild Grøtterud Birkeland

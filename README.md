@@ -6,6 +6,7 @@ Dette repoet inneholder et tabelluttrekk (ca. 190 rader) med reserverte MW, nær
 
 ### Rådata
 - `data/reservasjoner.tsv`: Tab-separert kopi av tabellen slik den ble hentet/limt inn.
+- `archive/missing_stasjoner.txt`: Arkivert liste over stasjoner som manglet koordinater.
 
 ### Anbefalt (for visualisering/publisering)
 - `data/datasett_clean.csv`: Normalisert versjon for analyse og grafikk.
@@ -38,6 +39,7 @@ Uten et slikt kartgrunnlag kan kart lages aggregert på `prisområde`/`områdepl
 - `data/stasjoner_faktasjekk_oversikt.csv`: alle unike stasjoner fra råfilene med status mot `geocode_cache.json`.
 - `data/stasjoner_faktasjekk_sortert.csv`: samme som over, sortert på status (mangler/null/har).
 - Siste faktasjekk (råfiler): 115 unike stasjoner · 56 i cache · 59 mangler · 40 null · 16 med koordinat.
+- Prisområde: Stasjon `T35` settes manuelt til `NO2` i `scripts/build_clean.py`.
 
 ## Kolonner (kort forklaring)
 
