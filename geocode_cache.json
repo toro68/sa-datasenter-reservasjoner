@@ -257,11 +257,11 @@
     "comment": "Ny stasjon på Lemmen, Sørfold."
   },
   "T35": {
-    "lat": "68.5375",
-    "lon": "16.5985",
-    "display_name": "T35 (Kvitfors) (manuell koordinat)",
+    "lat": "59.11639",
+    "lon": "9.63427",
+    "display_name": "T35 (Herøya, Porsgrunn) (manuell koordinat)",
     "manual": true,
-    "comment": "Ofte referanse til Kvitfors (Statnett-kode)."
+    "comment": "Herøya ved Porsgrunn (oppgitt koordinat)."
   },
   "Aurland2": {
     "lat": "60.80332",
