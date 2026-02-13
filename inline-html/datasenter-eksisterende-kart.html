@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eksisterende datasentre</title>
+  <style>
+    .dc-map-widget {
+      --dc-bg: #0f2d52;
+      --dc-bg-2: #0a1e36;
+      --dc-text: #ffffff;
+      --dc-blue: #60a5fa;
+      --dc-border: rgba(255, 255, 255, 0.2);
+
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      box-sizing: border-box;
+      width: 100%;
+      max-width: 920px;
+      margin: 0 auto 2rem;
+      color: var(--dc-text);
+    }
+
+    .dc-map-widget * { box-sizing: inherit; }
+
+    .dc-card {
+      border-radius: 18px;
+      padding: 22px;
+      background: linear-gradient(180deg, rgba(15, 45, 82, 0.95), rgba(10, 30, 54, 0.98));
+      border: 1px solid var(--dc-border);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(6px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dc-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.07) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .dc-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin: 0 0 0.4rem 0;
+    }
+
+    .dc-note {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.75);
+      margin: 0 0 1rem 0;
+    }
+
+    .dc-error {
+      margin-top: 0.8rem;
+      color: #fecaca;
+      font-size: 0.85rem;
+    }
+
+    #dc-map {
+      width: 100%;
+      height: 780px;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .dc-source {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.5);
+      margin-top: 0.9rem;
+      text-align: right;
+    }
+
+    .leaflet-container {
+      background: #e5ecf3;
+    }
+
+    .dc-tooltip {
+      font-family: inherit;
+      font-size: 0.85rem;
+    }
+  </style>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  />
+</head>
+<body>
+  <div class="dc-map-widget">
+    <div class="dc-card">
+      <h1 class="dc-title">Eksisterende datasentre</h1>
+      <p class="dc-note">Kartet viser eksisterende datasentre registrert hos Nasjonal kommunikasjonsmyndighet (Nkom). Aftenbladet har hentet ut forretningsadressen og regnskapstall fra Brønnøysundregistrene.</p>
+
+      <div id="dc-map" aria-label="Kart over eksisterende datasentre"></div>
+
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+
+  <script>
+    const DATA = [
+  {
+    "navn": "ARCTIC FLUX AS",
+    "forretningsadresse": "Langmyra 2",
+    "forretnings_poststed": "SKOPPUM",
+    "regnskapsaar": "",
+    "omsetning": "",
+    "arsresultat": "",
+    "lat": 59.3792447,
+    "lon": 10.4043974
+  },
+  {
+    "navn": "ASP DATA CENTER AS",
+    "forretningsadresse": "c/o Asp Eiendom AS, Knud Holms gate 8",
+    "forretnings_poststed": "STAVANGER",
+    "regnskapsaar": "2024",
+    "omsetning": 0,
+    "arsresultat": -948942,
+    "lat": 58.9675,
+    "lon": 5.7302
+  },
+  {
+    "navn": "ATEA AS",
+    "forretningsadresse": "Karvesvingen 5",
+    "forretnings_poststed": "OSLO",
+    "regnskapsaar": "2024",
+    "omsetning": 8693152000,
+    "arsresultat": 386481000,
+    "lat": 59.9277164,
+    "lon": 10.7985519
+  },
+  {
+    "navn": "AVUR AS",
+    "forretningsadresse": "Casperkollen, Øvre Kråkenes 17",
+    "forretnings_poststed": "BØNES",
+    "regnskapsaar": "2024",
+    "omsetning": 8718286,
+    "arsresultat": 873029,
+    "lat": 60.3405,
+    "lon": 5.32716
+  },
+  {
+    "navn": "BITPRO AS",
+    "forretningsadresse": "Østre Strandgate 80",
+    "forretnings_poststed": "KRISTIANSAND S",
+    "regnskapsaar": "2024",
+    "omsetning": 260763752,
+    "arsresultat": -54226501,
+    "lat": 58.148106,
+    "lon": 8.0070221
+  },
+  {
+    "navn": "BLIX SOLUTIONS AS",
+    "forretningsadresse": "Lindeberg næringsvei 26",
+    "forretnings_poststed": "OSLO",
+    "regnskapsaar": "2024",
+    "omsetning": 48869510,
+    "arsresultat": 3788518,
+    "lat": 59.93549,
+    "lon": 10.88559
+  },
+  {
+    "navn": "BLUEBITE GMBH",
+    "forretningsadresse": "Sjøgata 86",
+    "forretnings_poststed": "FAUSKE",
+    "regnskapsaar": "",
+    "omsetning": "",
+    "arsresultat": "",
+    "lat": 67.2590167,
+    "lon": 15.4014805
+  },
+  {
+    "navn": "BLUEFJORDS AS",
+    "forretningsadresse": "Øyagata 10A",
+    "forretnings_poststed": "GAUPNE",
+    "regnskapsaar": "2023",
+    "omsetning": 32664597,
+    "arsresultat": -3108551,
+    "lat": 61.40419,
+    "lon": 7.294997
+  },
+  {
+    "navn": "BULK DATA CENTERS N01 AS",
+    "forretningsadresse": "Karenslyst allé 53",
+    "forretnings_poststed": "OSLO",
+    "regnskapsaar": "2024",
+    "omsetning": 88056124,
+    "arsresultat": -52143446,
+    "lat": 59.921656,
+    "lon": 10.679702
+  },
+  {
+    "navn": "BULK DATA CENTERS N01 DCM101 AS",
+    "forretningsadresse": "Karenslyst allé 53",
+    "forretnings_poststed": "OSLO",
+    "regnskapsaar": "2024",
+    "omsetning": 134505349,
+    "arsresultat": -8619135,
+    "lat": 59.921656,
+    "lon": 10.679702
+  },
+  {
+    "navn": "BULK DATA CENTERS N01 DCM102 AS",
+    "forretningsadresse": "Karenslyst allé 53",
+    "forretnings_poststed": "OSLO",
+    "regnskapsaar": "2024",
+    "omsetning": 0,
+    "arsresultat": -1003939,
+    "lat": 59.921656,
+    "lon": 10.679702
+  },
+  {
+    "navn": "BULK DATA CENTERS OS-IX AS",
+    "forretningsadresse": "Karenslyst allé 53",
+    "forretnings_poststed": "OSLO",
+    "regnskapsaar": "2024",
+    "omsetning": 126698323,
+    "arsresultat": -41470093,
+    "lat": 59.921656,
+    "lon": 10.679702
+  },
+  {
+    "navn": "CURRENCY EDGE AS",
+    "forretningsadresse": "Moen 8",
+    "forretnings_poststed": "BURFJORD",
+    "regnskapsaar": "2024",
+    "omsetning": 104167,
+    "arsresultat": 71400,
+    "lat": 70.027584,
+    "lon": 22.094743
+  },
+  {
+    "navn": "DATACITY AS",
+    "forretningsadresse": "Hvervenmoveien 49",
+    "forretnings_poststed": "HØNEFOSS",
+    "regnskapsaar": "2024",
+    "omsetning": 468879,
+    "arsresultat": 69632,
+    "lat": 60.1454569,
+    "lon": 10.2562836
+  },
+  {
+    "navn": "DATAFJELLET AS",
+    "forretningsadresse": "Gullstølsstien 258",
+    "forretnings_poststed": "BØNES",
+    "regnskapsaar": "2024",
+    "omsetning": 3539434,
+    "arsresultat": 554173,
+    "lat": 60.338986,
+    "lon": 5.3127114
+  },
+  {
+    "navn": "DHUS AS",
+    "forretningsadresse": "Håvåsveien 121",
+    "forretnings_poststed": "SOKNEDAL",
+    "regnskapsaar": "",
+    "omsetning": "",
+    "arsresultat": "",
+    "lat": 62.944597,
+    "lon": 10.214725
+  },
+  {
+    "navn": "ECIT SOLUTIONS AS",
+    "forretningsadresse": "Inngang C, 3 etg., Bjørnstjerne Bjørnsons gate 110",
+    "forretnings_poststed": "DRAMMEN",
+    "regnskapsaar": "2024",
+    "omsetning": 461101848,
+    "arsresultat": 10024243,
+    "lat": 59.73082,
+    "lon": 10.21806
+  },
+  {
+    "navn": "EIDSIVA DIGITAL AS",
+    "forretningsadresse": "Vormstuguvegen 40",
+    "forretnings_poststed": "LILLEHAMMER",
+    "regnskapsaar": "2024",
+    "omsetning": 1090000000,
+    "arsresultat": -21000000,
+    "lat": 61.15119,
+    "lon": 10.418283
+  },
+  {
+    "navn": "EMP SECURE AS",
+    "forretningsadresse": "Stokkastrandvegen 85",
+    "forretnings_poststed": "NEDRE VATS",
+    "regnskapsaar": "2024",
+    "omsetning": 289222041,
+    "arsresultat": 4246820,
+    "lat": 59.4754759,
+    "lon": 5.7372127
+  },
+  {
+    "navn": "EVINY FIBER AS",
+    "forretningsadresse": "Solheimsgaten 5",
+    "forretnings_poststed": "BERGEN",
+    "regnskapsaar": "2024",
+    "omsetning": 316304255,
+    "arsresultat": 37019475,
+    "lat": 60.378649,
+    "lon": 5.335041
+  },
+  {
+    "navn": "EXANORTH AS",
+    "forretningsadresse": "Tunnsjødalsveien 178",
+    "forretnings_poststed": "TRONES",
+    "regnskapsaar": "2024",
+    "omsetning": 301235381,
+    "arsresultat": -65295966,
+    "lat": 64.713769,
+    "lon": 12.831813
+  },
+  {
+    "navn": "GIGAHOST AS",
+    "forretningsadresse": "Søndre Kullerød 2",
+    "forretnings_poststed": "SANDEFJORD",
+    "regnskapsaar": "2024",
+    "omsetning": 11174666,
+    "arsresultat": 1799374,
+    "lat": 59.1756549,
+    "lon": 10.2141556
+  },
+  {
+    "navn": "GLOBALCONNECT AS",
+    "forretningsadresse": "Snarøyveien 36",
+    "forretnings_poststed": "FORNEBU",
+    "regnskapsaar": "2024",
+    "omsetning": 2119774666,
+    "arsresultat": -326977282,
+    "lat": 59.8976718,
+    "lon": 10.6274234
+  },
+  {
+    "navn": "GREEN MOUNTAIN AS",
+    "forretningsadresse": "Hodneveien 260",
+    "forretnings_poststed": "RENNESØY",
+    "regnskapsaar": "2024",
+    "omsetning": 824580000,
+    "arsresultat": 333678000,
+    "lat": 59.0685421,
+    "lon": 5.7580319
+  },
+  {
+    "navn": "GREEN MOUNTAIN INNLANDET AS",
+    "forretningsadresse": "Hodneveien 260",
+    "forretnings_poststed": "RENNESØY",
+    "regnskapsaar": "2024",
+    "omsetning": 300298000,
+    "arsresultat": 845350000,
+    "lat": 59.070542100000004,
+    "lon": 5.762031899999999
+  },
+  {
+    "navn": "HOVEDKVARTERET IT AS",
+    "forretningsadresse": "Maridalsveien 91",
+    "forretnings_poststed": "OSLO",
+    "regnskapsaar": "2024",
+    "omsetning": 28679495,
+    "arsresultat": 234506,
+    "lat": 59.933172,
+    "lon": 10.756422
+  },
+  {
+    "navn": "INTRAHOUSE DATA CENTERS AS",
+    "forretningsadresse": "Ørnesveien 3",
+    "forretnings_poststed": "GLOMFJORD",
+    "regnskapsaar": "2023",
+    "omsetning": 545901,
+    "arsresultat": -4148968,
+    "lat": 66.817421,
+    "lon": 13.937897
+  },
+  {
+    "navn": "ITEAM AS",
+    "forretningsadresse": "Kongens gate 49",
+    "forretnings_poststed": "NARVIK",
+    "regnskapsaar": "2024",
+    "omsetning": 106546000,
+    "arsresultat": 17546000,
+    "lat": 68.439394,
+    "lon": 17.428376
+  },
+  {
+    "navn": "ITSJEFEN AS",
+    "forretningsadresse": "Havnegata 9",
+    "forretnings_poststed": "TRONDHEIM",
+    "regnskapsaar": "2024",
+    "omsetning": 56638220,
+    "arsresultat": 7479839,
+    "lat": 63.4410603,
+    "lon": 10.4028198
+  },
+  {
+    "navn": "POLARDC DRA AS",
+    "forretningsadresse": "c/o Econpartner AS, Grundingen 6",
+    "forretnings_poststed": "OSLO",
+    "regnskapsaar": "2024",
+    "omsetning": 0,
+    "arsresultat": -126006981,
+    "lat": 59.91064,
+    "lon": 10.72731
+  },
+  {
+    "navn": "LEFDAL MINE DATACENTER AS",
+    "forretningsadresse": "Gate 1 101",
+    "forretnings_poststed": "MÅLØY",
+    "regnskapsaar": "2024",
+    "omsetning": 172179968,
+    "arsresultat": -21832601,
+    "lat": 61.934503,
+    "lon": 5.112576
+  },
+  {
+    "navn": "NEAS IT AS",
+    "forretningsadresse": "Fosnagata 12",
+    "forretnings_poststed": "KRISTIANSUND N",
+    "regnskapsaar": "2024",
+    "omsetning": 38400356,
+    "arsresultat": 1997290,
+    "lat": 63.114173,
+    "lon": 7.733601
+  },
+  {
+    "navn": "NSCALE DRIFT AS",
+    "forretningsadresse": "Sam Eydes vei 47",
+    "forretnings_poststed": "GLOMFJORD",
+    "regnskapsaar": "2024",
+    "omsetning": 27005248,
+    "arsresultat": 373949,
+    "lat": 66.813689,
+    "lon": 13.93316
+  },
+  {
+    "navn": "NTC SERVICES AS",
+    "forretningsadresse": "",
+    "forretnings_poststed": "",
+    "regnskapsaar": "2024",
+    "omsetning": 108470390,
+    "arsresultat": 8775047,
+    "lat": 59.87584,
+    "lon": 10.49587
+  },
+  {
+    "navn": "NTE TELEKOM AS",
+    "forretningsadresse": "Sjøfartsgata 3",
+    "forretnings_poststed": "STEINKJER",
+    "regnskapsaar": "2024",
+    "omsetning": 807921000,
+    "arsresultat": 6938000,
+    "lat": 64.0108956,
+    "lon": 11.4882949
+  },
+  {
+    "navn": "ODIN GREEN DC AS",
+    "forretningsadresse": "c/o TMF Norway AS, Hagaløkkveien 26",
+    "forretnings_poststed": "ASKER",
+    "regnskapsaar": "2024",
+    "omsetning": 18112732,
+    "arsresultat": -29478743,
+    "lat": 59.82854,
+    "lon": 10.43026
+  },
+  {
+    "navn": "ORANGE BUSINESS DIGITAL NORWAY AS",
+    "forretningsadresse": "Lørenfaret 1E",
+    "forretnings_poststed": "OSLO",
+    "regnskapsaar": "2024",
+    "omsetning": 1041567712,
+    "arsresultat": -146013733,
+    "lat": 59.930568,
+    "lon": 10.800712
+  },
+  {
+    "navn": "REN RØROS DIGITAL AS",
+    "forretningsadresse": "Osloveien 16B",
+    "forretnings_poststed": "RØROS",
+    "regnskapsaar": "2024",
+    "omsetning": 20683629,
+    "arsresultat": -1701377,
+    "lat": 62.570446,
+    "lon": 11.386676
+  },
+  {
+    "navn": "SI OSL 01 AS",
+    "forretningsadresse": "Selma Ellefsens vei 1",
+    "forretnings_poststed": "OSLO",
+    "regnskapsaar": "2024",
+    "omsetning": 254031000,
+    "arsresultat": 65317000,
+    "lat": 59.924985,
+    "lon": 10.808894
+  },
+  {
+    "navn": "SI OSL 02 AS",
+    "forretningsadresse": "Rosenholmveien 25",
+    "forretnings_poststed": "TROLLÅSEN",
+    "regnskapsaar": "2024",
+    "omsetning": 39237000,
+    "arsresultat": -13732000,
+    "lat": 59.822087,
+    "lon": 10.788174
+  },
+  {
+    "navn": "SI OSL 03.1 AS",
+    "forretningsadresse": "Heiaveien 9",
+    "forretnings_poststed": "FETSUND",
+    "regnskapsaar": "2024",
+    "omsetning": 173731000,
+    "arsresultat": 12553000,
+    "lat": 59.9200363,
+    "lon": 11.216484
+  },
+  {
+    "navn": "SI OSL 03.2 AS",
+    "forretningsadresse": "Heiaveien 9",
+    "forretnings_poststed": "FETSUND",
+    "regnskapsaar": "2024",
+    "omsetning": 164695000,
+    "arsresultat": -67940000,
+    "lat": 59.9200363,
+    "lon": 11.216484
+  },
+  {
+    "navn": "SI OSL 04 AS",
+    "forretningsadresse": "Holtskogen 31",
+    "forretnings_poststed": "TOMTER",
+    "regnskapsaar": "2024",
+    "omsetning": 168727000,
+    "arsresultat": -110197000,
+    "lat": 59.63289,
+    "lon": 11.00618
+  },
+  {
+    "navn": "SKYGARD AS",
+    "forretningsadresse": "Karenslyst allé 10",
+    "forretnings_poststed": "OSLO",
+    "regnskapsaar": "2024",
+    "omsetning": 16590490,
+    "arsresultat": -33285878,
+    "lat": 59.919098,
+    "lon": 10.684839
+  },
+  {
+    "navn": "STORESPEED AS",
+    "forretningsadresse": "Øraveien 2",
+    "forretnings_poststed": "GAMLE FREDRIKSTAD",
+    "regnskapsaar": "2024",
+    "omsetning": 4129669,
+    "arsresultat": -2908573,
+    "lat": 59.196039,
+    "lon": 10.951284
+  },
+  {
+    "navn": "TAFJORD CONNECT AS",
+    "forretningsadresse": "Retirovegen 4",
+    "forretnings_poststed": "ÅLESUND",
+    "regnskapsaar": "2024",
+    "omsetning": 273161372,
+    "arsresultat": 49304938,
+    "lat": 62.4722318,
+    "lon": 6.366355
+  },
+  {
+    "navn": "TELIA NORGE AS",
+    "forretningsadresse": "Lørenfaret 1A",
+    "forretnings_poststed": "OSLO",
+    "regnskapsaar": "2024",
+    "omsetning": 14583000000,
+    "arsresultat": -1137000000,
+    "lat": 59.931016,
+    "lon": 10.799677
+  },
+  {
+    "navn": "TERAKRAFT AS",
+    "forretningsadresse": "Hellandsbygd, Handelandsvegen 140",
+    "forretnings_poststed": "SAUDA",
+    "regnskapsaar": "2024",
+    "omsetning": 20802660,
+    "arsresultat": -7815365,
+    "lat": 59.68485,
+    "lon": 6.51957
+  },
+  {
+    "navn": "THERMALTECH AS",
+    "forretningsadresse": "Innlandsvegen 344",
+    "forretnings_poststed": "TROMSDALEN",
+    "regnskapsaar": "2024",
+    "omsetning": 1454412,
+    "arsresultat": -516605,
+    "lat": 69.5487598,
+    "lon": 18.9628344
+  },
+  {
+    "navn": "TROLLFJORD IKT SENTER AS",
+    "forretningsadresse": "Nordnesveien 3",
+    "forretnings_poststed": "STOKMARKNES",
+    "regnskapsaar": "2024",
+    "omsetning": 8998513,
+    "arsresultat": 1457665,
+    "lat": 68.5696485,
+    "lon": 14.9086694
+  },
+  {
+    "navn": "TROLL HOUSING AS",
+    "forretningsadresse": "Klempertåsvegen 104",
+    "forretnings_poststed": "ELNESVÅGEN",
+    "regnskapsaar": "2024",
+    "omsetning": 298505977,
+    "arsresultat": 41854991,
+    "lat": 62.862239,
+    "lon": 7.10885
+  },
+  {
+    "navn": "TUSSA IKT AS",
+    "forretningsadresse": "Langemyra 6",
+    "forretnings_poststed": "HOVDEBYGDA",
+    "regnskapsaar": "2024",
+    "omsetning": 318286684,
+    "arsresultat": 19842238,
+    "lat": 62.178649,
+    "lon": 6.0833491
+  },
+  {
+    "navn": "TYDAL DATA CENTER AS",
+    "forretningsadresse": "Stugudalsvegen 196",
+    "forretnings_poststed": "TYDAL",
+    "regnskapsaar": "2024",
+    "omsetning": 310366482,
+    "arsresultat": 4684491,
+    "lat": 63.033104,
+    "lon": 11.686483
+  },
+  {
+    "navn": "UNIC NETTVERK AS",
+    "forretningsadresse": "Leirvollen 21",
+    "forretnings_poststed": "SKIEN",
+    "regnskapsaar": "2024",
+    "omsetning": 18196981,
+    "arsresultat": 894708,
+    "lat": 59.1663771,
+    "lon": 9.6346903
+  }
+];
+
+    const map = L.map('dc-map', {
+      zoomControl: true,
+      scrollWheelZoom: false
+    }).setView([64.4, 11.0], 4.6);
+
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; OpenStreetMap &copy; CARTO'
+    }).addTo(map);
+
+    const toNumber = (value) => {
+      if (value === null || value === undefined || value === '') return null;
+      const num = Number(value);
+      return Number.isFinite(num) ? num : null;
+    };
+
+    const formatNumber = (value) => {
+      const num = toNumber(value);
+      if (num === null) return '–';
+      return num.toLocaleString('nb-NO');
+    };
+
+    const formatYear = (value) => value ? String(value) : '–';
+
+    const formatAddress = (row) => {
+      const parts = [row.forretningsadresse, row.forretnings_poststed].filter(Boolean);
+      return parts.length ? parts.join(', ') : '–';
+    };
+
+    const makeTooltip = (row) => {
+      return `
+        <div class="dc-tooltip">
+          <strong>${row.navn || 'Ukjent'}</strong><br/>
+          Adresse: ${formatAddress(row)}<br/>
+          Regnskapsår: ${formatYear(row.regnskapsaar)}<br/>
+          Omsetning: ${formatNumber(row.omsetning)}<br/>
+          Årsresultat: ${formatNumber(row.arsresultat)}
+        </div>
+      `;
+    };
+
+    const showError = (message) => {
+      const card = document.querySelector('.dc-card');
+      const error = document.createElement('div');
+      error.className = 'dc-error';
+      error.textContent = message;
+      card.appendChild(error);
+    };
+
+    const points = DATA
+      .map((row) => ({
+        ...row,
+        lat: toNumber(row.lat),
+        lon: toNumber(row.lon)
+      }))
+      .filter((row) => row.lat !== null && row.lon !== null);
+
+    if (!points.length) {
+      showError('Fant ingen koordinater å kartfeste.');
+    } else {
+      points.forEach((row) => {
+        const marker = L.circleMarker([row.lat, row.lon], {
+          radius: 6,
+          color: '#60a5fa',
+          weight: 2,
+          fillColor: '#60a5fa',
+          fillOpacity: 0.6
+        }).addTo(map);
+
+        marker.bindTooltip(makeTooltip(row), {
+          direction: 'top',
+          offset: [0, -6],
+          opacity: 0.95
+        });
+      });
+    }
+  </script>
+</body>
+</html>

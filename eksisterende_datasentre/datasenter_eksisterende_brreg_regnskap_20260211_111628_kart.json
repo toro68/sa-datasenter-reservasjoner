@@ -1,0 +1,434 @@
+[
+  {
+    "navn": "ARCTIC FLUX AS",
+    "forretningsadresse": "Langmyra 2",
+    "forretnings_poststed": "SKOPPUM",
+    "regnskapsaar": "",
+    "omsetning": "",
+    "arsresultat": ""
+  },
+  {
+    "navn": "ASP DATA CENTER AS",
+    "forretningsadresse": "c/o Asp Eiendom AS, Knud Holms gate 8",
+    "forretnings_poststed": "STAVANGER",
+    "regnskapsaar": "2024",
+    "omsetning": 0,
+    "arsresultat": -948942
+  },
+  {
+    "navn": "ATEA AS",
+    "forretningsadresse": "Karvesvingen 5",
+    "forretnings_poststed": "OSLO",
+    "regnskapsaar": "2024",
+    "omsetning": 8693152000,
+    "arsresultat": 386481000
+  },
+  {
+    "navn": "AVUR AS",
+    "forretningsadresse": "Casperkollen, Øvre Kråkenes 17",
+    "forretnings_poststed": "BØNES",
+    "regnskapsaar": "2024",
+    "omsetning": 8718286,
+    "arsresultat": 873029
+  },
+  {
+    "navn": "BITPRO AS",
+    "forretningsadresse": "Østre Strandgate 80",
+    "forretnings_poststed": "KRISTIANSAND S",
+    "regnskapsaar": "2024",
+    "omsetning": 260763752,
+    "arsresultat": -54226501
+  },
+  {
+    "navn": "BLIX SOLUTIONS AS",
+    "forretningsadresse": "Lindeberg næringsvei 26",
+    "forretnings_poststed": "OSLO",
+    "regnskapsaar": "2024",
+    "omsetning": 48869510,
+    "arsresultat": 3788518
+  },
+  {
+    "navn": "BLUEBITE GMBH",
+    "forretningsadresse": "Sjøgata 86",
+    "forretnings_poststed": "FAUSKE",
+    "regnskapsaar": "",
+    "omsetning": "",
+    "arsresultat": ""
+  },
+  {
+    "navn": "BLUEFJORDS AS",
+    "forretningsadresse": "Øyagata 10A",
+    "forretnings_poststed": "GAUPNE",
+    "regnskapsaar": "2023",
+    "omsetning": 32664597,
+    "arsresultat": -3108551
+  },
+  {
+    "navn": "BULK DATA CENTERS N01 AS",
+    "forretningsadresse": "Karenslyst allé 53",
+    "forretnings_poststed": "OSLO",
+    "regnskapsaar": "2024",
+    "omsetning": 88056124,
+    "arsresultat": -52143446
+  },
+  {
+    "navn": "BULK DATA CENTERS N01 DCM101 AS",
+    "forretningsadresse": "Karenslyst allé 53",
+    "forretnings_poststed": "OSLO",
+    "regnskapsaar": "2024",
+    "omsetning": 134505349,
+    "arsresultat": -8619135
+  },
+  {
+    "navn": "BULK DATA CENTERS N01 DCM102 AS",
+    "forretningsadresse": "Karenslyst allé 53",
+    "forretnings_poststed": "OSLO",
+    "regnskapsaar": "2024",
+    "omsetning": 0,
+    "arsresultat": -1003939
+  },
+  {
+    "navn": "BULK DATA CENTERS OS-IX AS",
+    "forretningsadresse": "Karenslyst allé 53",
+    "forretnings_poststed": "OSLO",
+    "regnskapsaar": "2024",
+    "omsetning": 126698323,
+    "arsresultat": -41470093
+  },
+  {
+    "navn": "CURRENCY EDGE AS",
+    "forretningsadresse": "Moen 8",
+    "forretnings_poststed": "BURFJORD",
+    "regnskapsaar": "2024",
+    "omsetning": 104167,
+    "arsresultat": 71400
+  },
+  {
+    "navn": "DATACITY AS",
+    "forretningsadresse": "Hvervenmoveien 49",
+    "forretnings_poststed": "HØNEFOSS",
+    "regnskapsaar": "2024",
+    "omsetning": 468879,
+    "arsresultat": 69632
+  },
+  {
+    "navn": "DATAFJELLET AS",
+    "forretningsadresse": "Gullstølsstien 258",
+    "forretnings_poststed": "BØNES",
+    "regnskapsaar": "2024",
+    "omsetning": 3539434,
+    "arsresultat": 554173
+  },
+  {
+    "navn": "DHUS AS",
+    "forretningsadresse": "Håvåsveien 121",
+    "forretnings_poststed": "SOKNEDAL",
+    "regnskapsaar": "",
+    "omsetning": "",
+    "arsresultat": ""
+  },
+  {
+    "navn": "ECIT SOLUTIONS AS",
+    "forretningsadresse": "Inngang C, 3 etg., Bjørnstjerne Bjørnsons gate 110",
+    "forretnings_poststed": "DRAMMEN",
+    "regnskapsaar": "2024",
+    "omsetning": 461101848,
+    "arsresultat": 10024243
+  },
+  {
+    "navn": "EIDSIVA DIGITAL AS",
+    "forretningsadresse": "Vormstuguvegen 40",
+    "forretnings_poststed": "LILLEHAMMER",
+    "regnskapsaar": "2024",
+    "omsetning": 1090000000,
+    "arsresultat": -21000000
+  },
+  {
+    "navn": "EMP SECURE AS",
+    "forretningsadresse": "Stokkastrandvegen 85",
+    "forretnings_poststed": "NEDRE VATS",
+    "regnskapsaar": "2024",
+    "omsetning": 289222041,
+    "arsresultat": 4246820
+  },
+  {
+    "navn": "EVINY FIBER AS",
+    "forretningsadresse": "Solheimsgaten 5",
+    "forretnings_poststed": "BERGEN",
+    "regnskapsaar": "2024",
+    "omsetning": 316304255,
+    "arsresultat": 37019475
+  },
+  {
+    "navn": "EXANORTH AS",
+    "forretningsadresse": "Tunnsjødalsveien 178",
+    "forretnings_poststed": "TRONES",
+    "regnskapsaar": "2024",
+    "omsetning": 301235381,
+    "arsresultat": -65295966
+  },
+  {
+    "navn": "GIGAHOST AS",
+    "forretningsadresse": "Søndre Kullerød 2",
+    "forretnings_poststed": "SANDEFJORD",
+    "regnskapsaar": "2024",
+    "omsetning": 11174666,
+    "arsresultat": 1799374
+  },
+  {
+    "navn": "GLOBALCONNECT AS",
+    "forretningsadresse": "Snarøyveien 36",
+    "forretnings_poststed": "FORNEBU",
+    "regnskapsaar": "2024",
+    "omsetning": 2119774666,
+    "arsresultat": -326977282
+  },
+  {
+    "navn": "GREEN MOUNTAIN AS",
+    "forretningsadresse": "Hodneveien 260",
+    "forretnings_poststed": "RENNESØY",
+    "regnskapsaar": "2024",
+    "omsetning": 824580000,
+    "arsresultat": 333678000
+  },
+  {
+    "navn": "GREEN MOUNTAIN INNLANDET AS",
+    "forretningsadresse": "Hodneveien 260",
+    "forretnings_poststed": "RENNESØY",
+    "regnskapsaar": "2024",
+    "omsetning": 300298000,
+    "arsresultat": 845350000
+  },
+  {
+    "navn": "HOVEDKVARTERET IT AS",
+    "forretningsadresse": "Maridalsveien 91",
+    "forretnings_poststed": "OSLO",
+    "regnskapsaar": "2024",
+    "omsetning": 28679495,
+    "arsresultat": 234506
+  },
+  {
+    "navn": "INTRAHOUSE DATA CENTERS AS",
+    "forretningsadresse": "Ørnesveien 3",
+    "forretnings_poststed": "GLOMFJORD",
+    "regnskapsaar": "2023",
+    "omsetning": 545901,
+    "arsresultat": -4148968
+  },
+  {
+    "navn": "ITEAM AS",
+    "forretningsadresse": "Kongens gate 49",
+    "forretnings_poststed": "NARVIK",
+    "regnskapsaar": "2024",
+    "omsetning": 106546000,
+    "arsresultat": 17546000
+  },
+  {
+    "navn": "ITSJEFEN AS",
+    "forretningsadresse": "Havnegata 9",
+    "forretnings_poststed": "TRONDHEIM",
+    "regnskapsaar": "2024",
+    "omsetning": 56638220,
+    "arsresultat": 7479839
+  },
+  {
+    "navn": "POLARDC DRA AS",
+    "forretningsadresse": "c/o Econpartner AS, Grundingen 6",
+    "forretnings_poststed": "OSLO",
+    "regnskapsaar": "2024",
+    "omsetning": 0,
+    "arsresultat": -126006981
+  },
+  {
+    "navn": "LEFDAL MINE DATACENTER AS",
+    "forretningsadresse": "Gate 1 101",
+    "forretnings_poststed": "MÅLØY",
+    "regnskapsaar": "2024",
+    "omsetning": 172179968,
+    "arsresultat": -21832601
+  },
+  {
+    "navn": "NEAS IT AS",
+    "forretningsadresse": "Fosnagata 12",
+    "forretnings_poststed": "KRISTIANSUND N",
+    "regnskapsaar": "2024",
+    "omsetning": 38400356,
+    "arsresultat": 1997290
+  },
+  {
+    "navn": "NSCALE DRIFT AS",
+    "forretningsadresse": "Sam Eydes vei 47",
+    "forretnings_poststed": "GLOMFJORD",
+    "regnskapsaar": "2024",
+    "omsetning": 27005248,
+    "arsresultat": 373949
+  },
+  {
+    "navn": "NTC SERVICES AS",
+    "forretningsadresse": "",
+    "forretnings_poststed": "",
+    "regnskapsaar": "2024",
+    "omsetning": 108470390,
+    "arsresultat": 8775047
+  },
+  {
+    "navn": "NTE TELEKOM AS",
+    "forretningsadresse": "Sjøfartsgata 3",
+    "forretnings_poststed": "STEINKJER",
+    "regnskapsaar": "2024",
+    "omsetning": 807921000,
+    "arsresultat": 6938000
+  },
+  {
+    "navn": "ODIN GREEN DC AS",
+    "forretningsadresse": "c/o TMF Norway AS, Hagaløkkveien 26",
+    "forretnings_poststed": "ASKER",
+    "regnskapsaar": "2024",
+    "omsetning": 18112732,
+    "arsresultat": -29478743
+  },
+  {
+    "navn": "ORANGE BUSINESS DIGITAL NORWAY AS",
+    "forretningsadresse": "Lørenfaret 1E",
+    "forretnings_poststed": "OSLO",
+    "regnskapsaar": "2024",
+    "omsetning": 1041567712,
+    "arsresultat": -146013733
+  },
+  {
+    "navn": "REN RØROS DIGITAL AS",
+    "forretningsadresse": "Osloveien 16B",
+    "forretnings_poststed": "RØROS",
+    "regnskapsaar": "2024",
+    "omsetning": 20683629,
+    "arsresultat": -1701377
+  },
+  {
+    "navn": "SI OSL 01 AS",
+    "forretningsadresse": "Selma Ellefsens vei 1",
+    "forretnings_poststed": "OSLO",
+    "regnskapsaar": "2024",
+    "omsetning": 254031000,
+    "arsresultat": 65317000
+  },
+  {
+    "navn": "SI OSL 02 AS",
+    "forretningsadresse": "Rosenholmveien 25",
+    "forretnings_poststed": "TROLLÅSEN",
+    "regnskapsaar": "2024",
+    "omsetning": 39237000,
+    "arsresultat": -13732000
+  },
+  {
+    "navn": "SI OSL 03.1 AS",
+    "forretningsadresse": "Heiaveien 9",
+    "forretnings_poststed": "FETSUND",
+    "regnskapsaar": "2024",
+    "omsetning": 173731000,
+    "arsresultat": 12553000
+  },
+  {
+    "navn": "SI OSL 03.2 AS",
+    "forretningsadresse": "Heiaveien 9",
+    "forretnings_poststed": "FETSUND",
+    "regnskapsaar": "2024",
+    "omsetning": 164695000,
+    "arsresultat": -67940000
+  },
+  {
+    "navn": "SI OSL 04 AS",
+    "forretningsadresse": "Holtskogen 31",
+    "forretnings_poststed": "TOMTER",
+    "regnskapsaar": "2024",
+    "omsetning": 168727000,
+    "arsresultat": -110197000
+  },
+  {
+    "navn": "SKYGARD AS",
+    "forretningsadresse": "Karenslyst allé 10",
+    "forretnings_poststed": "OSLO",
+    "regnskapsaar": "2024",
+    "omsetning": 16590490,
+    "arsresultat": -33285878
+  },
+  {
+    "navn": "STORESPEED AS",
+    "forretningsadresse": "Øraveien 2",
+    "forretnings_poststed": "GAMLE FREDRIKSTAD",
+    "regnskapsaar": "2024",
+    "omsetning": 4129669,
+    "arsresultat": -2908573
+  },
+  {
+    "navn": "TAFJORD CONNECT AS",
+    "forretningsadresse": "Retirovegen 4",
+    "forretnings_poststed": "ÅLESUND",
+    "regnskapsaar": "2024",
+    "omsetning": 273161372,
+    "arsresultat": 49304938
+  },
+  {
+    "navn": "TELIA NORGE AS",
+    "forretningsadresse": "Lørenfaret 1A",
+    "forretnings_poststed": "OSLO",
+    "regnskapsaar": "2024",
+    "omsetning": 14583000000,
+    "arsresultat": -1137000000
+  },
+  {
+    "navn": "TERAKRAFT AS",
+    "forretningsadresse": "Hellandsbygd, Handelandsvegen 140",
+    "forretnings_poststed": "SAUDA",
+    "regnskapsaar": "2024",
+    "omsetning": 20802660,
+    "arsresultat": -7815365
+  },
+  {
+    "navn": "THERMALTECH AS",
+    "forretningsadresse": "Innlandsvegen 344",
+    "forretnings_poststed": "TROMSDALEN",
+    "regnskapsaar": "2024",
+    "omsetning": 1454412,
+    "arsresultat": -516605
+  },
+  {
+    "navn": "TROLLFJORD IKT SENTER AS",
+    "forretningsadresse": "Nordnesveien 3",
+    "forretnings_poststed": "STOKMARKNES",
+    "regnskapsaar": "2024",
+    "omsetning": 8998513,
+    "arsresultat": 1457665
+  },
+  {
+    "navn": "TROLL HOUSING AS",
+    "forretningsadresse": "Klempertåsvegen 104",
+    "forretnings_poststed": "ELNESVÅGEN",
+    "regnskapsaar": "2024",
+    "omsetning": 298505977,
+    "arsresultat": 41854991
+  },
+  {
+    "navn": "TUSSA IKT AS",
+    "forretningsadresse": "Langemyra 6",
+    "forretnings_poststed": "HOVDEBYGDA",
+    "regnskapsaar": "2024",
+    "omsetning": 318286684,
+    "arsresultat": 19842238
+  },
+  {
+    "navn": "TYDAL DATA CENTER AS",
+    "forretningsadresse": "Stugudalsvegen 196",
+    "forretnings_poststed": "TYDAL",
+    "regnskapsaar": "2024",
+    "omsetning": 310366482,
+    "arsresultat": 4684491
+  },
+  {
+    "navn": "UNIC NETTVERK AS",
+    "forretningsadresse": "Leirvollen 21",
+    "forretnings_poststed": "SKIEN",
+    "regnskapsaar": "2024",
+    "omsetning": 18196981,
+    "arsresultat": 894708
+  }
+]

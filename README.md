@@ -38,7 +38,7 @@ Uten et slikt kartgrunnlag kan kart lages aggregert på `prisområde`/`områdepl
 - `data/stasjoner_manuelle_koordinater.csv`: manuelle koordinater lagt til i cache.
 - `data/stasjoner_faktasjekk_oversikt.csv`: alle unike stasjoner fra råfilene med status mot `geocode_cache.json`.
 - `data/stasjoner_faktasjekk_sortert.csv`: samme som over, sortert på status (mangler/null/har).
-- Siste faktasjekk (råfiler): 115 unike stasjoner · 56 i cache · 59 mangler · 40 null · 16 med koordinat.
+- Siste stasjonslogg (`data/stasjoner_latlon_log.csv`): 115 unike stasjoner · 115 med koordinat · 0 mangler (kilde: 90 kartgrunnlag_cache, 12 manual, 13 cache).
 - Prisområde: Stasjon `T35` settes manuelt til `NO2` i `scripts/build_clean.py`.
 
 ## Kolonner (kort forklaring)
@@ -72,6 +72,10 @@ Felt slik de står i `data/reservasjoner.tsv`:
 - Hvor langt fram i tid ligger ønsket tilknytning i snitt per næringstype?
 
 ## Visualiseringer
+
+### 0) Eksisterende datasentre (Nkom)
+- HTML-oversikt: `eksisterende_datasentre/eksisterende-datasentre.html`
+- Datagrunnlag: `eksisterende_datasentre/datagrunnlag.md`
 
 ### 1) Tidslinje for reserverte MW
 - Linje- eller arealdiagram: Sum reserverte MW per år (basert på dato for reservasjon).

@@ -4,34 +4,68 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>NO2 – reservasjoner og kapasitetskø</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
       :root {
-        --bg: #0b1220;
-        --panel: #101a2e;
-        --text: #e8eefc;
-        --muted: #a8b4d6;
-        --border: rgba(232, 238, 252, 0.12);
-        --accent: #6aa2ff;
-        --danger: #ff6a7a;
-        --grid: rgba(232, 238, 252, 0.08);
+        --bg: #0b1216;
+        --bg-2: #0f1c22;
+        --panel: rgba(15, 24, 30, 0.92);
+        --panel-strong: #121c21;
+        --text: #f4f7f7;
+        --muted: #a6b3bb;
+        --border: rgba(244, 247, 247, 0.12);
+        --accent: #2dd4bf;
+        --accent-strong: #14b8a6;
+        --accent-warm: #fbbf24;
+        --danger: #ff6b6b;
+        --grid: rgba(244, 247, 247, 0.08);
+        --shadow: rgba(2, 6, 23, 0.45);
       }
 
       body {
         margin: 0;
-        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
-          "Apple Color Emoji", "Segoe UI Emoji";
-        background: var(--bg);
+        font-family: "Instrument Sans", "Segoe UI", Helvetica, Arial, sans-serif;
+        background: radial-gradient(1200px 800px at 15% -10%, rgba(45, 212, 191, 0.12), transparent 60%),
+          radial-gradient(900px 700px at 100% 0%, rgba(251, 191, 36, 0.12), transparent 55%),
+          linear-gradient(180deg, var(--bg), var(--bg-2));
         color: var(--text);
+        min-height: 100vh;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image: radial-gradient(rgba(244, 247, 247, 0.06) 0.6px, transparent 0.6px);
+        background-size: 22px 22px;
+        opacity: 0.25;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      * {
+        box-sizing: border-box;
       }
 
       header {
         padding: 24px 20px 12px;
+        max-width: 1100px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+        animation: floatIn 700ms ease both;
       }
 
       header h1 {
-        font-size: 18px;
+        font-family: "Space Grotesk", "Instrument Sans", "Segoe UI", sans-serif;
+        font-size: 22px;
         margin: 0 0 6px;
-        letter-spacing: 0.2px;
+        letter-spacing: 0.4px;
       }
 
       header p {
@@ -55,6 +89,10 @@
         display: grid;
         grid-template-columns: 1fr;
         gap: 16px;
+        max-width: 1100px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
       }
 
       .panel {
@@ -62,6 +100,13 @@
         border: 1px solid var(--border);
         border-radius: 14px;
         overflow: hidden;
+        box-shadow: 0 18px 45px var(--shadow);
+        backdrop-filter: blur(8px);
+        animation: floatIn 700ms ease both;
+      }
+
+      main > .panel {
+        animation-delay: 80ms;
       }
 
       .panel-header {
@@ -71,12 +116,14 @@
         padding: 14px;
         border-bottom: 1px solid var(--border);
         gap: 10px;
+        background: linear-gradient(120deg, rgba(45, 212, 191, 0.12), rgba(251, 191, 36, 0.1));
       }
 
       .panel-header h2 {
         margin: 0;
         font-size: 14px;
         letter-spacing: 0.25px;
+        font-family: "Space Grotesk", "Instrument Sans", "Segoe UI", sans-serif;
       }
 
       .pill {
@@ -86,19 +133,19 @@
         padding: 4px 8px;
         border-radius: 999px;
         border: 1px solid var(--border);
-        background: rgba(255, 255, 255, 0.03);
+        background: rgba(9, 13, 16, 0.6);
         color: var(--muted);
         font-size: 11px;
       }
 
       .pill-accent {
         color: var(--text);
-        border-color: rgba(106, 162, 255, 0.55);
-        background: rgba(106, 162, 255, 0.12);
+        border-color: rgba(45, 212, 191, 0.55);
+        background: rgba(45, 212, 191, 0.15);
       }
 
       .pill-accent:hover {
-        background: rgba(106, 162, 255, 0.2);
+        background: rgba(45, 212, 191, 0.25);
       }
 
       .quick-links {
@@ -138,10 +185,17 @@
       input[type="search"] {
         border-radius: 10px;
         border: 1px solid var(--border);
-        background: rgba(255, 255, 255, 0.03);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
         color: var(--text);
         padding: 10px 10px;
         outline: none;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      select:focus-visible,
+      input[type="search"]:focus-visible {
+        border-color: rgba(45, 212, 191, 0.7);
+        box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.2);
       }
 
       input[type="search"]::placeholder {
@@ -159,7 +213,8 @@
         border: 1px solid var(--border);
         border-radius: 12px;
         padding: 10px;
-        background: rgba(0, 0, 0, 0.12);
+        background: rgba(8, 12, 15, 0.45);
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
       }
 
       .chart h3 {
@@ -191,11 +246,11 @@
       }
 
       .bar {
-        fill: rgba(106, 162, 255, 0.8);
+        fill: rgba(45, 212, 191, 0.75);
       }
 
       .bar:hover {
-        fill: rgba(106, 162, 255, 1);
+        fill: rgba(45, 212, 191, 1);
       }
 
       .bar.selected {
@@ -222,6 +277,24 @@
         background: rgba(255, 0, 0, 0.05);
         font-size: 12px;
         display: none;
+      }
+
+      @keyframes floatIn {
+        from {
+          opacity: 0;
+          transform: translateY(14px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation: none !important;
+          transition: none !important;
+        }
       }
 
       @media (max-width: 900px) {

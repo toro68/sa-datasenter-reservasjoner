@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eksisterende datasentre i Norge</title>
+  <style>
+    :root {
+      --bg: #0f2d52;
+      --bg-2: #0a1e36;
+      --text: #ffffff;
+      --muted: rgba(255, 255, 255, 0.7);
+      --accent: #60a5fa;
+      --border: rgba(255, 255, 255, 0.2);
+    }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      background: #061627;
+      color: var(--text);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    .dc-page {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .dc-card {
+      background: linear-gradient(180deg, rgba(15, 45, 82, 0.95), rgba(10, 30, 54, 0.98));
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(6px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dc-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.07) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    h1 {
+      margin: 0 0 0.4rem 0;
+      font-size: 1.2rem;
+    }
+
+    .dc-lead {
+      margin: 0 0 1.2rem 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .dc-kpi {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin-bottom: 1.4rem;
+    }
+
+    .dc-kpi-card {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 12px;
+      padding: 0.9rem 1rem;
+    }
+
+    .dc-kpi-card span {
+      display: block;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .dc-kpi-card strong {
+      display: block;
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      font-variant-numeric: tabular-nums;
+      background: linear-gradient(180deg, #ffffff, #cbd5e1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .dc-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      margin-top: 0.6rem;
+    }
+
+    .dc-table th,
+    .dc-table td {
+      text-align: left;
+      padding: 0.6rem 0.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      vertical-align: top;
+    }
+
+    .dc-table th {
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.55);
+    }
+
+    .dc-table tbody tr:hover {
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .dc-toggle {
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: inherit;
+      font: inherit;
+      text-align: left;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      gap: 12px;
+    }
+
+    .dc-toggle span {
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.55);
+    }
+
+    .dc-detail td {
+      padding: 0.6rem 0.5rem 0.9rem;
+      color: rgba(255, 255, 255, 0.75);
+      font-size: 0.85rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .dc-detail strong {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .dc-tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      background: rgba(96, 165, 250, 0.2);
+      color: #bfdbfe;
+    }
+
+    .dc-tag.negative {
+      background: rgba(248, 113, 113, 0.18);
+      color: #fecaca;
+    }
+
+    .dc-toggle .dc-tag {
+      margin-left: auto;
+    }
+
+    .dc-toggle span:last-child {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .dc-source {
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.5);
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+  <div class="dc-page">
+    <div class="dc-card">
+      <h1>Eksisterende datasentre i Norge</h1>
+      <p class="dc-lead">Oversikt over registrerte datasentre og kommersielle operatører per 6. februar 2026.</p>
+
+      <div class="dc-kpi">
+        <div class="dc-kpi-card">
+          <span>Registrerte datasentre (inkl. virksomhetsinterne)</span>
+          <strong>88</strong>
+        </div>
+        <div class="dc-kpi-card">
+          <span>Kommersielle datasenteroperatører</span>
+          <strong>54</strong>
+        </div>
+      </div>
+
+      <table class="dc-table" aria-label="Liste over kommersielle datasenteroperatører">
+        <thead>
+          <tr>
+            <th>Kommersielle datasenteroperatører</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">ARCTIC FLUX AS <span class="dc-tag negative">Ja (95 % av forbruk)</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 935798973</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">ASP DATA CENTER AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 931764225</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">ATEA AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 976239997</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">AVUR AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 928077993</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">BITPRO AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 986643583</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">BLIX SOLUTIONS AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 993128708</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">BLUEBITE GMBH <span class="dc-tag negative">Ja (55 % av forbruk)</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 922053162</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">BLUEFJORDS <span class="dc-tag negative">Ja (30 % av forbruk)</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 993743801</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">BULK DATA CENTERS N01 AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 916871376</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">BULK DATA CENTERS N01 DCM101 AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 932255561</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">BULK DATA CENTERS N01 DCM102 AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 933932680</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">BULK DATA CENTERS OS-IX AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 923118535</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">CURRENCY EDGE AS <span class="dc-tag negative">Ja (100 % av forbruk)</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 933453898</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">DATACITY AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 979441320</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">DATAFJELLET AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 989766872</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">DHUS AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 935477670</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">ECIT SOLUTIONS AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 921064802</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">EIDSIVA DIGITAL AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 880258222</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">EMP SECURE AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 968504436</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">EVINY FIBER AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 982770297</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">EXANORTH AS <span class="dc-tag negative">Ja (33 % av forbruk)</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 921677421</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">GIGAHOST AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 933452549</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">GLOBALCONNECT AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 890164072</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">GREEN MOUNTAIN AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 994989391</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">GREEN MOUNTAIN INNLANDET AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 829283352</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">HOVEDKVARTERET IT AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 926643851</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">INTRAHOUSE DATA CENTERS AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 927410362</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">ITEAM AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 923456317</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">ITSJEFEN AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 828105442</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">KLINGSTONE AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 928431096</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">LEFDAL MINE DATACENTER AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 911599252</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">NEAS IT AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 928700968</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">NSCALE DRIFT AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 828605062</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">NTC SERVICES AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 988534005</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">NTE TELEKOM AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 926516019</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">ODIN GREEN DC AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 925218790</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">ORANGE BUSINESS DIGITAL NORWAY AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 982211743</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">REN RØROS DIGITAL AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 933054365</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">SI OSL 01 AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 981663322</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">SI OSL 02 AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 994817477</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">SI OSL 03.1 AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 912189287</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">SI OSL 03.2 AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 920030564</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">SI OSL 04 AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 922735573</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">SKYGARD AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 930086339</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">STORESPEED AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 916871821</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">TAFJORD CONNECT AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 977461863</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">TELIA NORGE AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 981929055</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">TERAKRAFT AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 926970208</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">THERMALTECH AS <span class="dc-tag negative">Ja (100 % av forbruk)</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 933436012</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">TROLLFJORD IKT SENTER AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 999648274</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">TROLL HOUSING AS <span class="dc-tag negative">Ja (97 % av forbruk)</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 911678608</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">TUSSA IKT AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 983450342</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">TYDAL DATA CENTER AS <span class="dc-tag negative">Ja (33 % av forbruk)</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 927050188</td></tr>
+          <tr><td><button class="dc-toggle" type="button" aria-expanded="false">UNIC NETTVERK AS <span class="dc-tag">Nei</span> <span>Vis info</span></button></td></tr>
+<tr class="dc-detail" hidden><td><strong>Org.nr:</strong> 863847672</td></tr>
+        </tbody>
+      </table>
+
+      <div class="dc-source">Kilde: Nkom (06.02.2026)</div>
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('.dc-toggle').forEach((button) => {
+      button.addEventListener('click', () => {
+        const detailRow = button.closest('tr').nextElementSibling;
+        const infoLabel = button.querySelector('span:last-child');
+        const isHidden = detailRow.hasAttribute('hidden');
+        detailRow.toggleAttribute('hidden');
+        button.setAttribute('aria-expanded', String(isHidden));
+        if (infoLabel) {
+          infoLabel.textContent = isHidden ? 'Skjul info' : 'Vis info';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

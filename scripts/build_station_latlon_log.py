@@ -144,7 +144,10 @@ def main() -> None:
         else:
             lat = str(result.get("lat", ""))
             lon = str(result.get("lon", ""))
-            source = "manual" if result.get("manual") else "cache"
+            if result.get("comment") == "Fra kartgrunnlag.geojson":
+                source = "kartgrunnlag_cache"
+            else:
+                source = "manual" if result.get("manual") else "cache"
 
         if not lat or not lon:
             for key in variant_keys(stasjon):
