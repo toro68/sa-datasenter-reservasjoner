@@ -336,11 +336,11 @@
     ]
   },
   "Humleberget": {
-    "lat": "58.8505",
-    "lon": "5.7665",
+    "lat": "58.88041",
+    "lon": "5.69047",
     "display_name": "Humleberget (manuell koordinat)",
     "manual": true,
-    "comment": "Ny stasjon i Sandnes (v/ Bærheim)."
+    "comment": "Ny stasjon i Sandnes (ved Bærheim)."
   },
   "Husnes": {
     "lat": "59.862784738615105",
