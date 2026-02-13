@@ -325,8 +325,9 @@
           <div class="control">
             <label for="dataset">Datasett</label>
             <select id="dataset">
-              <option value="reservasjoner" selected>Reservasjoner</option>
+              <option value="reservasjoner">Reservasjoner</option>
               <option value="kapasitetsko">Kapasitetskø</option>
+              <option value="kombinert" selected>Kombinert</option>
             </select>
           </div>
 
@@ -397,12 +398,16 @@
           url: "../kapasitetsko_clean.json",
           mwKey: "kapasitet_ko_mw",
         },
+        kombinert: {
+          label: "Kombinert",
+          mwKey: "mw_combined",
+        },
       };
 
       const $ = (id) => document.getElementById(id);
 
       const state = {
-        activeDataset: "reservasjoner",
+        activeDataset: "kombinert",
         rows: [],
         geo: null,
         markers: null,
@@ -489,6 +494,25 @@
         return totals;
       }
 
+      function buildCombinedRows(reservasjoner, kapasitetsko) {
+        const combined = [];
+        reservasjoner.forEach((row) => {
+          combined.push({
+            ...row,
+            mw_combined: Number(row.reservert_mw) || 0,
+            source: "reservasjoner",
+          });
+        });
+        kapasitetsko.forEach((row) => {
+          combined.push({
+            ...row,
+            mw_combined: Number(row.kapasitet_ko_mw) || 0,
+            source: "kapasitetsko",
+          });
+        });
+        return combined;
+      }
+
       function updateMissingList(missing) {
         const list = $("missing-list");
         list.innerHTML = "";
@@ -558,10 +582,25 @@
         setStatus("Laster…");
         try {
           const dataset = DATASETS[state.activeDataset];
-          const [rows, geo] = await Promise.all([
-            fetch(dataset.url, { cache: "no-store" }).then((r) => r.json()),
-            fetch("../kartgrunnlag.geojson", { cache: "no-store" }).then((r) => r.json()),
-          ]);
+          let rows = [];
+          let geo = null;
+
+          if (state.activeDataset === "kombinert") {
+            const [reservasjoner, kapasitetsko, geoData] = await Promise.all([
+              fetch(DATASETS.reservasjoner.url, { cache: "no-store" }).then((r) => r.json()),
+              fetch(DATASETS.kapasitetsko.url, { cache: "no-store" }).then((r) => r.json()),
+              fetch("../kartgrunnlag.geojson", { cache: "no-store" }).then((r) => r.json()),
+            ]);
+            rows = buildCombinedRows(reservasjoner, kapasitetsko);
+            geo = geoData;
+          } else {
+            const [rowsData, geoData] = await Promise.all([
+              fetch(dataset.url, { cache: "no-store" }).then((r) => r.json()),
+              fetch("../kartgrunnlag.geojson", { cache: "no-store" }).then((r) => r.json()),
+            ]);
+            rows = rowsData;
+            geo = geoData;
+          }
 
           state.rows = rows;
           state.geo = geo;
@@ -573,7 +612,7 @@
           applyFiltersAndRender();
         } catch (err) {
           setStatus("Feil");
-          setError(`Klarte ikke å laste data. (${err.message})`);
+          setError(`Klarte ikke å laste ${DATASETS[state.activeDataset].label}. (${err.message})`);
         }
       }
 

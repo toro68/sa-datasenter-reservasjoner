@@ -516,8 +516,9 @@
           <div class="control">
             <label for="dataset">Datasett</label>
             <select id="dataset">
-              <option value="reservasjoner" selected>Reservasjoner</option>
+              <option value="reservasjoner">Reservasjoner</option>
               <option value="kapasitetsko">Kapasitetskø</option>
+              <option value="kombinert" selected>Kombinert</option>
             </select>
           </div>
 
@@ -764,12 +765,16 @@
           url: "../kapasitetsko_clean.json",
           mwKey: "kapasitet_ko_mw",
         },
+        kombinert: {
+          label: "Kombinert",
+          mwKey: "mw_combined",
+        },
       };
 
       const $ = (id) => document.getElementById(id);
 
       const state = {
-        activeDataset: "reservasjoner",
+        activeDataset: "kombinert",
         rows: [],
         filtered: [],
         reservasjonerAll: [],
@@ -897,18 +902,49 @@
         renderChips("chips-stasjon", opts, state.multi.stasjon, { limit: opts.length });
       }
 
+      function buildCombinedRows(reservasjoner, kapasitetsko) {
+        const combined = [];
+        reservasjoner.forEach((row) => {
+          combined.push({
+            ...row,
+            mw_combined: Number(row.reservert_mw) || 0,
+            date_combined: row.reservert_dato || "",
+            source: "reservasjoner",
+          });
+        });
+        kapasitetsko.forEach((row) => {
+          combined.push({
+            ...row,
+            mw_combined: Number(row.kapasitet_ko_mw) || 0,
+            date_combined: row.innmelding_dato || "",
+            source: "kapasitetsko",
+          });
+        });
+        return combined;
+      }
+
       async function loadDataset(key) {
         state.activeDataset = key;
         setError("");
         setStatus("Laster…");
         try {
-          const response = await fetch(DATASETS[key].url, { cache: "no-store" });
-          if (!response.ok) {
-            throw new Error(`${response.status} ${response.statusText}`);
+          if (key === "kombinert") {
+            const [reservasjoner, kapasitetsko] = await Promise.all([
+              fetch(DATASETS.reservasjoner.url, { cache: "no-store" }).then((r) => r.json()),
+              fetch(DATASETS.kapasitetsko.url, { cache: "no-store" }).then((r) => r.json()),
+            ]);
+            state.reservasjonerAll = reservasjoner;
+            state.kapasitetskoAll = kapasitetsko;
+            state.rows = buildCombinedRows(reservasjoner, kapasitetsko);
+          } else {
+            const response = await fetch(DATASETS[key].url, { cache: "no-store" });
+            if (!response.ok) {
+              throw new Error(`${response.status} ${response.statusText}`);
+            }
+            state.rows = await response.json();
+            if (key === "reservasjoner") state.reservasjonerAll = state.rows;
+            if (key === "kapasitetsko") state.kapasitetskoAll = state.rows;
           }
-          state.rows = await response.json();
-          if (key === "reservasjoner") state.reservasjonerAll = state.rows;
-          if (key === "kapasitetsko") state.kapasitetskoAll = state.rows;
 
           const pris = unique(state.rows.map((r) => r.prisomrade));
           const naring = unique(state.rows.map((r) => r.naringstype));
@@ -935,7 +971,7 @@
         } catch (err) {
           setStatus("Feil");
           setError(
-            `Klarte ikke å laste ${DATASETS[key].url}. Åpne siden via en lokal webserver (ikke file://). (${err.message})`
+            `Klarte ikke å laste ${DATASETS[key].label}. Åpne siden via en lokal webserver (ikke file://). (${err.message})`
           );
         }
       }
